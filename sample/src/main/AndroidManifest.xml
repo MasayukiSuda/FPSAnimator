@@ -22,8 +22,12 @@
         <activity
             android:name=".EasingSampleActivity"
             android:label="EasingSample" />
-        <activity android:name=".ParabolicMotionSampleActivity" />
-        <activity android:name=".SpriteSheetSampleActivity"></activity>
+        <activity
+            android:name=".ParabolicMotionSampleActivity"
+            android:label="ParabolicMotionSampleActivity" />
+        <activity
+            android:name=".SpriteSheetSampleActivity"
+            android:label="SpriteSheetSampleActivity" />
     </application>
 
 </manifest>

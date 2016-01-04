@@ -24,8 +24,8 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion {
 
 
     private UpdatePositionListener mUpdatePositionListener;
-    private float mFrameWidth;
-    private float mFrameHeight;
+    public float mFrameWidth;
+    public float mFrameHeight;
     private int mFrameNum;
     private int mFrequency = 1;
     // The number of which frame, there is about line 1 of side
@@ -33,11 +33,10 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion {
     private boolean mSpriteLoop = true;
 
 
-    private float dx = 0;
-    private float dy = 0;
+    public float dx = 0;
+    public float dy = 0;
+    public int currentPosition = Constant.DEFAULT_CURRENT_POSITION;
     private int mDrawingNum = Constant.DEFAULT_DRAWING_NUM;
-    private int mCurrentPosition = Constant.DEFAULT_CURRENT_POSITION;
-
     private AnimCallBack mSpriteSheetFinishCallback;
 
     public ParabolicMotionSpriteSheet(Bitmap bitmap, float frameWidth, float frameHeight, int frameNum, int frameNumPerLine) {
@@ -136,6 +135,11 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion {
         return this;
     }
 
+    public ParabolicMotionSpriteSheet updatePositionListener(UpdatePositionListener callBack) {
+        mUpdatePositionListener = callBack;
+        return this;
+    }
+
     private synchronized void updateSpritePosition() {
         if (mDrawingNum != mFrequency) {
             mDrawingNum++;
@@ -144,31 +148,32 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion {
         mDrawingNum = Constant.DEFAULT_DRAWING_NUM;
 
         if (mUpdatePositionListener != null) {
-            mUpdatePositionListener.update(dx, dy, mCurrentPosition);
+            mUpdatePositionListener.update(dx, dy, currentPosition);
             repeatPosition();
             return;
         }
 
-        boolean edge = mCurrentPosition % mFrameNumPerLine == 0;
+        boolean edge = currentPosition % mFrameNumPerLine == 0;
         if (edge) {
             // 端の場合下に下がる
             dy -= mFrameHeight;
             dx = 0;
-            mCurrentPosition++;
+            currentPosition++;
             repeatPosition();
             return;
         }
 
         dx -= mFrameWidth;
-        mCurrentPosition++;
+        currentPosition++;
         repeatPosition();
+
     }
 
     private void repeatPosition() {
-        if (mCurrentPosition != mFrameNum) return;
+        if (currentPosition != mFrameNum) return;
 
         if (mSpriteLoop) {
-            mCurrentPosition = Constant.DEFAULT_CURRENT_POSITION;
+            currentPosition = Constant.DEFAULT_CURRENT_POSITION;
             dx = 0;
             dy = 0;
         }
@@ -180,13 +185,8 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion {
     }
 
     private void setBaseLength(Canvas canvas) {
-        if (mDpSize) {
-            mBottomBase = canvas.getHeight() - mBitmapDpHeight;
-            mRightSide = canvas.getWidth() - mBitmapDpWidth;
-        } else {
-            mBottomBase = canvas.getHeight() - mFrameHeight;
-            mRightSide = canvas.getWidth() - mFrameWidth;
-        }
+        mBottomBase = canvas.getHeight() - mFrameHeight;
+        mRightSide = canvas.getWidth() - mFrameWidth;
     }
 
 

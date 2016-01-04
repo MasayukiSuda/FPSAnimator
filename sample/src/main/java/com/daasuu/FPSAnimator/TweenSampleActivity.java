@@ -10,7 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.daasuu.FPSAnimator.UIUtil.UIUtil;
+import com.daasuu.FPSAnimator.util.UIUtil;
 import com.daasuu.library.FPSTextureView;
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.easing.Ease;
