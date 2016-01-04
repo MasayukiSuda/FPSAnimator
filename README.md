@@ -4,6 +4,41 @@
 
 A simple but powerful tweening / SpriteSheet / ParabolicMotion / animation library for Android TextureView.
 
+# Usage
+Include the FPSTextureView widget in your layout.
+```xml
+    <com.daasuu.library.FPSTextureView
+        android:id="@+id/animation_texture_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+```
+In your onCreate method (or onCreateView for a fragment), bind the widget.
+```JAVA
+    private FPSTextureView mFPSTextureView;
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_easing_sample);
+        mFPSTextureView = (FPSTextureView) findViewById(R.id.animation_texture_view);
+    }
+```
+Create Tween instance and Add FPSTextureView.
+```JAVA
+    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+    TweenBitmap tweenBitmapA = new TweenBitmap(bitmap);
+    tweenBitmapA
+            .toX(1600, UIUtil.getWindowWidth(this) - bitmap.getWidth(), Ease.BACK_IN_OUT)
+            .waitTime(1000)
+            .alpha(1000, 0f)
+            .alpha(1000, 1f);
+            
+    mFPSTextureView.addChild(tweenBitmapA);
+    mFPSTextureView.tickStart();
+```
+<img src="art/tweenBitmapSampleDemo.gif" width="32%">
+
+
 
 ## License
     Copyright 2016 MasayukiSuda
