@@ -35,8 +35,8 @@ Create an instance of the Tween, please add it to the FPSTextureView.
             
     mFPSTextureView
                 .setFps(24)
-                .addChild(tweenBitmapA);
-    mFPSTextureView.tickStart();
+                .addChild(tweenBitmapA)
+                .tickStart();
 ```
 <img src="art/tweenBitmapSampleDemo.gif" width="32%">
 
