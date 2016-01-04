@@ -4,6 +4,11 @@
 
 A simple but powerful tweening / SpriteSheet / ParabolicMotion / animation library for Android TextureView.
 
+# Features
+* The controls Fps possible to animation.
+* Possible for animation of Tween and SpriteSheet and ParabolicMotion in one of TextureView.
+* Possible to animate with low load on the terminal.
+
 # Basic Usage
 Include the FPSTextureView widget in your layout.
 ```xml
