@@ -62,7 +62,6 @@ public class TweenSampleActivity extends AppCompatActivity {
 
 
         Paint paint = new Paint();
-        paint.setARGB(255, 0, 255, 0);
         paint.setColor(ContextCompat.getColor(this, R.color.colorAccent));
         paint.setTextSize(Util.convertDpToPixel(16, this));
 
