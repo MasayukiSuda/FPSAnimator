@@ -51,6 +51,7 @@ The example above will create a new tween instance that:
 
 
 # Example
+This is the implementation of the sample application.
 
 #### TweenText
 <img src="art/tweenTextDemo.gif" width="50%">
