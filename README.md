@@ -44,6 +44,9 @@ The example above will create a new tween instance that:
 * tweens the target's alpha from  1 to 0 over 1s
 * tweens the target's alpha from 0 to 1 over 1s
 
+# Easing Demo
+<img src="art/easingDemo.gif" width="50%">
+
 
 # Example
 
