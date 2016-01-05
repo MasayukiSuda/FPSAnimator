@@ -10,7 +10,7 @@ A simple but powerful tweening / SpriteSheet / ParabolicMotion / animation libra
 * Possible to animate with low load on the terminal.
 
 # Basic Usage
-set up Gradle
+Gradle
 ```groovy
     dependencies {
         // jCenter
@@ -58,12 +58,31 @@ The example above will create a new tween instance that:
 * tweens the target's alpha from  1 to 0 over 1s
 * tweens the target's alpha from 0 to 1 over 1s
 
-# Easing
-<img src="art/easingDemo.gif" width="80%">
-
-
 # Example
 This is the implementation of the sample application.
+
+#### SpriteSheet
+<img src="art/spriteSheet.gif" width="50%">
+
+
+```JAVA
+    
+    TweenSpriteSheet tweenSpriteSheet = new TweenSpriteSheet(
+            spriteBitmap,
+            frameWidth,
+            frameHeight,
+            64,
+            12)
+            .spriteLoop(true)
+            .loop(true)
+            .transform(-Util.convertDpToPixel(82.875f, this), UIUtil.getWindowHeight(this) / 2)
+            .toX(3000, UIUtil.getWindowWidth(this));
+
+    mFPSTextureView
+                .setFps(24)
+                .addChild(tweenSpriteSheet);
+```
+
 
 #### TweenText
 <img src="art/tweenTextDemo.gif" width="50%">
@@ -156,6 +175,9 @@ This is the implementation of the sample application.
     }
 
 ```
+
+# Easing
+<img src="art/easingDemo.gif" width="80%">
 
 ## License
     Copyright 2016 MasayukiSuda
