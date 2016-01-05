@@ -2,7 +2,7 @@
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html)
 
-A simple but powerful tweening / SpriteSheet / ParabolicMotion / animation library for Android TextureView.
+A simple but powerful tweening / SpriteSheet / ParabolicMotion / animation library for Android TextureView and SurfaceView.
 
 # Features
 * The controls Fps possible to animation.
@@ -14,7 +14,7 @@ Gradle
 ```groovy
     dependencies {
         // jCenter
-        compile 'com.daasuu:FPSAnimator:0.0.2'
+        compile 'com.daasuu:FPSAnimator:0.0.3'
     }
 ```
 Include the FPSTextureView widget in your layout.
