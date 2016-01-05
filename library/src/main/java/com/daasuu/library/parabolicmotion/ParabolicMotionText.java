@@ -17,7 +17,7 @@ public class ParabolicMotionText extends ParabolicMotion {
         mAdjustTextMesureY = mPaint.getTextSize();
     }
 
-    public ParabolicMotionText setTransform(float x, float y) {
+    public ParabolicMotionText transform(float x, float y) {
         mAnimParameter.x = x;
         mAnimParameter.y = y;
         return this;
