@@ -28,6 +28,9 @@
         <activity
             android:name=".SpriteSheetSampleActivity"
             android:label="SpriteSheetSampleActivity" />
+        <activity
+            android:name=".FPSSurfaceViewSampleActivity"
+            android:label="FPSSurfaceViewSampleActivity" />
     </application>
 
 </manifest>

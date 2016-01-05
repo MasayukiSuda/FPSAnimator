@@ -3,11 +3,12 @@ package com.daasuu.library;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
-import android.graphics.SurfaceTexture;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
-import android.view.TextureView;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 
 import com.daasuu.library.constant.Constant;
 
@@ -17,32 +18,37 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Created by sudamasayuki on 15/12/19.
+ * It recommended better to use the FPSTextureView.
  */
-public class FPSTextureView extends TextureView implements TextureView.SurfaceTextureListener {
+public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
 
     private Timer mTimer;
     private long mFps = Constant.DEFAULT_FPS;
 
+    private SurfaceHolder mSurfaceHolder;
+
     private List<Anim> mAnimList = new ArrayList<>();
 
-    public FPSTextureView(Context context) {
+    public FPSSurfaceView(Context context) {
         this(context, null, 0);
     }
 
-    public FPSTextureView(Context context, AttributeSet attrs) {
+    public FPSSurfaceView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public FPSTextureView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public FPSSurfaceView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        setOpaque(false);
-        setSurfaceTextureListener(this);
+        mSurfaceHolder = getHolder();
+        mSurfaceHolder.addCallback(this);
+        mSurfaceHolder.setFormat(PixelFormat.TRANSLUCENT);
+        setZOrderOnTop(true);
+
     }
 
 
-    public FPSTextureView tickStart() {
+    public FPSSurfaceView tickStart() {
         stop();
         mTimer = new Timer();
         mTimer.schedule(new TimerTask() {
@@ -62,31 +68,18 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
     }
 
     @Override
-    public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-        synchronized (this) {
-            Canvas canvas = this.lockCanvas();
-            canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-            this.unlockCanvasAndPost(canvas);
-        }
-
-    }
-
-    @Override
-    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+    public void surfaceCreated(SurfaceHolder holder) {
         // do nothing
     }
 
     @Override
-    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-        synchronized (this) {
-            stop();
-            return false;
-        }
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+        // do nothing
     }
 
     @Override
-    public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-        // do nothing
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        stop();
     }
 
     private void onTick() {
@@ -95,7 +88,7 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
 
             List<Anim> copyAnimList = new ArrayList<Anim>(mAnimList);
 
-            Canvas canvas = this.lockCanvas();
+            Canvas canvas = mSurfaceHolder.lockCanvas();
             if (canvas == null) return;
 
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
@@ -107,24 +100,24 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
                 anim.draw(canvas);
             }
 
-            this.unlockCanvasAndPost(canvas);
+            mSurfaceHolder.unlockCanvasAndPost(canvas);
         }
 
     }
 
-    public FPSTextureView addChild(@NonNull Anim anim) {
+    public FPSSurfaceView addChild(@NonNull Anim anim) {
         anim.setFps(mFps);
         anim.setUp();
         mAnimList.add(anim);
         return this;
     }
 
-    public FPSTextureView removeChild(@NonNull Anim anim) {
+    public FPSSurfaceView removeChild(@NonNull Anim anim) {
         mAnimList.remove(anim);
         return this;
     }
 
-    public FPSTextureView setFps(long fps) {
+    public FPSSurfaceView setFps(long fps) {
         this.mFps = fps;
         return this;
     }
