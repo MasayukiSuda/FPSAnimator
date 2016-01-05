@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.daasuu.FPSAnimator.util.UIUtil;
 import com.daasuu.library.FPSTextureView;
+import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.parabolicmotion.ParabolicMotionSpriteSheet;
 import com.daasuu.library.spritesheet.UpdatePositionListener;
 import com.daasuu.library.tween.TweenSpriteSheet;
@@ -53,6 +54,7 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
         float frameWidth = Util.convertDpToPixel(82.875f, this);
         float frameHeight = Util.convertDpToPixel(146.25f, this);
 
+
         final ParabolicMotionSpriteSheet parabolicMotion = new ParabolicMotionSpriteSheet(
                 spriteBitmapB,
                 frameWidth,
@@ -62,8 +64,15 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
         );
         parabolicMotion
                 .dpSize(this)
-                .transform(UIUtil.getWindowWidth(this) / 2, UIUtil.getWindowHeight(this) / 2)
+                .transform(0, UIUtil.getWindowHeight(this) / 2)
                 .initialVelocityY(-30)
+                .coefficientRight(false)
+                .rightHitCallback(new AnimCallBack() {
+                    @Override
+                    public void call() {
+                        mFPSTextureView.removeChild(parabolicMotion);
+                    }
+                })
                 .updatePositionListener(new UpdatePositionListener() {
                     @Override
                     public void update(float dx, float dy, int currentPosition) {
@@ -74,12 +83,12 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
 
                         boolean edge = parabolicMotion.currentPosition % 12 == 0;
                         if (edge) {
-                            parabolicMotion.dy -= parabolicMotion.mFrameHeight;
+                            parabolicMotion.dy -= parabolicMotion.frameHeight;
                             parabolicMotion.dx = 0;
                             parabolicMotion.currentPosition++;
                             return;
                         }
-                        parabolicMotion.dx -= parabolicMotion.mFrameWidth;
+                        parabolicMotion.dx -= parabolicMotion.frameWidth;
                         parabolicMotion.currentPosition++;
                     }
                 });

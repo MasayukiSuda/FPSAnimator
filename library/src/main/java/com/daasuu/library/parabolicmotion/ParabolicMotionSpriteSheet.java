@@ -24,8 +24,8 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion {
 
 
     private UpdatePositionListener mUpdatePositionListener;
-    public float mFrameWidth;
-    public float mFrameHeight;
+    public float frameWidth;
+    public float frameHeight;
     private int mFrameNum;
     private int mFrequency = 1;
     // The number of which frame, there is about line 1 of side
@@ -41,8 +41,8 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion {
 
     public ParabolicMotionSpriteSheet(Bitmap bitmap, float frameWidth, float frameHeight, int frameNum, int frameNumPerLine) {
         this.mBitmap = bitmap;
-        this.mFrameWidth = frameWidth;
-        this.mFrameHeight = frameHeight;
+        this.frameWidth = frameWidth;
+        this.frameHeight = frameHeight;
         this.mFrameNum = frameNum;
         this.mFrameNumPerLine = frameNumPerLine;
     }
@@ -50,8 +50,8 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion {
     public ParabolicMotionSpriteSheet dpSize(Context context) {
         mDpSize = true;
 
-        mFrameWidth = Util.convertPixelsToDp(mFrameWidth, context);
-        mFrameHeight = Util.convertPixelsToDp(mFrameHeight, context);
+        frameWidth = Util.convertPixelsToDp(frameWidth, context);
+        frameHeight = Util.convertPixelsToDp(frameHeight, context);
 
         mBitmapDpWidth = Util.convertPixelsToDp(mBitmap.getWidth(), context);
         mBitmapDpHeight = Util.convertPixelsToDp(mBitmap.getHeight(), context);
@@ -156,14 +156,14 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion {
         boolean edge = currentPosition % mFrameNumPerLine == 0;
         if (edge) {
             // 端の場合下に下がる
-            dy -= mFrameHeight;
+            dy -= frameHeight;
             dx = 0;
             currentPosition++;
             repeatPosition();
             return;
         }
 
-        dx -= mFrameWidth;
+        dx -= frameWidth;
         currentPosition++;
         repeatPosition();
 
@@ -185,8 +185,8 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion {
     }
 
     private void setBaseLength(Canvas canvas) {
-        mBottomBase = canvas.getHeight() - mFrameHeight;
-        mRightSide = canvas.getWidth() - mFrameWidth;
+        mBottomBase = canvas.getHeight() - frameHeight;
+        mRightSide = canvas.getWidth() - frameWidth;
     }
 
 
@@ -200,8 +200,8 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion {
         RectF bounds = new RectF(
                 mAnimParameter.x,
                 mAnimParameter.y,
-                mAnimParameter.x + mFrameWidth,
-                mAnimParameter.y + mFrameHeight
+                mAnimParameter.x + frameWidth,
+                mAnimParameter.y + frameHeight
         );
         canvas.saveLayer(bounds, null, Canvas.ALL_SAVE_FLAG);
         updateSpritePosition();
