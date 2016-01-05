@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.SurfaceTexture;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.TextureView;
 
@@ -112,14 +113,14 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
 
     }
 
-    public FPSTextureView addChild(Anim anim) {
+    public FPSTextureView addChild(@NonNull Anim anim) {
         anim.setFps(mFps);
         anim.setUp();
         mAnimList.add(anim);
         return this;
     }
 
-    public FPSTextureView removeChild(Anim anim) {
+    public FPSTextureView removeChild(@NonNull Anim anim) {
         mAnimList.remove(anim);
         return this;
     }

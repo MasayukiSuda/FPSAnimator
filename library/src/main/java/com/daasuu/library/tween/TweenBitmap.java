@@ -6,7 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
-
+import android.support.annotation.NonNull;
 
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.easing.Ease;
@@ -22,11 +22,11 @@ public class TweenBitmap extends Tween {
     private float mBitmapDpHeight;
     private Rect mBitmapRect;
 
-    public TweenBitmap(Bitmap bitmap) {
+    public TweenBitmap(@NonNull Bitmap bitmap) {
         this(bitmap, null);
     }
 
-    public TweenBitmap(Bitmap bitmap, Paint paint) {
+    public TweenBitmap(@NonNull Bitmap bitmap, Paint paint) {
         this.mBitmap = bitmap;
         this.mPaint = paint;
     }
@@ -41,7 +41,7 @@ public class TweenBitmap extends Tween {
         return this;
     }
 
-    public TweenBitmap dpSize(Context context) {
+    public TweenBitmap dpSize(@NonNull Context context) {
         mDpSize = true;
         mBitmapDpWidth = Util.convertPixelsToDp(mBitmap.getWidth(), context);
         mBitmapDpHeight = Util.convertPixelsToDp(mBitmap.getHeight(), context);

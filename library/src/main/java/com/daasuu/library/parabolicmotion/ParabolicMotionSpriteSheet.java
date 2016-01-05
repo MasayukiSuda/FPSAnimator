@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.support.annotation.NonNull;
 
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.constant.Constant;
@@ -39,7 +40,7 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion {
     private int mDrawingNum = Constant.DEFAULT_DRAWING_NUM;
     private AnimCallBack mSpriteSheetFinishCallback;
 
-    public ParabolicMotionSpriteSheet(Bitmap bitmap, float frameWidth, float frameHeight, int frameNum, int frameNumPerLine) {
+    public ParabolicMotionSpriteSheet(@NonNull Bitmap bitmap, float frameWidth, float frameHeight, int frameNum, int frameNumPerLine) {
         this.mBitmap = bitmap;
         this.frameWidth = frameWidth;
         this.frameHeight = frameHeight;
@@ -47,7 +48,7 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion {
         this.mFrameNumPerLine = frameNumPerLine;
     }
 
-    public ParabolicMotionSpriteSheet dpSize(Context context) {
+    public ParabolicMotionSpriteSheet dpSize(@NonNull Context context) {
         mDpSize = true;
 
         frameWidth = Util.convertPixelsToDp(frameWidth, context);

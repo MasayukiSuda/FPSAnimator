@@ -2,6 +2,7 @@ package com.daasuu.library.tween;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.support.annotation.NonNull;
 
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.easing.Ease;
@@ -16,7 +17,7 @@ public class TweenText extends Tween {
     private String mText;
     private float mAdjustTextMesureY = 0f;
 
-    public TweenText(String text, Paint paint) {
+    public TweenText(@NonNull String text, Paint paint) {
         this.mText = text;
         this.mPaint = paint;
         if (mPaint != null) mAdjustTextMesureY = mPaint.getTextSize();

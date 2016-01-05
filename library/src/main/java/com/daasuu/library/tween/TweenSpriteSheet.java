@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.support.annotation.NonNull;
 
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.constant.Constant;
@@ -42,7 +43,7 @@ public class TweenSpriteSheet extends Tween {
 
     private AnimCallBack mSpriteSheetFinishCallback;
 
-    public TweenSpriteSheet(Bitmap bitmap, float frameWidth, float frameHeight, int frameNum, int frameNumPerLine) {
+    public TweenSpriteSheet(@NonNull Bitmap bitmap, float frameWidth, float frameHeight, int frameNum, int frameNumPerLine) {
         this.mBitmap = bitmap;
         this.mFrameWidth = frameWidth;
         this.mFrameHeight = frameHeight;
@@ -50,7 +51,7 @@ public class TweenSpriteSheet extends Tween {
         this.mFrameNumPerLine = frameNumPerLine;
     }
 
-    public TweenSpriteSheet dpSize(Context context) {
+    public TweenSpriteSheet dpSize(@NonNull Context context) {
         mDpSize = true;
 
         mFrameWidth = Util.convertPixelsToDp(mFrameWidth, context);

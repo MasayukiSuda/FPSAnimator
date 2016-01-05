@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.support.annotation.NonNull;
 
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.util.Util;
@@ -20,11 +21,11 @@ public class ParabolicMotionBitmap extends ParabolicMotion {
     private float mBitmapDpHeight;
     private Rect mBitmapRect;
 
-    public ParabolicMotionBitmap(Bitmap bitmap) {
+    public ParabolicMotionBitmap(@NonNull Bitmap bitmap) {
         this.mBitmap = bitmap;
     }
 
-    public ParabolicMotionBitmap dpSize(Context context) {
+    public ParabolicMotionBitmap dpSize(@NonNull Context context) {
         mDpSize = true;
         mBitmapDpWidth = Util.convertPixelsToDp(mBitmap.getWidth(), context);
         mBitmapDpHeight = Util.convertPixelsToDp(mBitmap.getHeight(), context);

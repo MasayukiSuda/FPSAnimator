@@ -2,7 +2,7 @@ package com.daasuu.library.parabolicmotion;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-
+import android.support.annotation.NonNull;
 
 import com.daasuu.library.callback.AnimCallBack;
 
@@ -11,7 +11,7 @@ public class ParabolicMotionText extends ParabolicMotion {
     private String mText;
     private float mAdjustTextMesureY;
 
-    public ParabolicMotionText(String text, Paint paint) {
+    public ParabolicMotionText(@NonNull String text, Paint paint) {
         this.mText = text;
         this.mPaint = paint;
         mAdjustTextMesureY = mPaint.getTextSize();
