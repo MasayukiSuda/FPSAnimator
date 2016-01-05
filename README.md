@@ -10,6 +10,13 @@ A simple but powerful tweening / SpriteSheet / ParabolicMotion / animation libra
 * Possible to animate with low load on the terminal.
 
 # Basic Usage
+set up Gradle
+```groovy
+    dependencies {
+        // jCenter
+        compile 'com.daasuu:FPSAnimator:0.0.2'
+    }
+```
 Include the FPSTextureView widget in your layout.
 ```xml
     <com.daasuu.library.FPSTextureView
@@ -52,7 +59,7 @@ The example above will create a new tween instance that:
 * tweens the target's alpha from 0 to 1 over 1s
 
 # Easing
-<img src="art/easingDemo.gif" width="50%">
+<img src="art/easingDemo.gif" width="80%">
 
 
 # Example
