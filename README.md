@@ -134,7 +134,7 @@ This is the implementation of the sample application.
         paint.setTextSize(Util.convertDpToPixel(20, this));
         final ParabolicMotionText parabolicMotionText = new ParabolicMotionText("Text", paint);
         parabolicMotionText
-                .setTransform(800, 800)
+                .transform(800, 800)
                 .initialVelocityY(-40);
 
         mFPSTextureView.addChild(parabolicMotionText);
