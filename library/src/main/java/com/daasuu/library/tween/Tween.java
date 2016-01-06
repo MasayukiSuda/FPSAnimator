@@ -20,28 +20,37 @@ class Tween extends Anim {
     }
 
     protected void setTransform(float x, float y) {
-        mInitialX = x;
-        mInitialY = y;
-        AnimParameter animParameter = mAnimParameters.get(0);
-        animParameter.x = x;
-        animParameter.y = y;
+        if (mTweenParameterList.size() > 0) {
+            setTo(0, x, y, Ease.NONE);
+        } else {
+            mInitialX = x;
+            mInitialY = y;
+            AnimParameter animParameter = mAnimParameters.get(0);
+            animParameter.x = x;
+            animParameter.y = y;
+        }
     }
 
     protected void setTransform(float x, float y, int alpha, float scaleX, float scaleY, float rotation) {
-        mInitialX = x;
-        mInitialY = y;
-        mInitialAlpha = alpha;
-        mInitialScaleX = scaleX;
-        mInitialScaleY = scaleY;
-        mInitialRotation = rotation;
+        if (mTweenParameterList.size() > 0) {
+            setTo(0, x, y, alpha, scaleX, scaleY, rotation, Ease.NONE);
+        } else {
+            mInitialX = x;
+            mInitialY = y;
+            mInitialAlpha = alpha;
+            mInitialScaleX = scaleX;
+            mInitialScaleY = scaleY;
+            mInitialRotation = rotation;
 
-        AnimParameter animParameter = mAnimParameters.get(0);
-        animParameter.x = x;
-        animParameter.y = y;
-        animParameter.alpha = alpha;
-        animParameter.scaleX = scaleX;
-        animParameter.scaleY = scaleY;
-        animParameter.rotation = rotation;
+            AnimParameter animParameter = mAnimParameters.get(0);
+            animParameter.x = x;
+            animParameter.y = y;
+            animParameter.alpha = alpha;
+            animParameter.scaleX = scaleX;
+            animParameter.scaleY = scaleY;
+            animParameter.rotation = rotation;
+        }
+
     }
 
     public void kill() {
