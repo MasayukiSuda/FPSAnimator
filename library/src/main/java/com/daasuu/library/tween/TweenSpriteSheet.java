@@ -27,8 +27,8 @@ public class TweenSpriteSheet extends Tween {
     private Bitmap mBitmap;
 
     private UpdatePositionListener mUpdatePositionListener;
-    private float mFrameWidth;
-    private float mFrameHeight;
+    public float frameWidth;
+    public float frameHeight;
     private int mFrameNum;
     private int mFrequency = 1;
     // The number of which frame, there is about line 1 of side
@@ -36,17 +36,18 @@ public class TweenSpriteSheet extends Tween {
     private boolean mSpriteLoop = false;
 
 
-    private float dx = 0;
-    private float dy = 0;
+    public float dx = 0;
+    public float dy = 0;
     private int mDrawingNum = Constant.DEFAULT_DRAWING_NUM;
-    private int mCurrentPosition = Constant.DEFAULT_CURRENT_POSITION;
+    public int currentPosition = Constant.DEFAULT_CURRENT_POSITION;
+
 
     private AnimCallBack mSpriteSheetFinishCallback;
 
     public TweenSpriteSheet(@NonNull Bitmap bitmap, float frameWidth, float frameHeight, int frameNum, int frameNumPerLine) {
         this.mBitmap = bitmap;
-        this.mFrameWidth = frameWidth;
-        this.mFrameHeight = frameHeight;
+        this.frameWidth = frameWidth;
+        this.frameHeight = frameHeight;
         this.mFrameNum = frameNum;
         this.mFrameNumPerLine = frameNumPerLine;
     }
@@ -54,8 +55,8 @@ public class TweenSpriteSheet extends Tween {
     public TweenSpriteSheet dpSize(@NonNull Context context) {
         mDpSize = true;
 
-        mFrameWidth = Util.convertPixelsToDp(mFrameWidth, context);
-        mFrameHeight = Util.convertPixelsToDp(mFrameHeight, context);
+        frameWidth = Util.convertPixelsToDp(frameWidth, context);
+        frameHeight = Util.convertPixelsToDp(frameHeight, context);
 
         mBitmapDpWidth = Util.convertPixelsToDp(mBitmap.getWidth(), context);
         mBitmapDpHeight = Util.convertPixelsToDp(mBitmap.getHeight(), context);
@@ -211,37 +212,46 @@ public class TweenSpriteSheet extends Tween {
         mDrawingNum = Constant.DEFAULT_DRAWING_NUM;
 
         if (mUpdatePositionListener != null) {
-            mUpdatePositionListener.update(dx, dy, mCurrentPosition);
+            mUpdatePositionListener.update(dx, dy, currentPosition);
             repeatPosition();
             return;
         }
 
-        boolean edge = mCurrentPosition % mFrameNumPerLine == 0;
+        boolean edge = currentPosition % mFrameNumPerLine == 0;
         if (edge) {
             // It falls under the case of the end
-            dy -= mFrameHeight;
-            dx = 0;
-            mCurrentPosition++;
+            currentPosition++;
+            if (currentPosition <= mFrameNum) {
+                dy -= frameHeight;
+                dx = 0;
+            }
             repeatPosition();
             return;
         }
 
-        dx -= mFrameWidth;
-        mCurrentPosition++;
+        currentPosition++;
+        if (currentPosition <= mFrameNum) {
+            dx -= frameWidth;
+        }
         repeatPosition();
     }
 
     private void repeatPosition() {
-        if (mCurrentPosition != mFrameNum) return;
+        if (currentPosition != mFrameNum) return;
 
         if (mSpriteLoop) {
-            mCurrentPosition = Constant.DEFAULT_CURRENT_POSITION;
+            currentPosition = Constant.DEFAULT_CURRENT_POSITION;
             dx = 0;
             dy = 0;
+        } else {
+            currentPosition = mFrameNum;
         }
 
         if (mSpriteSheetFinishCallback != null) {
             mSpriteSheetFinishCallback.call();
+            if (!mSpriteLoop) {
+                mSpriteSheetFinishCallback = null;
+            }
         }
 
     }
@@ -264,8 +274,8 @@ public class TweenSpriteSheet extends Tween {
         RectF bounds = new RectF(
                 animParameter.x,
                 animParameter.y,
-                animParameter.x + mFrameWidth,
-                animParameter.y + mFrameHeight
+                animParameter.x + frameWidth,
+                animParameter.y + frameHeight
         );
         canvas.saveLayer(bounds, null, Canvas.ALL_SAVE_FLAG);
         updateSpritePosition();

@@ -156,16 +156,18 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion {
 
         boolean edge = currentPosition % mFrameNumPerLine == 0;
         if (edge) {
-            // 端の場合下に下がる
-            dy -= frameHeight;
-            dx = 0;
             currentPosition++;
+            if (currentPosition <= mFrameNum) {
+                dy -= frameHeight;
+                dx = 0;
+            }
             repeatPosition();
             return;
         }
-
-        dx -= frameWidth;
         currentPosition++;
+        if (currentPosition <= mFrameNum) {
+            dx -= frameWidth;
+        }
         repeatPosition();
 
     }
@@ -177,12 +179,16 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion {
             currentPosition = Constant.DEFAULT_CURRENT_POSITION;
             dx = 0;
             dy = 0;
+        } else {
+            currentPosition = mFrameNum;
         }
 
         if (mSpriteSheetFinishCallback != null) {
             mSpriteSheetFinishCallback.call();
+            if (!mSpriteLoop) {
+                mSpriteSheetFinishCallback = null;
+            }
         }
-
     }
 
     private void setBaseLength(Canvas canvas) {
