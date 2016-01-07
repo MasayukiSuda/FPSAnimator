@@ -15,7 +15,6 @@ import com.daasuu.library.FPSSurfaceView;
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.easing.Ease;
 import com.daasuu.library.parabolicmotion.ParabolicMotionSpriteSheet;
-import com.daasuu.library.spritesheet.UpdatePositionListener;
 import com.daasuu.library.tween.TweenBitmap;
 import com.daasuu.library.tween.TweenSpriteSheet;
 import com.daasuu.library.tween.TweenText;
@@ -121,25 +120,6 @@ public class FPSSurfaceViewSampleActivity extends AppCompatActivity {
                     @Override
                     public void call() {
                         mFpsSurfaceView.removeChild(parabolicMotion);
-                    }
-                })
-                .updatePositionListener(new UpdatePositionListener() {
-                    @Override
-                    public void update(float dx, float dy, int currentPosition) {
-
-                        if (parabolicMotion.currentPosition < 26) {
-                            parabolicMotion.currentPosition = 26;
-                        }
-
-                        boolean edge = parabolicMotion.currentPosition % 12 == 0;
-                        if (edge) {
-                            parabolicMotion.dy -= parabolicMotion.frameHeight;
-                            parabolicMotion.dx = 0;
-                            parabolicMotion.currentPosition++;
-                            return;
-                        }
-                        parabolicMotion.dx -= parabolicMotion.frameWidth;
-                        parabolicMotion.currentPosition++;
                     }
                 });
 

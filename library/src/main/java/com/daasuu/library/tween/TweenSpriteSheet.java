@@ -12,7 +12,7 @@ import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.constant.Constant;
 import com.daasuu.library.easing.Ease;
 import com.daasuu.library.parameter.AnimParameter;
-import com.daasuu.library.spritesheet.UpdatePositionListener;
+import com.daasuu.library.spritesheet.SpriteSheet;
 import com.daasuu.library.util.Util;
 
 /**
@@ -26,37 +26,28 @@ public class TweenSpriteSheet extends Tween {
     private Rect mBitmapRect;
     private Bitmap mBitmap;
 
-    private UpdatePositionListener mUpdatePositionListener;
-    public float frameWidth;
-    public float frameHeight;
-    private int mFrameNum;
     private int mFrequency = 1;
-    // The number of which frame, there is about line 1 of side
-    private int mFrameNumPerLine;
-    private boolean mSpriteLoop = false;
 
+    private SpriteSheet mSpriteSheet;
 
-    public float dx = 0;
-    public float dy = 0;
     private int mDrawingNum = Constant.DEFAULT_DRAWING_NUM;
-    public int currentPosition = Constant.DEFAULT_CURRENT_POSITION;
 
-
-    private AnimCallBack mSpriteSheetFinishCallback;
 
     public TweenSpriteSheet(@NonNull Bitmap bitmap, float frameWidth, float frameHeight, int frameNum, int frameNumPerLine) {
         this.mBitmap = bitmap;
-        this.frameWidth = frameWidth;
-        this.frameHeight = frameHeight;
-        this.mFrameNum = frameNum;
-        this.mFrameNumPerLine = frameNumPerLine;
+        this.mSpriteSheet = new SpriteSheet(frameWidth, frameHeight, frameNum, frameNumPerLine);
+    }
+
+    public TweenSpriteSheet(@NonNull Bitmap bitmap, @NonNull SpriteSheet spriteSheet) {
+        this.mBitmap = bitmap;
+        this.mSpriteSheet = spriteSheet;
     }
 
     public TweenSpriteSheet dpSize(@NonNull Context context) {
         mDpSize = true;
 
-        frameWidth = Util.convertPixelsToDp(frameWidth, context);
-        frameHeight = Util.convertPixelsToDp(frameHeight, context);
+        mSpriteSheet.frameWidth = Util.convertPixelsToDp(mSpriteSheet.frameWidth, context);
+        mSpriteSheet.frameHeight = Util.convertPixelsToDp(mSpriteSheet.frameHeight, context);
 
         mBitmapDpWidth = Util.convertPixelsToDp(mBitmap.getWidth(), context);
         mBitmapDpHeight = Util.convertPixelsToDp(mBitmap.getHeight(), context);
@@ -69,13 +60,8 @@ public class TweenSpriteSheet extends Tween {
         return this;
     }
 
-    public TweenSpriteSheet updatePositionListener(UpdatePositionListener listener) {
-        mUpdatePositionListener = listener;
-        return this;
-    }
-
     public TweenSpriteSheet spriteLoop(boolean loop) {
-        mSpriteLoop = loop;
+        mSpriteSheet.spriteLoop = loop;
         return this;
     }
 
@@ -200,7 +186,7 @@ public class TweenSpriteSheet extends Tween {
     }
 
     public TweenSpriteSheet spriteAnimationEndCallBack(AnimCallBack callBack) {
-        mSpriteSheetFinishCallback = callBack;
+        mSpriteSheet.setSpriteSheetFinishCallback(callBack);
         return this;
     }
 
@@ -211,48 +197,7 @@ public class TweenSpriteSheet extends Tween {
         }
         mDrawingNum = Constant.DEFAULT_DRAWING_NUM;
 
-        if (mUpdatePositionListener != null) {
-            mUpdatePositionListener.update(dx, dy, currentPosition);
-            repeatPosition();
-            return;
-        }
-
-        boolean edge = currentPosition % mFrameNumPerLine == 0;
-        if (edge) {
-            // It falls under the case of the end
-            currentPosition++;
-            if (currentPosition <= mFrameNum) {
-                dy -= frameHeight;
-                dx = 0;
-            }
-            repeatPosition();
-            return;
-        }
-
-        currentPosition++;
-        if (currentPosition <= mFrameNum) {
-            dx -= frameWidth;
-        }
-        repeatPosition();
-    }
-
-    private void repeatPosition() {
-        if (currentPosition != mFrameNum) return;
-
-        if (mSpriteLoop) {
-            currentPosition = Constant.DEFAULT_CURRENT_POSITION;
-            dx = 0;
-            dy = 0;
-        } else {
-            currentPosition = mFrameNum;
-        }
-
-        if (mSpriteSheetFinishCallback != null) {
-            mSpriteSheetFinishCallback.call();
-            if (!mSpriteLoop) {
-                mSpriteSheetFinishCallback = null;
-            }
-        }
+        mSpriteSheet.updatePosition();
 
     }
 
@@ -274,22 +219,22 @@ public class TweenSpriteSheet extends Tween {
         RectF bounds = new RectF(
                 animParameter.x,
                 animParameter.y,
-                animParameter.x + frameWidth,
-                animParameter.y + frameHeight
+                animParameter.x + mSpriteSheet.frameWidth,
+                animParameter.y + mSpriteSheet.frameHeight
         );
         canvas.saveLayer(bounds, null, Canvas.ALL_SAVE_FLAG);
         updateSpritePosition();
 
         if (mDpSize) {
             RectF dpSizeRect = new RectF(
-                    animParameter.x + dx,
-                    animParameter.y + dy,
-                    animParameter.x + dx + mBitmapDpWidth,
-                    animParameter.y + dy + mBitmapDpHeight
+                    animParameter.x + mSpriteSheet.dx,
+                    animParameter.y + mSpriteSheet.dy,
+                    animParameter.x + mSpriteSheet.dx + mBitmapDpWidth,
+                    animParameter.y + mSpriteSheet.dy + mBitmapDpHeight
             );
             canvas.drawBitmap(mBitmap, mBitmapRect, dpSizeRect, mPaint);
         } else {
-            canvas.drawBitmap(mBitmap, animParameter.x + dx, animParameter.y + dy, mPaint);
+            canvas.drawBitmap(mBitmap, animParameter.x + mSpriteSheet.dx, animParameter.y + mSpriteSheet.dy, mPaint);
         }
 
         canvas.restore();

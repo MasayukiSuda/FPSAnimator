@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.constant.Constant;
-import com.daasuu.library.spritesheet.UpdatePositionListener;
+import com.daasuu.library.spritesheet.SpriteSheet;
 import com.daasuu.library.util.Util;
 
 
@@ -23,36 +23,25 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion {
     private float mBitmapDpHeight;
     private Rect mBitmapRect;
 
+    private SpriteSheet mSpriteSheet;
 
-    private UpdatePositionListener mUpdatePositionListener;
-    public float frameWidth;
-    public float frameHeight;
-    private int mFrameNum;
-    private int mFrequency = 1;
-    // The number of which frame, there is about line 1 of side
-    private int mFrameNumPerLine;
-    private boolean mSpriteLoop = true;
-
-
-    public float dx = 0;
-    public float dy = 0;
-    public int currentPosition = Constant.DEFAULT_CURRENT_POSITION;
     private int mDrawingNum = Constant.DEFAULT_DRAWING_NUM;
-    private AnimCallBack mSpriteSheetFinishCallback;
 
     public ParabolicMotionSpriteSheet(@NonNull Bitmap bitmap, float frameWidth, float frameHeight, int frameNum, int frameNumPerLine) {
         this.mBitmap = bitmap;
-        this.frameWidth = frameWidth;
-        this.frameHeight = frameHeight;
-        this.mFrameNum = frameNum;
-        this.mFrameNumPerLine = frameNumPerLine;
+        this.mSpriteSheet = new SpriteSheet(frameWidth, frameHeight, frameNum, frameNumPerLine);
+    }
+
+    public ParabolicMotionSpriteSheet(@NonNull Bitmap bitmap, @NonNull SpriteSheet spriteSheet) {
+        this.mBitmap = bitmap;
+        this.mSpriteSheet = spriteSheet;
     }
 
     public ParabolicMotionSpriteSheet dpSize(@NonNull Context context) {
         mDpSize = true;
 
-        frameWidth = Util.convertPixelsToDp(frameWidth, context);
-        frameHeight = Util.convertPixelsToDp(frameHeight, context);
+        mSpriteSheet.frameWidth = Util.convertPixelsToDp(mSpriteSheet.frameWidth, context);
+        mSpriteSheet.frameHeight = Util.convertPixelsToDp(mSpriteSheet.frameHeight, context);
 
         mBitmapDpWidth = Util.convertPixelsToDp(mBitmap.getWidth(), context);
         mBitmapDpHeight = Util.convertPixelsToDp(mBitmap.getHeight(), context);
@@ -72,7 +61,7 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion {
     }
 
     public ParabolicMotionSpriteSheet spriteLoop(boolean loop) {
-        mSpriteLoop = loop;
+        mSpriteSheet.spriteLoop = loop;
         return this;
     }
 
@@ -132,12 +121,7 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion {
     }
 
     public ParabolicMotionSpriteSheet spriteAnimationEndCallBack(AnimCallBack callBack) {
-        mSpriteSheetFinishCallback = callBack;
-        return this;
-    }
-
-    public ParabolicMotionSpriteSheet updatePositionListener(UpdatePositionListener callBack) {
-        mUpdatePositionListener = callBack;
+        mSpriteSheet.setSpriteSheetFinishCallback(callBack);
         return this;
     }
 
@@ -148,54 +132,13 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion {
         }
         mDrawingNum = Constant.DEFAULT_DRAWING_NUM;
 
-        if (mUpdatePositionListener != null) {
-            mUpdatePositionListener.update(dx, dy, currentPosition);
-            repeatPosition();
-            return;
-        }
-
-        boolean edge = currentPosition % mFrameNumPerLine == 0;
-        if (edge) {
-            currentPosition++;
-            if (currentPosition <= mFrameNum) {
-                dy -= frameHeight;
-                dx = 0;
-            }
-            repeatPosition();
-            return;
-        }
-        currentPosition++;
-        if (currentPosition <= mFrameNum) {
-            dx -= frameWidth;
-        }
-        repeatPosition();
-
-    }
-
-    private void repeatPosition() {
-        if (currentPosition != mFrameNum) return;
-
-        if (mSpriteLoop) {
-            currentPosition = Constant.DEFAULT_CURRENT_POSITION;
-            dx = 0;
-            dy = 0;
-        } else {
-            currentPosition = mFrameNum;
-        }
-
-        if (mSpriteSheetFinishCallback != null) {
-            mSpriteSheetFinishCallback.call();
-            if (!mSpriteLoop) {
-                mSpriteSheetFinishCallback = null;
-            }
-        }
+        mSpriteSheet.updatePosition();
     }
 
     private void setBaseLength(Canvas canvas) {
-        mBottomBase = canvas.getHeight() - frameHeight;
-        mRightSide = canvas.getWidth() - frameWidth;
+        mBottomBase = canvas.getHeight() - mSpriteSheet.frameHeight;
+        mRightSide = canvas.getWidth() - mSpriteSheet.frameWidth;
     }
-
 
     @Override
     public void draw(Canvas canvas) {
@@ -207,22 +150,22 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion {
         RectF bounds = new RectF(
                 mAnimParameter.x,
                 mAnimParameter.y,
-                mAnimParameter.x + frameWidth,
-                mAnimParameter.y + frameHeight
+                mAnimParameter.x + mSpriteSheet.frameWidth,
+                mAnimParameter.y + mSpriteSheet.frameHeight
         );
         canvas.saveLayer(bounds, null, Canvas.ALL_SAVE_FLAG);
         updateSpritePosition();
 
         if (mDpSize) {
             RectF dpSizeRect = new RectF(
-                    mAnimParameter.x + dx,
-                    mAnimParameter.y + dy,
-                    mAnimParameter.x + dx + mBitmapDpWidth,
-                    mAnimParameter.y + dy + mBitmapDpHeight
+                    mAnimParameter.x + mSpriteSheet.dx,
+                    mAnimParameter.y + mSpriteSheet.dy,
+                    mAnimParameter.x + mSpriteSheet.dx + mBitmapDpWidth,
+                    mAnimParameter.y + mSpriteSheet.dy + mBitmapDpHeight
             );
             canvas.drawBitmap(mBitmap, mBitmapRect, dpSizeRect, mPaint);
         } else {
-            canvas.drawBitmap(mBitmap, mAnimParameter.x + dx, mAnimParameter.y + dy, mPaint);
+            canvas.drawBitmap(mBitmap, mAnimParameter.x + mSpriteSheet.dx, mAnimParameter.y + mSpriteSheet.dy, mPaint);
         }
         canvas.restore();
     }
