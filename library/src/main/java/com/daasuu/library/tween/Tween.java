@@ -11,9 +11,27 @@ import com.daasuu.library.parameter.AnimParameter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Tween BaseClass. It summarizes the common processing required when to Tween animation.
+ */
 class Tween extends Anim {
 
     protected boolean mTweenLoop = false;
+    private boolean mTweenPause = false;
+
+
+    public void kill() {
+        mTweenParameterList.clear();
+        mAnimParameters.clear();
+    }
+
+    public void tweenPause(boolean pause) {
+        mTweenPause = pause;
+    }
+
+    public boolean isTweenPause() {
+        return mTweenPause;
+    }
 
     protected void setTweenLoop(boolean repeat) {
         mTweenLoop = repeat;
@@ -51,11 +69,6 @@ class Tween extends Anim {
             animParameter.rotation = rotation;
         }
 
-    }
-
-    public void kill() {
-        mTweenParameterList.clear();
-        mAnimParameters.clear();
     }
 
     protected float mRotateRegistrationX = 0f;
@@ -471,6 +484,12 @@ class Tween extends Anim {
 
     protected AnimParameter getDrawAnimParameter() {
         if (mAnimParameters.size() == 0) return null;
+
+        if (mTweenPause) {
+            if (mDrawCount == -1) mDrawCount = 0;
+
+            return mAnimParameters.get(mDrawCount);
+        }
 
         mDrawCount++;
 

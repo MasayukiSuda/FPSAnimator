@@ -45,6 +45,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button animationStopSample = (Button) findViewById(R.id.animation_stop_sample);
+        animationStopSample.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AnimationPauseSampleActivity.startActivity(v.getContext());
+            }
+        });
+
         Button surfaceSample = (Button) findViewById(R.id.surface_sample);
         surfaceSample.setOnClickListener(new View.OnClickListener() {
             @Override

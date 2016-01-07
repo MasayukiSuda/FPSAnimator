@@ -34,7 +34,6 @@ public class EasingSampleActivity extends AppCompatActivity {
 
         int cnt = 0;
         Paint paint = new Paint();
-        paint.setARGB(255, 0, 255, 0);
         paint.setColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         paint.setTextSize(Util.convertDpToPixel(12, this));
 

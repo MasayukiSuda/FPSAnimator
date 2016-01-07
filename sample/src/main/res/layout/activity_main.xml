@@ -46,6 +46,13 @@
             android:textAllCaps="false" />
 
         <Button
+            android:id="@+id/animation_stop_sample"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AnimationStopSample"
+            android:textAllCaps="false" />
+
+        <Button
             android:id="@+id/surface_sample"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

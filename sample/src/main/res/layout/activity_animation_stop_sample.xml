@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AnimationPauseSampleActivity">
+
+    <com.daasuu.library.FPSTextureView
+        android:id="@+id/animation_texture_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/tween_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tween Pause"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/sprite_sheet_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SpriteSheet Pause"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/parabolic_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ParabolicMotion Pause"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+
+</LinearLayout>
