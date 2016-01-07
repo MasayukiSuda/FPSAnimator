@@ -32,6 +32,9 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
 
         createSparkles();
 
+        float frameWidth = Util.convertDpToPixel(82.875f, this);
+        float frameHeight = Util.convertDpToPixel(146.25f, this);
+
         Bitmap baseSpriteBitmapB = BitmapFactory.decodeResource(getResources(), R.drawable.spritesheet_grant);
         Bitmap spriteBitmapB = Bitmap.createScaledBitmap(
                 baseSpriteBitmapB,
@@ -41,18 +44,14 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
 
         TweenSpriteSheet tweenSpriteSheetB = new TweenSpriteSheet(
                 spriteBitmapB,
-                Util.convertDpToPixel(82.875f, this),
-                Util.convertDpToPixel(146.25f, this),
+                frameWidth,
+                frameHeight,
                 64,
                 12)
                 .spriteLoop(true)
                 .loop(true)
                 .transform(-Util.convertDpToPixel(82.875f, this), UIUtil.getWindowHeight(this) / 2)
                 .toX(3000, UIUtil.getWindowWidth(this));
-
-
-        float frameWidth = Util.convertDpToPixel(82.875f, this);
-        float frameHeight = Util.convertDpToPixel(146.25f, this);
 
 
         OverrideSpriteSheet overrideSpriteSheet = new OverrideSpriteSheet(

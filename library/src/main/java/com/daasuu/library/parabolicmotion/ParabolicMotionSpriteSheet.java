@@ -9,11 +9,12 @@ import android.support.annotation.NonNull;
 
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.constant.Constant;
+import com.daasuu.library.spritesheet.SpritePause;
 import com.daasuu.library.spritesheet.SpriteSheet;
 import com.daasuu.library.util.Util;
 
 
-public class ParabolicMotionSpriteSheet extends ParabolicMotion {
+public class ParabolicMotionSpriteSheet extends ParabolicMotion implements SpritePause {
 
     private Bitmap mBitmap;
 
@@ -123,6 +124,16 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion {
     public ParabolicMotionSpriteSheet spriteAnimationEndCallBack(AnimCallBack callBack) {
         mSpriteSheet.setSpriteSheetFinishCallback(callBack);
         return this;
+    }
+
+    @Override
+    public void spritePause(boolean pause) {
+        mSpriteSheet.setSpritePause(pause);
+    }
+
+    @Override
+    public boolean isSpritePause() {
+        return mSpriteSheet.isSpritePause();
     }
 
     private synchronized void updateSpritePosition() {

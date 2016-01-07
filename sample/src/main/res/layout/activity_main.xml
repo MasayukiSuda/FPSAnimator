@@ -16,7 +16,6 @@
         android:gravity="center"
         android:orientation="vertical">
 
-
         <Button
             android:id="@+id/tween_sample"
             android:layout_width="wrap_content"
@@ -49,7 +48,7 @@
             android:id="@+id/animation_stop_sample"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AnimationStopSample"
+            android:text="AnimationPauseSample"
             android:textAllCaps="false" />
 
         <Button

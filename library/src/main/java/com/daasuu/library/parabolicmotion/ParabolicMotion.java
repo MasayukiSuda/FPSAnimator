@@ -48,6 +48,19 @@ class ParabolicMotion extends Anim {
     protected AnimCallBack mLeftHitCallback;
     protected AnimCallBack mRightHitCallback;
 
+    /**
+     * ParabolicMotionPause method.
+     */
+    private boolean mParabolicMotionPause = false;
+
+    public void parabolicMotionPause(boolean pause) {
+        mParabolicMotionPause = pause;
+    }
+
+    public boolean isParabolicMotionPause() {
+        return mParabolicMotionPause;
+    }
+
     protected void setBottomHitCallback(AnimCallBack bottomCallback) {
         this.mBottomHitCallback = bottomCallback;
     }
@@ -66,6 +79,8 @@ class ParabolicMotion extends Anim {
             return;
         }
         mDrawingNum = DEFAULT_DRAWING_NUM;
+
+        if (mParabolicMotionPause) return;
 
         this.mMovementY += mAccelerationY;
 

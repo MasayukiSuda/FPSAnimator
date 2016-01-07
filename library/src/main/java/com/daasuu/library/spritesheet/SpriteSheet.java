@@ -21,6 +21,16 @@ public class SpriteSheet {
 
     private AnimCallBack mSpriteSheetFinishCallback;
 
+    protected boolean mSpritePause = false;
+
+    public boolean isSpritePause() {
+        return mSpritePause;
+    }
+
+    public void setSpritePause(boolean mSpritePause) {
+        this.mSpritePause = mSpritePause;
+    }
+
     /**
      * constructor
      *
@@ -45,6 +55,8 @@ public class SpriteSheet {
      * Move position of SpriteSheet
      */
     public void updatePosition() {
+        if (mSpritePause) return;
+
         if (currentPosition > frameNum + 2) return;
 
         boolean edge = currentPosition % frameNumPerLine == 0;
@@ -64,7 +76,6 @@ public class SpriteSheet {
             dx -= frameWidth;
         }
         repeatPosition();
-
     }
 
     /**

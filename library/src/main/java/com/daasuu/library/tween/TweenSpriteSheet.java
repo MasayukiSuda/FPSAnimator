@@ -12,13 +12,14 @@ import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.constant.Constant;
 import com.daasuu.library.easing.Ease;
 import com.daasuu.library.parameter.AnimParameter;
+import com.daasuu.library.spritesheet.SpritePause;
 import com.daasuu.library.spritesheet.SpriteSheet;
 import com.daasuu.library.util.Util;
 
 /**
  * Created by sudamasayuki on 15/12/19.
  */
-public class TweenSpriteSheet extends Tween {
+public class TweenSpriteSheet extends Tween implements SpritePause {
 
     private boolean mDpSize = false;
     private float mBitmapDpWidth;
@@ -188,6 +189,16 @@ public class TweenSpriteSheet extends Tween {
     public TweenSpriteSheet spriteAnimationEndCallBack(AnimCallBack callBack) {
         mSpriteSheet.setSpriteSheetFinishCallback(callBack);
         return this;
+    }
+
+    @Override
+    public void spritePause(boolean pause) {
+        mSpriteSheet.setSpritePause(pause);
+    }
+
+    @Override
+    public boolean isSpritePause() {
+        return mSpriteSheet.isSpritePause();
     }
 
     private synchronized void updateSpritePosition() {

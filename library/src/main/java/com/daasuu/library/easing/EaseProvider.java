@@ -10,7 +10,7 @@ public class EaseProvider {
     /**
      * @param ease
      * @param elapsedTimeRate
-     * @return
+     * @return easedValue
      */
     public static float get(@NonNull Ease ease, float elapsedTimeRate) {
         switch (ease) {
