@@ -71,8 +71,8 @@ This is the implementation of the sample application.
             spriteBitmap,
             frameWidth,
             frameHeight,
-            64,
-            12)
+            frameNum,
+            frameNumPerLine)
             .spriteLoop(true)
             .loop(true)
             .transform(-Util.convertDpToPixel(82.875f, this), UIUtil.getWindowHeight(this) / 2)
