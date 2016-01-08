@@ -102,7 +102,7 @@ public class AnimationPauseSampleActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        mFPSTextureView.stop();
+        mFPSTextureView.tickStop();
     }
 
     private void setUpBtns() {

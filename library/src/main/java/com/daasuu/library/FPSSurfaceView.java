@@ -106,8 +106,7 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
     }
 
     public FPSSurfaceView addChild(@NonNull DisplayObject displayObject) {
-        displayObject.setFps(mFps);
-        displayObject.setUp();
+        displayObject.setUp(mFps);
         mDisplayObjectList.add(displayObject);
         return this;
     }

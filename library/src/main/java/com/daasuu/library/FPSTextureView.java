@@ -43,7 +43,7 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
 
 
     public FPSTextureView tickStart() {
-        stop();
+        tickStop();
         mTimer = new Timer();
         mTimer.schedule(new TimerTask() {
             @Override
@@ -54,7 +54,7 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
         return this;
     }
 
-    public void stop() {
+    public void tickStop() {
         if (mTimer != null) {
             mTimer.cancel();
             mTimer = null;
@@ -79,7 +79,7 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
     @Override
     public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
         synchronized (this) {
-            stop();
+            tickStop();
             return false;
         }
     }
@@ -113,8 +113,7 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
     }
 
     public FPSTextureView addChild(@NonNull DisplayObject displayObject) {
-        displayObject.setFps(mFps);
-        displayObject.setUp();
+        displayObject.setUp(mFps);
         mDisplayObjectList.add(displayObject);
         return this;
     }

@@ -72,7 +72,7 @@ public class TweenSpriteSheet extends Tween implements SpritePause {
     }
 
     public TweenSpriteSheet paint(Paint paint) {
-        mPaint = paint;
+        this.paint = paint;
         return this;
     }
 
@@ -220,12 +220,16 @@ public class TweenSpriteSheet extends Tween implements SpritePause {
         AnimParameter animParameter = getDrawAnimParameter();
         if (animParameter == null) return;
 
-        if (mPaint == null) mPaint = new Paint();
-        mPaint.setAlpha(animParameter.alpha);
+        if (paint == null) paint = new Paint();
+        alpha = animParameter.alpha;
+        paint.setAlpha(alpha);
 
         canvas.save();
-        canvas.scale(animParameter.scaleX, animParameter.scaleX, animParameter.x + mScaleRegistrationX, animParameter.y + mScaleRegistrationY);
-        canvas.rotate(animParameter.rotation, animParameter.x + mRotateRegistrationX, animParameter.y + mRotateRegistrationY);
+        scaleX = animParameter.scaleX;
+        scaleY = animParameter.scaleY;
+        rotation = animParameter.rotation;
+        canvas.scale(scaleX, scaleY, animParameter.x + mScaleRegistrationX, animParameter.y + mScaleRegistrationY);
+        canvas.rotate(rotation, animParameter.x + mRotateRegistrationX, animParameter.y + mRotateRegistrationY);
 
         RectF bounds = new RectF(
                 animParameter.x,
@@ -236,16 +240,19 @@ public class TweenSpriteSheet extends Tween implements SpritePause {
         canvas.saveLayer(bounds, null, Canvas.ALL_SAVE_FLAG);
         updateSpritePosition();
 
+        x = animParameter.x + mSpriteSheet.dx;
+        y = animParameter.y + mSpriteSheet.dy;
+
         if (mDpSize) {
             RectF dpSizeRect = new RectF(
-                    animParameter.x + mSpriteSheet.dx,
-                    animParameter.y + mSpriteSheet.dy,
-                    animParameter.x + mSpriteSheet.dx + mBitmapDpWidth,
-                    animParameter.y + mSpriteSheet.dy + mBitmapDpHeight
+                    x,
+                    y,
+                    x + mBitmapDpWidth,
+                    y + mBitmapDpHeight
             );
-            canvas.drawBitmap(mBitmap, mBitmapRect, dpSizeRect, mPaint);
+            canvas.drawBitmap(mBitmap, mBitmapRect, dpSizeRect, paint);
         } else {
-            canvas.drawBitmap(mBitmap, animParameter.x + mSpriteSheet.dx, animParameter.y + mSpriteSheet.dy, mPaint);
+            canvas.drawBitmap(mBitmap, x, y, paint);
         }
 
         canvas.restore();

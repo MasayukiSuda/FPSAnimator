@@ -51,8 +51,8 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion implements Sprit
     }
 
     public ParabolicMotionSpriteSheet transform(float x, float y) {
-        mAnimParameter.x = x;
-        mAnimParameter.y = y;
+        this.x = x;
+        this.y = y;
         return this;
     }
 
@@ -159,24 +159,24 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion implements Sprit
         updatePosition();
         canvas.save();
         RectF bounds = new RectF(
-                mAnimParameter.x,
-                mAnimParameter.y,
-                mAnimParameter.x + mSpriteSheet.frameWidth,
-                mAnimParameter.y + mSpriteSheet.frameHeight
+                x,
+                y,
+                x + mSpriteSheet.frameWidth,
+                y + mSpriteSheet.frameHeight
         );
         canvas.saveLayer(bounds, null, Canvas.ALL_SAVE_FLAG);
         updateSpritePosition();
 
         if (mDpSize) {
             RectF dpSizeRect = new RectF(
-                    mAnimParameter.x + mSpriteSheet.dx,
-                    mAnimParameter.y + mSpriteSheet.dy,
-                    mAnimParameter.x + mSpriteSheet.dx + mBitmapDpWidth,
-                    mAnimParameter.y + mSpriteSheet.dy + mBitmapDpHeight
+                    x + mSpriteSheet.dx,
+                    y + mSpriteSheet.dy,
+                    x + mSpriteSheet.dx + mBitmapDpWidth,
+                    y + mSpriteSheet.dy + mBitmapDpHeight
             );
-            canvas.drawBitmap(mBitmap, mBitmapRect, dpSizeRect, mPaint);
+            canvas.drawBitmap(mBitmap, mBitmapRect, dpSizeRect, paint);
         } else {
-            canvas.drawBitmap(mBitmap, mAnimParameter.x + mSpriteSheet.dx, mAnimParameter.y + mSpriteSheet.dy, mPaint);
+            canvas.drawBitmap(mBitmap, x + mSpriteSheet.dx, y + mSpriteSheet.dy, paint);
         }
         canvas.restore();
     }

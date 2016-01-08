@@ -13,13 +13,13 @@ public class ParabolicMotionText extends ParabolicMotion {
 
     public ParabolicMotionText(@NonNull String text, Paint paint) {
         this.mText = text;
-        this.mPaint = paint;
-        mAdjustTextMesureY = mPaint.getTextSize();
+        this.paint = paint;
+        mAdjustTextMesureY = this.paint.getTextSize();
     }
 
     public ParabolicMotionText transform(float x, float y) {
-        mAnimParameter.x = x;
-        mAnimParameter.y = y;
+        this.x = x;
+        this.y = y;
         return this;
     }
 
@@ -85,7 +85,7 @@ public class ParabolicMotionText extends ParabolicMotion {
 
     private void setBaseLength(Canvas canvas) {
         mBottomBase = canvas.getHeight() - mAdjustTextMesureY;
-        mRightSide = canvas.getWidth() - mPaint.measureText(mText);
+        mRightSide = canvas.getWidth() - paint.measureText(mText);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class ParabolicMotionText extends ParabolicMotion {
         if (mText == null) return;
         setBaseLength(canvas);
         updatePosition();
-        canvas.drawText(mText, mAnimParameter.x, mAnimParameter.y + mAdjustTextMesureY, mPaint);
+        canvas.drawText(mText, x, y + mAdjustTextMesureY, paint);
     }
 
 

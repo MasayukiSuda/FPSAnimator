@@ -87,7 +87,7 @@ public class ParabolicMotionSampleActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        mFPSTextureView.stop();
+        mFPSTextureView.tickStop();
         if (mTimer != null) {
             mTimer.cancel();
             mTimer = null;

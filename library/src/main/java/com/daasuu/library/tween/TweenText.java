@@ -19,8 +19,8 @@ public class TweenText extends Tween {
 
     public TweenText(@NonNull String text, Paint paint) {
         this.mText = text;
-        this.mPaint = paint;
-        if (mPaint != null) mAdjustTextMesureY = mPaint.getTextSize();
+        this.paint = paint;
+        if (this.paint != null) mAdjustTextMesureY = this.paint.getTextSize();
     }
 
     public TweenText transform(float x, float y) {
@@ -145,13 +145,20 @@ public class TweenText extends Tween {
         AnimParameter animParameter = getDrawAnimParameter();
         if (animParameter == null) return;
 
-        if (mPaint == null) mPaint = new Paint();
-        mPaint.setAlpha(animParameter.alpha);
+        if (paint == null) paint = new Paint();
+        alpha = animParameter.alpha;
+        paint.setAlpha(alpha);
 
         canvas.save();
-        canvas.scale(animParameter.scaleX, animParameter.scaleX, animParameter.x + mScaleRegistrationX, animParameter.y + mScaleRegistrationY);
-        canvas.rotate(animParameter.rotation, animParameter.x + mRotateRegistrationX, animParameter.y + mRotateRegistrationY);
-        canvas.drawText(mText, animParameter.x, animParameter.y + mAdjustTextMesureY, mPaint);
+        scaleX = animParameter.scaleX;
+        scaleY = animParameter.scaleY;
+        rotation = animParameter.rotation;
+        canvas.scale(scaleX, scaleY, animParameter.x + mScaleRegistrationX, animParameter.y + mScaleRegistrationY);
+        canvas.rotate(rotation, animParameter.x + mRotateRegistrationX, animParameter.y + mRotateRegistrationY);
+
+        x = animParameter.x;
+        y = animParameter.y + mAdjustTextMesureY;
+        canvas.drawText(mText, x, y, paint);
 
         canvas.restore();
 

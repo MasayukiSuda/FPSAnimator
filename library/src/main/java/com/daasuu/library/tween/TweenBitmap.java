@@ -28,7 +28,7 @@ public class TweenBitmap extends Tween {
 
     public TweenBitmap(@NonNull Bitmap bitmap, Paint paint) {
         this.mBitmap = bitmap;
-        this.mPaint = paint;
+        this.paint = paint;
     }
 
     public TweenBitmap transform(float x, float y) {
@@ -162,23 +162,30 @@ public class TweenBitmap extends Tween {
         AnimParameter animParameter = getDrawAnimParameter();
         if (animParameter == null) return;
 
-        if (mPaint == null) mPaint = new Paint();
-        mPaint.setAlpha(animParameter.alpha);
+        if (paint == null) paint = new Paint();
+        alpha = animParameter.alpha;
+        paint.setAlpha(alpha);
 
         canvas.save();
-        canvas.scale(animParameter.scaleX, animParameter.scaleX, animParameter.x + mScaleRegistrationX, animParameter.y + mScaleRegistrationY);
-        canvas.rotate(animParameter.rotation, animParameter.x + mRotateRegistrationX, animParameter.y + mRotateRegistrationY);
+        scaleX = animParameter.scaleX;
+        scaleY = animParameter.scaleY;
+        rotation = animParameter.rotation;
+        canvas.scale(scaleX, scaleY, animParameter.x + mScaleRegistrationX, animParameter.y + mScaleRegistrationY);
+        canvas.rotate(rotation, animParameter.x + mRotateRegistrationX, animParameter.y + mRotateRegistrationY);
 
+        x = animParameter.x;
+        y = animParameter.y;
         if (mDpSize) {
+
             RectF dpSizeRect = new RectF(
-                    animParameter.x,
-                    animParameter.y,
-                    animParameter.x + mBitmapDpWidth,
-                    animParameter.y + mBitmapDpHeight
+                    x,
+                    y,
+                    x + mBitmapDpWidth,
+                    y + mBitmapDpHeight
             );
-            canvas.drawBitmap(mBitmap, mBitmapRect, dpSizeRect, mPaint);
+            canvas.drawBitmap(mBitmap, mBitmapRect, dpSizeRect, paint);
         } else {
-            canvas.drawBitmap(mBitmap, animParameter.x, animParameter.y, mPaint);
+            canvas.drawBitmap(mBitmap, x, y, paint);
         }
 
         canvas.restore();

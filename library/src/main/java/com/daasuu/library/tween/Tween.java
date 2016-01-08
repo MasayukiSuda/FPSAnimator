@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 
 import com.daasuu.library.DisplayObject;
 import com.daasuu.library.callback.AnimCallBack;
+import com.daasuu.library.constant.Constant;
 import com.daasuu.library.easing.Ease;
 import com.daasuu.library.easing.EaseProvider;
 import com.daasuu.library.parameter.AnimParameter;
@@ -41,8 +42,8 @@ class Tween extends DisplayObject {
         if (mTweenParameterList.size() > 0) {
             setTo(0, x, y, Ease.NONE);
         } else {
-            mInitialX = x;
-            mInitialY = y;
+            this.x = x;
+            this.y = y;
             AnimParameter animParameter = mAnimParameters.get(0);
             animParameter.x = x;
             animParameter.y = y;
@@ -53,12 +54,12 @@ class Tween extends DisplayObject {
         if (mTweenParameterList.size() > 0) {
             setTo(0, x, y, alpha, scaleX, scaleY, rotation, Ease.NONE);
         } else {
-            mInitialX = x;
-            mInitialY = y;
-            mInitialAlpha = alpha;
-            mInitialScaleX = scaleX;
-            mInitialScaleY = scaleY;
-            mInitialRotation = rotation;
+            this.x = x;
+            this.y = y;
+            this.alpha = alpha;
+            this.scaleX = scaleX;
+            this.scaleY = scaleY;
+            this.rotation = rotation;
 
             AnimParameter animParameter = mAnimParameters.get(0);
             animParameter.x = x;
@@ -86,6 +87,17 @@ class Tween extends DisplayObject {
         mScaleRegistrationY = regY;
     }
 
+    protected List<AnimParameter> mAnimParameters = new ArrayList<AnimParameter>() {
+        {
+            add(new AnimParameter(x, y));
+        }
+    };
+
+    protected long mFps = 1000 / Constant.DEFAULT_FPS;
+
+    private void setFps(long fps) {
+        mFps = 1000 / fps;
+    }
 
     /**
      * animation array set
@@ -107,10 +119,10 @@ class Tween extends DisplayObject {
             scaleY = beforeTweenParameter.scaleY;
             rotation = beforeTweenParameter.rotation;
         } else {
-            alpha = mInitialAlpha;
-            scaleX = mInitialScaleX;
-            scaleY = mInitialScaleY;
-            rotation = mInitialRotation;
+            alpha = this.alpha;
+            scaleX = this.scaleX;
+            scaleY = this.scaleY;
+            rotation = this.rotation;
         }
         setTo(animDuration, x, y, alpha, scaleX, scaleY, rotation, ease);
     }
@@ -135,9 +147,9 @@ class Tween extends DisplayObject {
             scaleY = beforeTweenParameter.scaleY;
             rotation = beforeTweenParameter.rotation;
         } else {
-            scaleX = mInitialScaleX;
-            scaleY = mInitialScaleY;
-            rotation = mInitialRotation;
+            scaleX = this.scaleX;
+            scaleY = this.scaleY;
+            rotation = this.rotation;
         }
 
         setTo(animDuration, x, y, alpha, scaleX, scaleY, rotation, ease);
@@ -161,8 +173,8 @@ class Tween extends DisplayObject {
             alpha = beforeTweenParameter.alpha;
             rotation = beforeTweenParameter.rotation;
         } else {
-            alpha = mInitialAlpha;
-            rotation = mInitialRotation;
+            alpha = this.alpha;
+            rotation = this.rotation;
         }
 
         setTo(animDuration, x, y, alpha, scaleX, scaleY, rotation, ease);
@@ -187,9 +199,9 @@ class Tween extends DisplayObject {
             scaleX = beforeTweenParameter.scaleX;
             scaleY = beforeTweenParameter.scaleY;
         } else {
-            alpha = mInitialAlpha;
-            scaleX = mInitialScaleX;
-            scaleY = mInitialScaleY;
+            alpha = this.alpha;
+            scaleX = this.scaleX;
+            scaleY = this.scaleY;
         }
 
         setTo(animDuration, x, y, alpha, scaleX, scaleY, rotation, ease);
@@ -243,11 +255,11 @@ class Tween extends DisplayObject {
             scaleY = beforeTweenParameter.scaleY;
             rotation = beforeTweenParameter.rotation;
         } else {
-            y = mInitialY;
-            alpha = mInitialAlpha;
-            scaleX = mInitialScaleX;
-            scaleY = mInitialScaleY;
-            rotation = mInitialRotation;
+            y = this.y;
+            alpha = this.alpha;
+            scaleX = this.scaleX;
+            scaleY = this.scaleY;
+            rotation = this.rotation;
             mAnimParameters.clear();
         }
 
@@ -281,11 +293,11 @@ class Tween extends DisplayObject {
             scaleY = beforeTweenParameter.scaleY;
             rotation = beforeTweenParameter.rotation;
         } else {
-            x = mInitialX;
-            alpha = mInitialAlpha;
-            scaleX = mInitialScaleX;
-            scaleY = mInitialScaleY;
-            rotation = mInitialRotation;
+            x = this.x;
+            alpha = this.alpha;
+            scaleX = this.scaleX;
+            scaleY = this.scaleY;
+            rotation = this.rotation;
             mAnimParameters.clear();
         }
 
@@ -318,11 +330,11 @@ class Tween extends DisplayObject {
             scaleY = beforeTweenParameter.scaleY;
             rotation = beforeTweenParameter.rotation;
         } else {
-            x = mInitialX;
-            y = mInitialY;
-            scaleX = mInitialScaleX;
-            scaleY = mInitialScaleY;
-            rotation = mInitialRotation;
+            x = this.x;
+            y = this.y;
+            scaleX = this.scaleX;
+            scaleY = this.scaleY;
+            rotation = this.rotation;
             mAnimParameters.clear();
         }
 
@@ -354,10 +366,10 @@ class Tween extends DisplayObject {
             alpha = beforeTweenParameter.alpha;
             rotation = beforeTweenParameter.rotation;
         } else {
-            x = mInitialX;
-            y = mInitialY;
-            alpha = mInitialAlpha;
-            rotation = mInitialRotation;
+            x = this.x;
+            y = this.y;
+            alpha = this.alpha;
+            rotation = this.rotation;
             mAnimParameters.clear();
         }
 
@@ -390,11 +402,11 @@ class Tween extends DisplayObject {
             scaleX = beforeTweenParameter.scaleX;
             scaleY = beforeTweenParameter.scaleY;
         } else {
-            x = mInitialX;
-            y = mInitialY;
-            alpha = mInitialAlpha;
-            scaleX = mInitialScaleX;
-            scaleY = mInitialScaleY;
+            x = this.x;
+            y = this.y;
+            alpha = this.alpha;
+            scaleX = this.scaleX;
+            scaleY = this.scaleY;
             mAnimParameters.clear();
         }
 
@@ -430,12 +442,12 @@ class Tween extends DisplayObject {
             scaleY = beforeTweenParameter.scaleY;
             rotation = beforeTweenParameter.rotation;
         } else {
-            x = mInitialX;
-            y = mInitialY;
-            alpha = mInitialAlpha;
-            scaleX = mInitialScaleX;
-            scaleY = mInitialScaleY;
-            rotation = mInitialRotation;
+            x = this.x;
+            y = this.y;
+            alpha = this.alpha;
+            scaleX = this.scaleX;
+            scaleY = this.scaleY;
+            rotation = this.rotation;
             mAnimParameters.clear();
         }
 
@@ -513,7 +525,8 @@ class Tween extends DisplayObject {
     }
 
     @Override
-    public void setUp() {
+    public void setUp(long fps) {
+        setFps(fps);
         // FPS、到達ポイント、からAnimParameterを生成し、1TweenParameterあたり、mAnimParametersをいくつ作成するかを決める。
         for (int i = 0, n = mTweenParameterList.size(); i < n; i++) {
             setUpAnimParamList(mTweenParameterList.get(i), i);
@@ -538,21 +551,21 @@ class Tween extends DisplayObject {
         float cntScaleX;
         float cntScaleY;
 
-        float beforeParameterX = mInitialX;
-        float beforeParameterY = mInitialY;
-        int beforeParameterAlpha = mInitialAlpha;
-        float beforeParameterRotation = mInitialRotation;
-        float beforeParameterScaleX = mInitialScaleX;
-        float beforeParameterScaleY = mInitialScaleY;
+        float beforeParameterX = x;
+        float beforeParameterY = y;
+        int beforeParameterAlpha = alpha;
+        float beforeParameterRotation = rotation;
+        float beforeParameterScaleX = scaleX;
+        float beforeParameterScaleY = scaleY;
 
         if (position == 0) {
 
-            cntX = (tweenParameter.x - mInitialX) / animParamNum;
-            cntY = (tweenParameter.y - mInitialY) / animParamNum;
-            cntAlpha = (int) ((tweenParameter.alpha - mInitialAlpha) / animParamNum);
-            cntRotation = (tweenParameter.rotation - mInitialRotation) / animParamNum;
-            cntScaleX = (tweenParameter.scaleX - mInitialScaleX) / animParamNum;
-            cntScaleY = (tweenParameter.scaleY - mInitialScaleY) / animParamNum;
+            cntX = (tweenParameter.x - x) / animParamNum;
+            cntY = (tweenParameter.y - y) / animParamNum;
+            cntAlpha = (int) ((tweenParameter.alpha - alpha) / animParamNum);
+            cntRotation = (tweenParameter.rotation - rotation) / animParamNum;
+            cntScaleX = (tweenParameter.scaleX - scaleX) / animParamNum;
+            cntScaleY = (tweenParameter.scaleY - scaleY) / animParamNum;
 
         } else {
             TweenParameter beforeTweenParameter = mTweenParameterList.get(position - 1);

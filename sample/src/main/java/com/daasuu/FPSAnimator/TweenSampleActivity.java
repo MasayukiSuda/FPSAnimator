@@ -92,7 +92,7 @@ public class TweenSampleActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        mFPSTextureView.stop();
+        mFPSTextureView.tickStop();
     }
 
 }

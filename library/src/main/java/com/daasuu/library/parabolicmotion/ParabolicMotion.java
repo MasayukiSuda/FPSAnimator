@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 
 import com.daasuu.library.DisplayObject;
 import com.daasuu.library.callback.AnimCallBack;
-import com.daasuu.library.parameter.AnimParameter;
 
 /**
  * Class for heavy acceleration motion
@@ -33,8 +32,6 @@ class ParabolicMotion extends DisplayObject {
     protected float mAccelerationX = DEFAULT_ACCELERATION_X;
 
     protected int mFrequency = DEFAULT_FREQUENCY;
-
-    protected AnimParameter mAnimParameter = mAnimParameters.get(0);
 
     protected float mBottomBase;
     protected float mRightSide;
@@ -84,40 +81,40 @@ class ParabolicMotion extends DisplayObject {
 
         this.mMovementY += mAccelerationY;
 
-        this.mAnimParameter.y += this.mMovementY;
-        this.mAnimParameter.x += mAccelerationX;
+        y += this.mMovementY;
+        x += mAccelerationX;
 
-        if (mAnimParameter.y > mBottomBase) {
+        if (y > mBottomBase) {
 
             if (mBottomHitCallback != null) {
                 mBottomHitCallback.call();
             }
 
             if (mCoefficientBottom) {
-                mAnimParameter.y = mBottomBase;
+                y = mBottomBase;
                 mMovementY = mMovementY * -1;
             }
         }
 
-        if (mAnimParameter.x > mRightSide) {
+        if (x > mRightSide) {
             if (mRightHitCallback != null) {
                 mRightHitCallback.call();
             }
 
             if (mCoefficientRight) {
-                mAnimParameter.x = mRightSide;
+                x = mRightSide;
                 mAccelerationX *= -1;
                 mMovementY *= mCoefficientRestitutionY;
             }
         }
 
-        if (mAnimParameter.x < 0) {
+        if (x < 0) {
             if (mLeftHitCallback != null) {
                 mLeftHitCallback.call();
             }
 
             if (mCoefficientLeft) {
-                mAnimParameter.x = 0;
+                x = 0;
                 mAccelerationX *= -1;
                 mAccelerationX *= mCoefficientRestitutionX;
             }
@@ -130,7 +127,7 @@ class ParabolicMotion extends DisplayObject {
     }
 
     @Override
-    public void setUp() {
+    public void setUp(long fps) {
         this.mMovementY = mInitialVelocityY;
     }
 }

@@ -35,8 +35,8 @@ public class ParabolicMotionBitmap extends ParabolicMotion {
 
 
     public ParabolicMotionBitmap transform(float x, float y) {
-        mAnimParameter.x = x;
-        mAnimParameter.y = y;
+        this.x = x;
+        this.y = y;
         return this;
     }
 
@@ -117,14 +117,14 @@ public class ParabolicMotionBitmap extends ParabolicMotion {
         updatePosition();
         if (mDpSize) {
             RectF dpSizeRect = new RectF(
-                    mAnimParameter.x,
-                    mAnimParameter.y,
-                    mAnimParameter.x + mBitmapDpWidth,
-                    mAnimParameter.y + mBitmapDpHeight
+                    x,
+                    y,
+                    x + mBitmapDpWidth,
+                    y + mBitmapDpHeight
             );
-            canvas.drawBitmap(mBitmap, mBitmapRect, dpSizeRect, mPaint);
+            canvas.drawBitmap(mBitmap, mBitmapRect, dpSizeRect, paint);
         } else {
-            canvas.drawBitmap(mBitmap, mAnimParameter.x, mAnimParameter.y, mPaint);
+            canvas.drawBitmap(mBitmap, x, y, paint);
         }
     }
 
