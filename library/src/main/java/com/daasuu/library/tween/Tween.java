@@ -2,7 +2,7 @@ package com.daasuu.library.tween;
 
 import android.graphics.Canvas;
 
-import com.daasuu.library.Anim;
+import com.daasuu.library.DisplayObject;
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.easing.Ease;
 import com.daasuu.library.easing.EaseProvider;
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Tween BaseClass. It summarizes the common processing required when to Tween animation.
  */
-class Tween extends Anim {
+class Tween extends DisplayObject {
 
     protected boolean mTweenLoop = false;
     private boolean mTweenPause = false;

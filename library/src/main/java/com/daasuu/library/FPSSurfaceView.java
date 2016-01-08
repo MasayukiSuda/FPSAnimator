@@ -27,7 +27,7 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
 
     private SurfaceHolder mSurfaceHolder;
 
-    private List<Anim> mAnimList = new ArrayList<>();
+    private List<DisplayObject> mDisplayObjectList = new ArrayList<>();
 
     public FPSSurfaceView(Context context) {
         this(context, null, 0);
@@ -86,18 +86,18 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
 
         synchronized (this) {
 
-            List<Anim> copyAnimList = new ArrayList<Anim>(mAnimList);
+            List<DisplayObject> copyDisplayObjectList = new ArrayList<DisplayObject>(mDisplayObjectList);
 
             Canvas canvas = mSurfaceHolder.lockCanvas();
             if (canvas == null) return;
 
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
-            for (Anim anim : copyAnimList) {
-                if (anim == null) {
+            for (DisplayObject displayObject : copyDisplayObjectList) {
+                if (displayObject == null) {
                     continue;
                 }
-                anim.draw(canvas);
+                displayObject.draw(canvas);
             }
 
             mSurfaceHolder.unlockCanvasAndPost(canvas);
@@ -105,15 +105,15 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
 
     }
 
-    public FPSSurfaceView addChild(@NonNull Anim anim) {
-        anim.setFps(mFps);
-        anim.setUp();
-        mAnimList.add(anim);
+    public FPSSurfaceView addChild(@NonNull DisplayObject displayObject) {
+        displayObject.setFps(mFps);
+        displayObject.setUp();
+        mDisplayObjectList.add(displayObject);
         return this;
     }
 
-    public FPSSurfaceView removeChild(@NonNull Anim anim) {
-        mAnimList.remove(anim);
+    public FPSSurfaceView removeChild(@NonNull DisplayObject displayObject) {
+        mDisplayObjectList.remove(displayObject);
         return this;
     }
 
@@ -122,7 +122,7 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
         return this;
     }
 
-    public List<Anim> getAnimList() {
-        return mAnimList;
+    public List<DisplayObject> getAnimList() {
+        return mDisplayObjectList;
     }
 }

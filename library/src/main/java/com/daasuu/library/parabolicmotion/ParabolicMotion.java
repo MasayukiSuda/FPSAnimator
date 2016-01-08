@@ -2,14 +2,14 @@ package com.daasuu.library.parabolicmotion;
 
 import android.graphics.Canvas;
 
-import com.daasuu.library.Anim;
+import com.daasuu.library.DisplayObject;
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.parameter.AnimParameter;
 
 /**
  * Class for heavy acceleration motion
  */
-class ParabolicMotion extends Anim {
+class ParabolicMotion extends DisplayObject {
 
     protected static final int DEFAULT_DRAWING_NUM = 1;
     protected static final float DEFAULT_COEFFICIENT_RESTITUTION = 1;

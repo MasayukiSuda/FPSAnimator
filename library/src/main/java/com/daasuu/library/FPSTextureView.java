@@ -24,7 +24,7 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
     private Timer mTimer;
     private long mFps = Constant.DEFAULT_FPS;
 
-    private List<Anim> mAnimList = new ArrayList<>();
+    private List<DisplayObject> mDisplayObjectList = new ArrayList<>();
 
     public FPSTextureView(Context context) {
         this(context, null, 0);
@@ -93,18 +93,18 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
 
         synchronized (this) {
 
-            List<Anim> copyAnimList = new ArrayList<Anim>(mAnimList);
+            List<DisplayObject> copyDisplayObjectList = new ArrayList<DisplayObject>(mDisplayObjectList);
 
             Canvas canvas = this.lockCanvas();
             if (canvas == null) return;
 
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
-            for (Anim anim : copyAnimList) {
-                if (anim == null) {
+            for (DisplayObject displayObject : copyDisplayObjectList) {
+                if (displayObject == null) {
                     continue;
                 }
-                anim.draw(canvas);
+                displayObject.draw(canvas);
             }
 
             this.unlockCanvasAndPost(canvas);
@@ -112,15 +112,15 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
 
     }
 
-    public FPSTextureView addChild(@NonNull Anim anim) {
-        anim.setFps(mFps);
-        anim.setUp();
-        mAnimList.add(anim);
+    public FPSTextureView addChild(@NonNull DisplayObject displayObject) {
+        displayObject.setFps(mFps);
+        displayObject.setUp();
+        mDisplayObjectList.add(displayObject);
         return this;
     }
 
-    public FPSTextureView removeChild(@NonNull Anim anim) {
-        mAnimList.remove(anim);
+    public FPSTextureView removeChild(@NonNull DisplayObject displayObject) {
+        mDisplayObjectList.remove(displayObject);
         return this;
     }
 
@@ -129,7 +129,7 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
         return this;
     }
 
-    public List<Anim> getAnimList() {
-        return mAnimList;
+    public List<DisplayObject> getAnimList() {
+        return mDisplayObjectList;
     }
 }

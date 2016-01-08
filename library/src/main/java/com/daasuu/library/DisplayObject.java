@@ -1,10 +1,8 @@
 package com.daasuu.library;
 
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 
-import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.constant.Constant;
 import com.daasuu.library.parameter.AnimParameter;
 
@@ -14,7 +12,7 @@ import java.util.List;
 /**
  * Created by sudamasayuki on 15/12/19.
  */
-public abstract class Anim {
+public abstract class DisplayObject {
 
     public float mInitialX = 0f;
     public float mInitialY = 0f;
@@ -41,7 +39,6 @@ public abstract class Anim {
     // Draw
     public abstract void draw(Canvas canvas);
 
-    // FPS等の計算
     public abstract void setUp();
 
 }
