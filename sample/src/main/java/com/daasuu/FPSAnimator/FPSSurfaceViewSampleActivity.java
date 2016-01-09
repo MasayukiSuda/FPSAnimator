@@ -114,7 +114,7 @@ public class FPSSurfaceViewSampleActivity extends AppCompatActivity {
                 .dpSize(this)
                 .transform(0, UIUtil.getWindowHeight(this) / 2)
                 .initialVelocityY(-30)
-                .coefficientRight(false)
+                .reboundRight(false)
                 .rightHitCallback(new AnimCallBack() {
                     @Override
                     public void call() {

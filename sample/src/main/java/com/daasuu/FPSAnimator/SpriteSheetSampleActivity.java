@@ -69,7 +69,7 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
                 .spriteLoop(true)
                 .transform(0, UIUtil.getWindowHeight(this) / 2)
                 .initialVelocityY(-30)
-                .coefficientRight(false)
+                .reboundRight(false)
                 .rightHitCallback(new AnimCallBack() {
                     @Override
                     public void call() {
@@ -148,7 +148,7 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
                         spriteBitmapA.getHeight(),
                         spriteBitmapANum,
                         spriteBitmapANum)
-                        .frameRate((int) (1 + Math.random() * 3))
+                        .frequency((int) (1 + Math.random() * 3))
                         .transform(i * interval, j * interval)
                         .spriteLoop(true);
 

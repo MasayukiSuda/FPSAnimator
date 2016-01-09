@@ -54,7 +54,7 @@ public class ParabolicMotionSampleActivity extends AppCompatActivity {
         parabolicMotionBitmap
                 .transform(0, mFPSTextureView.getHeight())
                 .dpSize(this)
-                .coefficientBottom(false)
+                .reboundBottom(false)
                 .accelerationX((float) (15 + Math.random() * 7))
                 .initialVelocityY((float) (-65 + Math.random() * 15))
                 .bottomHitCallback(new AnimCallBack() {

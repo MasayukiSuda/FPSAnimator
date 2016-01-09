@@ -49,14 +49,14 @@ public class TweenSpriteSheet extends Tween implements SpritePause {
 
     /**
      * By default Sprite instances advance one frame per tick.
-     * Specifying a frameRate for the Sprite (or its related SpriteSheet) will cause it to
-     * advance based on elapsed time between ticks as appropriate to maintain the target framerate.
-     * For example, if a Sprite with a frameRate of 10 is placed on a Stage being updated at 40fps,
+     * Specifying a frequency for the Sprite (or its related SpriteSheet) will cause it to
+     * advance based on elapsed time between ticks as appropriate to maintain the target frequency.
+     * For example, if a Sprite with a frequency of 10 is placed on a Stage being updated at 40fps,
      * then the Sprite will advance roughly one frame every 4 ticks. This will not be exact,
      * because the time between each tick will vary slightly between frames.
      * This feature is dependent on the tick event object being passed into update.
      */
-    private int mFrameRate = 1;
+    private int mFrequency = 1;
 
     /**
      * The SpriteSheet instance to play back. This includes frame dimensions, and frame data.
@@ -64,7 +64,7 @@ public class TweenSpriteSheet extends Tween implements SpritePause {
     private SpriteSheet mSpriteSheet;
 
     /**
-     * member variables needed to skip a tick in mFrameRate
+     * member variables needed to skip a tick in mFrequency
      */
     private int mDrawingNum = Constant.DEFAULT_DRAWING_NUM;
 
@@ -112,16 +112,22 @@ public class TweenSpriteSheet extends Tween implements SpritePause {
     }
 
     /**
-     * Setter mFrameRate
+     * Set Frequency
      *
-     * @param frameRate
+     * @param frequency 　The number to be updated in every times of tick
      * @return this
      */
-    public TweenSpriteSheet frameRate(int frameRate) {
-        mFrameRate = frameRate;
+    public TweenSpriteSheet frequency(int frequency) {
+        mFrequency = frequency;
         return this;
     }
 
+    /**
+     * If true, the Sprite Animation will loop when it reaches the last frame.
+     *
+     * @param loop If true, the Sprite Animation will loop when it reaches the last frame.
+     * @return this
+     */
     public TweenSpriteSheet spriteLoop(boolean loop) {
         mSpriteSheet.spriteLoop = loop;
         return this;
@@ -483,7 +489,7 @@ public class TweenSpriteSheet extends Tween implements SpritePause {
      * Move frame of SpriteSheet
      */
     private synchronized void updateSpriteFrame() {
-        if (mDrawingNum != mFrameRate) {
+        if (mDrawingNum != mFrequency) {
             mDrawingNum++;
             return;
         }

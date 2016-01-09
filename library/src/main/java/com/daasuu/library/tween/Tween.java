@@ -170,9 +170,9 @@ class Tween extends DisplayObject {
 
     /**
      * Indicates the target frame rate in frames per second (FPS). Effectively just a shortcut to `interval`, where
-     * `frameRate == 1000/interval`.
+     * `frequency == 1000/interval`.
      *
-     * @param fps frameRate
+     * @param fps frequency
      */
     private void setFps(long fps) {
         mFps = 1000 / fps;
