@@ -40,7 +40,7 @@ Create an instance of the Tween, please add it to the FPSTextureView.
     Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
     TweenBitmap tweenBitmapA = new TweenBitmap(bitmap);
     tweenBitmapA
-            .toX(1600, UIUtil.getWindowWidth(this) - bitmap.getWidth(), Ease.BACK_IN_OUT)
+            .toX(1600, windowWidth - bitmap.getWidth(), Ease.BACK_IN_OUT)
             .waitTime(1000)
             .alpha(1000, 0f)
             .alpha(1000, 1f);
@@ -75,8 +75,8 @@ This is the implementation of the sample application.
             frameNumPerLine)
             .spriteLoop(true)
             .loop(true)
-            .transform(-Util.convertDpToPixel(82.875f, this), UIUtil.getWindowHeight(this) / 2)
-            .toX(3000, UIUtil.getWindowWidth(this));
+            .transform(frameWidth, windowHeight / 2)
+            .toX(3000, windowWidth);
 
     mFPSTextureView
                 .setFps(24)
@@ -98,7 +98,7 @@ This is the implementation of the sample application.
             .loop(true)
             .transform(0, 800)
             .waitTime(300)
-            .to(1000, UIUtil.getWindowWidth(this) - paint.measureText(tweenTxt), 800, Ease.SINE_OUT, 720)
+            .to(1000, windowWidth - textWidth, 800, Ease.SINE_OUT, 720)
             .waitTime(300)
             .to(1000, 0, 800, Ease.SINE_IN, 0);
 ```
@@ -108,8 +108,8 @@ This is the implementation of the sample application.
 ```JAVA
     TweenBitmap tweenBitmapB = new TweenBitmap(bitmap);
     tweenBitmapB
-            .dpSize(this)
-            .scaleRegistration(Util.convertPixelsToDp(bitmap.getWidth(), this) / 2, Util.convertPixelsToDp(bitmap.getHeight(), this) / 2)
+            .dpSize(context)
+            .scaleRegistration(bitmap.getWidth() / 2, bitmap.getHeight() / 2)
             .loop(true)
             .transform(300, 400)
             .to(500, 300, 400, 0, 6f, 6f, 0, Ease.SINE_IN_OUT)
@@ -130,8 +130,8 @@ This is the implementation of the sample application.
         
         // ParabolicMotionText
         Paint paint = new Paint();
-        paint.setColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        paint.setTextSize(Util.convertDpToPixel(20, this));
+        paint.setColor(ContextCompat.getColor(context, R.color.colorPrimary));
+        paint.setTextSize(Util.convertDpToPixel(20, context));
         final ParabolicMotionText parabolicMotionText = new ParabolicMotionText("Text", paint);
         parabolicMotionText
                 .transform(800, 800)
@@ -144,7 +144,7 @@ This is the implementation of the sample application.
         final ParabolicMotionBitmap parabolicMotionBitmap = new ParabolicMotionBitmap(mBitmap);
         parabolicMotionBitmap
                 .transform(0, mFPSTextureView.getHeight())
-                .dpSize(this)
+                .dpSize(context)
                 .coefficientBottom(false)
                 .accelerationX((float) (15 + Math.random() * 7))
                 .initialVelocityY((float) (-65 + Math.random() * 15))
