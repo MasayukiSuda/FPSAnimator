@@ -41,7 +41,7 @@ public class ParabolicMotionBitmap extends ParabolicMotion {
     }
 
     public ParabolicMotionBitmap frequency(int frequency) {
-        mFrequency = frequency;
+        mFrameRate = frequency;
         return this;
     }
 

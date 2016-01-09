@@ -99,28 +99,28 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
         }
 
         @Override
-        public void updatePosition() {
-            if (currentPosition > frameNum + 2) return;
+        public void updateFrame() {
+            if (currentFrame > frameNum + 2) return;
 
-            if (currentPosition < 26) {
-                currentPosition = 26;
+            if (currentFrame < 26) {
+                currentFrame = 26;
             }
 
-            boolean edge = currentPosition % 12 == 0;
+            boolean edge = currentFrame % 12 == 0;
             if (edge) {
-                currentPosition++;
-                if (currentPosition <= frameNum) {
+                currentFrame++;
+                if (currentFrame <= frameNum) {
                     dy -= frameHeight;
                     dx = 0;
                 }
-                repeatPosition();
+                repeatFrame();
                 return;
             }
-            currentPosition++;
-            if (currentPosition <= frameNum) {
+            currentFrame++;
+            if (currentFrame <= frameNum) {
                 dx -= frameWidth;
             }
-            repeatPosition();
+            repeatFrame();
         }
     }
 
@@ -148,7 +148,7 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
                         spriteBitmapA.getHeight(),
                         spriteBitmapANum,
                         spriteBitmapANum)
-                        .frequency((int) (1 + Math.random() * 3))
+                        .frameRate((int) (1 + Math.random() * 3))
                         .transform(i * interval, j * interval)
                         .spriteLoop(true);
 

@@ -15,7 +15,7 @@ class ParabolicMotion extends DisplayObject {
     protected static final float DEFAULT_INITIAL_VELOCITY_Y = 2;
     protected static final float DEFAULT_ACCELERATION_Y = 2;
     protected static final float DEFAULT_ACCELERATION_X = 8;
-    protected static final int DEFAULT_FREQUENCY = 1;
+    protected static final int DEFAULT_FRAME_RATE = 1;
 
 
     protected int mDrawingNum = DEFAULT_DRAWING_NUM;
@@ -31,7 +31,7 @@ class ParabolicMotion extends DisplayObject {
     protected float mAccelerationY = DEFAULT_ACCELERATION_Y;
     protected float mAccelerationX = DEFAULT_ACCELERATION_X;
 
-    protected int mFrequency = DEFAULT_FREQUENCY;
+    protected int mFrameRate = DEFAULT_FRAME_RATE;
 
     protected float mBottomBase;
     protected float mRightSide;
@@ -71,7 +71,7 @@ class ParabolicMotion extends DisplayObject {
     }
 
     protected synchronized void updatePosition() {
-        if (mDrawingNum != mFrequency) {
+        if (mDrawingNum != mFrameRate) {
             mDrawingNum++;
             return;
         }

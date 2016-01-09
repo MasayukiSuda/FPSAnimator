@@ -5,7 +5,17 @@ package com.daasuu.library.spritesheet;
  */
 public interface SpritePause {
 
+    /**
+     * indicates whether to start the SpriteAnimation paused.
+     *
+     * @param pause If true, SpriteAnimation pause.
+     */
     public void spritePause(boolean pause);
 
+    /**
+     * Getter SpriteAnimation pause state
+     *
+     * @return spritePause
+     */
     public boolean isSpritePause();
 }

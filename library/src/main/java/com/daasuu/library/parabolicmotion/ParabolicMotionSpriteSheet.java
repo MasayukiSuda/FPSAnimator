@@ -16,12 +16,29 @@ import com.daasuu.library.util.Util;
 
 public class ParabolicMotionSpriteSheet extends ParabolicMotion implements SpritePause {
 
+    /**
+     * Bitmap to be drawn in FPSTextureView or FPSSurfaceView.
+     */
     private Bitmap mBitmap;
 
+    /**
+     * If true, Draw a Bitmap in device-specific pixel density.
+     */
     private boolean mDpSize = false;
 
+    /**
+     * Width of Bitmap in device-specific pixel density.
+     */
     private float mBitmapDpWidth;
+
+    /**
+     * Height of Bitmap in device-specific pixel density.
+     */
     private float mBitmapDpHeight;
+
+    /**
+     * Bitmap of Rect holds four integer coordinates for a rectangle.
+     */
     private Rect mBitmapRect;
 
     private SpriteSheet mSpriteSheet;
@@ -57,7 +74,7 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion implements Sprit
     }
 
     public ParabolicMotionSpriteSheet frequency(int frequency) {
-        mFrequency = frequency;
+        mFrameRate = frequency;
         return this;
     }
 
@@ -137,13 +154,13 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion implements Sprit
     }
 
     private synchronized void updateSpritePosition() {
-        if (mDrawingNum != mFrequency) {
+        if (mDrawingNum != mFrameRate) {
             mDrawingNum++;
             return;
         }
         mDrawingNum = Constant.DEFAULT_DRAWING_NUM;
 
-        mSpriteSheet.updatePosition();
+        mSpriteSheet.updateFrame();
     }
 
     private void setBaseLength(Canvas canvas) {

@@ -3,30 +3,78 @@ package com.daasuu.library.spritesheet;
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.constant.Constant;
 
-
+/**
+ * Encapsulates the properties and methods associated with a sprite sheet. A sprite sheet is a series of images (usually
+ * animation frames) combined into a larger image (or images). For example, an animation consisting of eight 100x100
+ * images could be combined into a single 400x200 sprite sheet (4 frames across by 2 high).
+ */
 public class SpriteSheet {
 
+    /**
+     * The number of width of each frame
+     */
     public float frameWidth;
+
+    /**
+     * The number of height of each frame
+     */
     public float frameHeight;
+
+    /**
+     * the total number of frames in the specified animation
+     */
     public int frameNum;
 
-    // The number of which frame, there is about line 1 of side
+    /**
+     * The number of which frame, there is about line 1 of side
+     */
     public int frameNumPerLine;
 
+    /**
+     * If true, the Sprite Animation will loop when it reaches the last frame.
+     */
     public boolean spriteLoop = false;
 
+    /**
+     * Movement of frame horizontal translation (x position) in pixels
+     */
     public float dx = 0;
-    public float dy = 0;
-    public int currentPosition = Constant.DEFAULT_CURRENT_POSITION;
 
+    /**
+     * Movement of frame horizontal translation (y position) in pixels
+     */
+    public float dy = 0;
+
+    /**
+     * The frame index that will be drawn when draw is called.
+     * This will always be an integer value.
+     */
+    public int currentFrame = Constant.DEFAULT_CURRENT_FRAME;
+
+    /**
+     * Dispatched when an animation reaches its ends.
+     */
     private AnimCallBack mSpriteSheetFinishCallback;
 
+    /**
+     * indicates whether to start the SpriteAnimation paused.
+     */
     protected boolean mSpritePause = false;
 
+    /**
+     * Getter mSpritePause
+     *
+     * @return mSpritePause
+     */
     public boolean isSpritePause() {
         return mSpritePause;
     }
 
+    /**
+     * Setter mSpritePause
+     *
+     * @param mSpritePause indicates whether to start the SpriteAnimation paused.
+     */
     public void setSpritePause(boolean mSpritePause) {
         this.mSpritePause = mSpritePause;
     }
@@ -34,10 +82,10 @@ public class SpriteSheet {
     /**
      * constructor
      *
-     * @param frameWidth
-     * @param frameHeight
-     * @param frameNum
-     * @param frameNumPerLine
+     * @param frameWidth      The number of width of each frame
+     * @param frameHeight     The number of height of each frame
+     * @param frameNum        the total number of frames in the specified animation
+     * @param frameNumPerLine The number of which frame, there is about line 1 of side
      */
     public SpriteSheet(float frameWidth, float frameHeight, int frameNum, int frameNumPerLine) {
         this.frameWidth = frameWidth;
@@ -46,50 +94,54 @@ public class SpriteSheet {
         this.frameNumPerLine = frameNumPerLine;
     }
 
-
+    /**
+     * Setter mSpriteSheetFinishCallback
+     *
+     * @param spriteSheetFinishCallback Dispatched when an animation reaches its ends.
+     */
     public void setSpriteSheetFinishCallback(AnimCallBack spriteSheetFinishCallback) {
         this.mSpriteSheetFinishCallback = spriteSheetFinishCallback;
     }
 
     /**
-     * Move position of SpriteSheet
+     * Move frame of SpriteSheet
      */
-    public void updatePosition() {
+    public void updateFrame() {
         if (mSpritePause) return;
 
-        if (currentPosition > frameNum + 2) return;
+        if (currentFrame > frameNum + 2) return;
 
-        boolean edge = currentPosition % frameNumPerLine == 0;
+        boolean edge = currentFrame % frameNumPerLine == 0;
         if (edge) {
             // It falls under the case of the end
-            currentPosition++;
-            if (currentPosition <= frameNum) {
+            currentFrame++;
+            if (currentFrame <= frameNum) {
                 dy -= frameHeight;
                 dx = 0;
             }
-            repeatPosition();
+            repeatFrame();
             return;
         }
 
-        currentPosition++;
-        if (currentPosition <= frameNum) {
+        currentFrame++;
+        if (currentFrame <= frameNum) {
             dx -= frameWidth;
         }
-        repeatPosition();
+        repeatFrame();
     }
 
     /**
-     * Repeat position of SpriteSheet
+     * Repeat frame of SpriteSheet
      */
-    protected void repeatPosition() {
-        if (currentPosition != frameNum) return;
+    protected void repeatFrame() {
+        if (currentFrame != frameNum) return;
 
         if (spriteLoop) {
-            currentPosition = Constant.DEFAULT_CURRENT_POSITION;
+            currentFrame = Constant.DEFAULT_CURRENT_FRAME;
             dx = 0;
             dy = 0;
         } else {
-            currentPosition = frameNum;
+            currentFrame = frameNum;
         }
 
         if (mSpriteSheetFinishCallback != null) {

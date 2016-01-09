@@ -17,8 +17,42 @@ import java.util.List;
  */
 class Tween extends DisplayObject {
 
+    /**
+     * If true, the tween will loop when it reaches the end. Can be set via the props param.
+     */
     protected boolean mTweenLoop = false;
+
+    /**
+     * Setter mTweenLoop
+     *
+     * @param repeat If true, the tween will loop when it reaches the end.
+     */
+    protected void setTweenLoop(boolean repeat) {
+        mTweenLoop = repeat;
+    }
+
+    /**
+     * indicates whether to start the tween paused.
+     */
     private boolean mTweenPause = false;
+
+    /**
+     * Setter mTweenPause
+     *
+     * @param pause indicates whether to start the tween paused.
+     */
+    public void tweenPause(boolean pause) {
+        mTweenPause = pause;
+    }
+
+    /**
+     * Getter mTweenPause
+     *
+     * @return indicates whether to start the tween paused.
+     */
+    public boolean isTweenPause() {
+        return mTweenPause;
+    }
 
 
     public void kill() {
@@ -26,18 +60,12 @@ class Tween extends DisplayObject {
         mAnimParameters.clear();
     }
 
-    public void tweenPause(boolean pause) {
-        mTweenPause = pause;
-    }
-
-    public boolean isTweenPause() {
-        return mTweenPause;
-    }
-
-    protected void setTweenLoop(boolean repeat) {
-        mTweenLoop = repeat;
-    }
-
+    /**
+     * Shortcut method to quickly set the transform properties on the display object.
+     *
+     * @param x The horizontal translation (x position) in pixels
+     * @param y The vertical translation (y position) in pixels
+     */
     protected void setTransform(float x, float y) {
         if (mTweenParameterList.size() > 0) {
             setTo(0, x, y, Ease.NONE);
@@ -50,6 +78,16 @@ class Tween extends DisplayObject {
         }
     }
 
+    /**
+     * Shortcut method to quickly set the transform properties on the display object.
+     *
+     * @param x        The horizontal translation (x position) in pixels
+     * @param y        The vertical translation (y position) in pixels
+     * @param alpha    The alpha (transparency) ,as a percentage of 255.
+     * @param scaleX   The horizontal scale, as a percentage of 1
+     * @param scaleY   The vertical scale, as a percentage of 1
+     * @param rotation The rotation, in degrees
+     */
     protected void setTransform(float x, float y, int alpha, float scaleX, float scaleY, float rotation) {
         if (mTweenParameterList.size() > 0) {
             setTo(0, x, y, alpha, scaleX, scaleY, rotation, Ease.NONE);
@@ -72,40 +110,82 @@ class Tween extends DisplayObject {
 
     }
 
+    /**
+     * The left offset for this display object's registration point. For example, to make a 100x100px Bitmap rotate
+     * around its center, you would set mRotateRegistrationX and mRotateRegistrationY to 50.
+     */
     protected float mRotateRegistrationX = 0f;
-    protected float mRotateRegistrationY = 0f;
-    protected float mScaleRegistrationX = 0f;
-    protected float mScaleRegistrationY = 0f;
 
+    /**
+     * The y offset for this display object's registration point. For example, to make a 100x100px Bitmap rotate
+     * around its center, you would set mRotateRegistrationX and mRotateRegistrationY to 50.
+     */
+    protected float mRotateRegistrationY = 0f;
+
+    /**
+     * Setter mRotateRegistrationX and mRotateRegistrationY
+     *
+     * @param regX The horizontal rotate registration point in pixels
+     * @param regY The vertical rotate registration point in pixels
+     */
     protected void setRotateRegistration(float regX, float regY) {
         mRotateRegistrationX = regX;
         mRotateRegistrationY = regY;
     }
 
+    /**
+     * The left offset for this display object's registration point. For example, to make a 100x100px Bitmap scale
+     * around its center, you would set mRotateRegistrationX and mRotateRegistrationY to 50.
+     */
+    protected float mScaleRegistrationX = 0f;
+
+    /**
+     * The y offset for this display object's registration point. For example, to make a 100x100px Bitmap scale
+     * around its center, you would set mRotateRegistrationX and mRotateRegistrationY to 50.
+     */
+    protected float mScaleRegistrationY = 0f;
+
+    /**
+     * Setter mScaleRegistrationX and mScaleRegistrationY
+     *
+     * @param regX The horizontal scale registration point in pixels
+     * @param regY The vertical scale registration point in pixels
+     */
     protected void setScaleRegistration(float regX, float regY) {
         mScaleRegistrationX = regX;
         mScaleRegistrationY = regY;
     }
 
+    /**
+     * Array of parameters required when to Tween animation DisplayObject.
+     */
     protected List<AnimParameter> mAnimParameters = new ArrayList<AnimParameter>() {
         {
             add(new AnimParameter(x, y));
         }
     };
 
+
     protected long mFps = 1000 / Constant.DEFAULT_FPS;
 
+    /**
+     * Indicates the target frame rate in frames per second (FPS). Effectively just a shortcut to `interval`, where
+     * `frameRate == 1000/interval`.
+     *
+     * @param fps frameRate
+     */
     private void setFps(long fps) {
         mFps = 1000 / fps;
     }
 
     /**
-     * animation array set
+     * Queues a tween from the current values to the target properties. Set duration to 0 to jump to these value.
+     * Numeric properties will be tweened from their current value in the tween to the target value.
      *
-     * @param animDuration
-     * @param x
-     * @param y
-     * @param ease
+     * @param animDuration The duration of the tween in milliseconds
+     * @param x            The horizontal translation (x position) in pixels
+     * @param y            The vertical translation (y position) in pixels
+     * @param ease         The easing function to use for this tween.
      */
     protected void setTo(long animDuration, float x, float y, Ease ease) {
         int alpha;
@@ -129,13 +209,14 @@ class Tween extends DisplayObject {
 
 
     /**
-     * animation array set
+     * Queues a tween from the current values to the target properties. Set duration to 0 to jump to these value.
+     * Numeric properties will be tweened from their current value in the tween to the target value.
      *
-     * @param animDuration
-     * @param x
-     * @param y
-     * @param alpha
-     * @param ease
+     * @param animDuration The duration of the tween in milliseconds
+     * @param x            The horizontal translation (x position) in pixels
+     * @param y            The vertical translation (y position) in pixels
+     * @param alpha        The alpha (transparency) ,as a percentage of 255.
+     * @param ease         The easing function to use for this tween.
      */
     protected void setTo(long animDuration, float x, float y, int alpha, Ease ease) {
         float scaleX;
@@ -156,14 +237,15 @@ class Tween extends DisplayObject {
     }
 
     /**
-     * animation array set
+     * Queues a tween from the current values to the target properties. Set duration to 0 to jump to these value.
+     * Numeric properties will be tweened from their current value in the tween to the target value.
      *
-     * @param animDuration
-     * @param x
-     * @param y
-     * @param scaleX
-     * @param scaleY
-     * @param ease
+     * @param animDuration The duration of the tween in milliseconds
+     * @param x            The horizontal translation (x position) in pixels
+     * @param y            The vertical translation (y position) in pixels
+     * @param scaleX       The horizontal scale, as a percentage of 1
+     * @param scaleY       The vertical scale, as a percentage of 1
+     * @param ease         The easing function to use for this tween.
      */
     protected void setTo(long animDuration, float x, float y, float scaleX, float scaleY, Ease ease) {
         int alpha;
@@ -181,13 +263,14 @@ class Tween extends DisplayObject {
     }
 
     /**
-     * animation array set
+     * Queues a tween from the current values to the target properties. Set duration to 0 to jump to these value.
+     * Numeric properties will be tweened from their current value in the tween to the target value.
      *
-     * @param animDuration
-     * @param x
-     * @param y
-     * @param rotation
-     * @param ease
+     * @param animDuration The duration of the tween in milliseconds
+     * @param x            The horizontal translation (x position) in pixels
+     * @param y            The vertical translation (y position) in pixels
+     * @param rotation     The rotation, in degrees
+     * @param ease         The easing function to use for this tween.
      */
     protected void setTo(long animDuration, float x, float y, float rotation, Ease ease) {
         int alpha;
@@ -208,16 +291,17 @@ class Tween extends DisplayObject {
     }
 
     /**
-     * animation array set
+     * Queues a tween from the current values to the target properties. Set duration to 0 to jump to these value.
+     * Numeric properties will be tweened from their current value in the tween to the target value.
      *
-     * @param animDuration
-     * @param x
-     * @param y
-     * @param alpha
-     * @param scaleX
-     * @param scaleY
-     * @param rotation
-     * @param ease
+     * @param animDuration The duration of the tween in milliseconds
+     * @param x            The horizontal translation (x position) in pixels
+     * @param y            The vertical translation (y position) in pixels
+     * @param alpha        The alpha (transparency) ,as a percentage of 255.
+     * @param scaleX       The horizontal scale, as a percentage of 1
+     * @param scaleY       The vertical scale, as a percentage of 1
+     * @param rotation     The rotation, in degrees
+     * @param ease         The easing function to use for this tween.
      */
     protected void setTo(long animDuration, float x, float y, int alpha, float scaleX, float scaleY, float rotation, Ease ease) {
         if (mTweenParameterList.size() == 0) {
@@ -235,11 +319,12 @@ class Tween extends DisplayObject {
 
 
     /**
-     * animation array set x only
+     * Queues a tween from the current values to the target properties. Set duration to 0 to jump to these value.
+     * Numeric properties will be tweened from their current value in the tween to the target value.
      *
-     * @param animDuration
-     * @param x
-     * @param ease
+     * @param animDuration The duration of the tween in milliseconds
+     * @param x            The horizontal translation (x position) in pixels
+     * @param ease         The easing function to use for this tween.
      */
     protected void setToX(long animDuration, float x, Ease ease) {
         int alpha;
@@ -273,11 +358,12 @@ class Tween extends DisplayObject {
     }
 
     /**
-     * animation array set y only
+     * Queues a tween from the current values to the target properties. Set duration to 0 to jump to these value.
+     * Numeric properties will be tweened from their current value in the tween to the target value.
      *
-     * @param animDuration
-     * @param y
-     * @param ease
+     * @param animDuration The duration of the tween in milliseconds
+     * @param y            The vertical translation (y position) in pixels
+     * @param ease         The easing function to use for this tween.
      */
     protected void setToY(long animDuration, float y, Ease ease) {
         int alpha;
@@ -311,9 +397,12 @@ class Tween extends DisplayObject {
     }
 
     /**
-     * @param animDuration
-     * @param alpha
-     * @param ease
+     * Queues a tween from the current values to the target properties. Set duration to 0 to jump to these value.
+     * Numeric properties will be tweened from their current value in the tween to the target value.
+     *
+     * @param animDuration The duration of the tween in milliseconds
+     * @param alpha        The alpha (transparency) ,as a percentage of 255.
+     * @param ease         The easing function to use for this tween.
      */
     protected void setAlpha(long animDuration, int alpha, Ease ease) {
         float x;
@@ -348,10 +437,13 @@ class Tween extends DisplayObject {
     }
 
     /**
-     * @param animDuration
-     * @param scaleX
-     * @param scaleY
-     * @param ease
+     * Queues a tween from the current values to the target properties. Set duration to 0 to jump to these value.
+     * Numeric properties will be tweened from their current value in the tween to the target value.
+     *
+     * @param animDuration The duration of the tween in milliseconds
+     * @param scaleX       The horizontal scale, as a percentage of 1
+     * @param scaleY       The vertical scale, as a percentage of 1
+     * @param ease         The easing function to use for this tween.
      */
     protected void setScale(long animDuration, float scaleX, float scaleY, Ease ease) {
         float x;
@@ -383,9 +475,12 @@ class Tween extends DisplayObject {
     }
 
     /**
-     * @param animDuration
-     * @param rotation
-     * @param ease
+     * Queues a tween from the current values to the target properties. Set duration to 0 to jump to these value.
+     * Numeric properties will be tweened from their current value in the tween to the target value.
+     *
+     * @param animDuration The duration of the tween in milliseconds
+     * @param rotation     The rotation, in degrees
+     * @param ease         The easing function to use for this tween.
      */
     protected void setRotation(long animDuration, float rotation, Ease ease) {
         float x;
@@ -421,9 +516,9 @@ class Tween extends DisplayObject {
     }
 
     /**
-     * waitTime Animation set
+     * Queues a wait (essentially an empty tween).
      *
-     * @param animDuration
+     * @param animDuration The duration of the wait in milliseconds
      */
     protected void setWaitTime(long animDuration) {
         float x;
@@ -460,7 +555,9 @@ class Tween extends DisplayObject {
     }
 
     /**
-     * @param animCallBack
+     * Set queues an action to call the specified function.
+     *
+     * @param animCallBack callback The function to call.
      */
     protected void setAnimCallBack(AnimCallBack animCallBack) {
 
@@ -475,7 +572,7 @@ class Tween extends DisplayObject {
     protected List<TweenParameter> mTweenParameterList = new ArrayList<>();
 
     /**
-     * mAnimParametersの配列を生成する際に
+     * Arrangement for generating AnimPrameter
      */
     protected class TweenParameter extends AnimParameter {
         public long animDuration;
@@ -517,6 +614,11 @@ class Tween extends DisplayObject {
         return mAnimParameters.get(mDrawCount);
     }
 
+    /**
+     * Queues an action to call the specified function.
+     *
+     * @param animParameter It might have been holding the call the specified function
+     */
     protected void runAnimCallBack(AnimParameter animParameter) {
         if (animParameter.animCallBack != null) {
             animParameter.animCallBack.call();
@@ -527,15 +629,17 @@ class Tween extends DisplayObject {
     @Override
     public void setUp(long fps) {
         setFps(fps);
-        // FPS、到達ポイント、からAnimParameterを生成し、1TweenParameterあたり、mAnimParametersをいくつ作成するかを決める。
+        // FPS, generates a AnimParameter from the arrival point , per 1TweenParameter, to determine how many create a mAnimParameters.
         for (int i = 0, n = mTweenParameterList.size(); i < n; i++) {
             setUpAnimParamList(mTweenParameterList.get(i), i);
         }
     }
 
     /**
-     * @param tweenParameter
-     * @param position
+     * It generates a AnimParam sequences required in Tween.
+     *
+     * @param tweenParameter Arrangement for generating AnimPrameter
+     * @param position       The number of times that Queues a tween was set.
      */
     private void setUpAnimParamList(TweenParameter tweenParameter, int position) {
 

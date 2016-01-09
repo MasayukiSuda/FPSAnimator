@@ -24,7 +24,7 @@ public class ParabolicMotionText extends ParabolicMotion {
     }
 
     public ParabolicMotionText frequency(int frequency) {
-        mFrequency = frequency;
+        mFrameRate = frequency;
         return this;
     }
 

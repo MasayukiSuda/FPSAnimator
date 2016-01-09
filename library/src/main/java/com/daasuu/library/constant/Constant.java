@@ -9,6 +9,6 @@ public class Constant {
     public static final float DEFAULT_ROTATION = 0f;
 
     public static final int DEFAULT_DRAWING_NUM = 1;
-    public static final int DEFAULT_CURRENT_POSITION = 1;
+    public static final int DEFAULT_CURRENT_FRAME = 1;
 
 }
