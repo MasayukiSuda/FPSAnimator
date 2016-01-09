@@ -2,7 +2,7 @@
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html)
 
-A simple but powerful tweening / SpriteSheet / ParabolicMotion / animation library for Android TextureView and SurfaceView.
+A simple but powerful Tween / SpriteSheet / ParabolicMotion / animation library for Android TextureView and SurfaceView.
 
 # Features
 * The controls Fps possible to animation.
@@ -38,8 +38,9 @@ In your onCreate method (or onCreateView for a fragment), bind the widget.
 Create an instance of the Tween, please add it to the FPSTextureView.
 ```JAVA
     Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-    TweenBitmap tweenBitmapA = new TweenBitmap(bitmap);
-    tweenBitmapA
+    
+    TweenBitmap tweenBitmap = new TweenBitmap(bitmap);
+    tweenBitmap
             .toX(1600, windowWidth - bitmap.getWidth(), Ease.BACK_IN_OUT)
             .waitTime(1000)
             .alpha(1000, 0f)
@@ -47,7 +48,7 @@ Create an instance of the Tween, please add it to the FPSTextureView.
             
     mFPSTextureView
                 .setFps(24)
-                .addChild(tweenBitmapA)
+                .addChild(tweenBitmap)
                 .tickStart();
 ```
 <img src="art/tweenBitmapSampleDemo.gif" width="32%">
@@ -106,8 +107,8 @@ This is the implementation of the sample application.
 #### TweenBitmap
 <img src="art/scaleAndAlpha.gif" width="16%">
 ```JAVA
-    TweenBitmap tweenBitmapB = new TweenBitmap(bitmap);
-    tweenBitmapB
+    TweenBitmap tweenBitmap = new TweenBitmap(bitmap);
+    tweenBitmap
             .dpSize(context)
             .scaleRegistration(bitmap.getWidth() / 2, bitmap.getHeight() / 2)
             .loop(true)
@@ -132,7 +133,8 @@ This is the implementation of the sample application.
         Paint paint = new Paint();
         paint.setColor(ContextCompat.getColor(context, R.color.colorPrimary));
         paint.setTextSize(Util.convertDpToPixel(20, context));
-        final ParabolicMotionText parabolicMotionText = new ParabolicMotionText("Text", paint);
+        
+        ParabolicMotionText parabolicMotionText = new ParabolicMotionText("Text", paint);
         parabolicMotionText
                 .transform(800, 800)
                 .initialVelocityY(-40);
@@ -141,11 +143,11 @@ This is the implementation of the sample application.
     }
 
     private void createParabolicMotionBitmap() {
-        final ParabolicMotionBitmap parabolicMotionBitmap = new ParabolicMotionBitmap(mBitmap);
+        ParabolicMotionBitmap parabolicMotionBitmap = new ParabolicMotionBitmap(mBitmap);
         parabolicMotionBitmap
                 .transform(0, mFPSTextureView.getHeight())
                 .dpSize(context)
-                .coefficientBottom(false)
+                .reboundBottom(false)
                 .accelerationX((float) (15 + Math.random() * 7))
                 .initialVelocityY((float) (-65 + Math.random() * 15))
                 .bottomHitCallback(new AnimCallBack() {
