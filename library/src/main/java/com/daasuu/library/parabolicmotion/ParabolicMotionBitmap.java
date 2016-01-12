@@ -240,7 +240,7 @@ public class ParabolicMotionBitmap extends ParabolicMotion {
     }
 
     /**
-     * if not set mBottomBase and mRightSide, set Canvas Bottm and Width.
+     * if not set mBottomBase and mRightSide, set Canvas Bottom and Width.
      *
      * @param canvas This Canvas acquired by lookCanvas in FPSTextureView or FPSSurfaceView.
      */

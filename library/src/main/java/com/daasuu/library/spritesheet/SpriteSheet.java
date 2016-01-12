@@ -3,6 +3,8 @@ package com.daasuu.library.spritesheet;
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.constant.Constant;
 
+import java.util.List;
+
 /**
  * Encapsulates the properties and methods associated with a sprite sheet. A sprite sheet is a series of images (usually
  * animation frames) combined into a larger image (or images). For example, an animation consisting of eight 100x100
@@ -50,6 +52,11 @@ public class SpriteSheet {
      * This will always be an integer value.
      */
     public int currentFrame = Constant.DEFAULT_CURRENT_FRAME;
+
+    /**
+     * It will animation play in the frame number order of the value of this array.
+     */
+    public List<Integer> customFrameList;
 
     /**
      * Dispatched when an animation reaches its ends.
@@ -109,6 +116,11 @@ public class SpriteSheet {
     public void updateFrame() {
         if (mSpritePause) return;
 
+        if (customFrameList != null) {
+            updateCustomFrame();
+            return;
+        }
+
         if (currentFrame > frameNum + 2) return;
 
         boolean edge = currentFrame % frameNumPerLine == 0;
@@ -151,6 +163,28 @@ public class SpriteSheet {
                 mSpriteSheetFinishCallback = null;
             }
         }
+
+    }
+
+    /**
+     * Move frame of SpriteSheet by customFrameList
+     */
+    protected void updateCustomFrame() {
+
+        if (currentFrame == customFrameList.size()) {
+            if (!spriteLoop) return;
+            currentFrame = Constant.DEFAULT_CURRENT_FRAME;
+            dx = 0;
+            dy = 0;
+            return;
+        }
+
+        int currentNum = customFrameList.get(currentFrame - 1);
+
+        dx = frameWidth * (currentNum % frameNumPerLine);
+        dy = frameHeight * (currentNum / frameNumPerLine);
+
+        currentFrame++;
 
     }
 

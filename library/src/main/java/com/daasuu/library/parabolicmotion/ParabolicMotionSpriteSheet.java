@@ -13,6 +13,8 @@ import com.daasuu.library.spritesheet.SpritePause;
 import com.daasuu.library.spritesheet.SpriteSheet;
 import com.daasuu.library.util.Util;
 
+import java.util.List;
+
 
 public class ParabolicMotionSpriteSheet extends ParabolicMotion implements SpritePause {
 
@@ -47,6 +49,18 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion implements Sprit
     private SpriteSheet mSpriteSheet;
 
     private int mDrawingNum = Constant.DEFAULT_DRAWING_NUM;
+
+    /**
+     * Constructor
+     *
+     * @param bitmap      Bitmap to be drawn in FPSTextureView or FPSSurfaceView.
+     * @param frameWidth  The number of width of each frame
+     * @param frameHeight The number of height of each frame
+     * @param frameNum    the total number of frames in the specified animation
+     */
+    public ParabolicMotionSpriteSheet(@NonNull Bitmap bitmap, float frameWidth, float frameHeight, int frameNum) {
+        this(bitmap, frameWidth, frameHeight, frameNum, (int) (bitmap.getWidth() / frameWidth));
+    }
 
     /**
      * Constructor
@@ -101,6 +115,17 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion implements Sprit
     public ParabolicMotionSpriteSheet transform(float x, float y) {
         this.x = x;
         this.y = y;
+        return this;
+    }
+
+    /**
+     * It will animation play in the frame number order of the value of this array.
+     *
+     * @param list Integer List of Frame num.
+     * @return this
+     */
+    public ParabolicMotionSpriteSheet customFrameList(List<Integer> list) {
+        mSpriteSheet.customFrameList = list;
         return this;
     }
 
@@ -325,7 +350,7 @@ public class ParabolicMotionSpriteSheet extends ParabolicMotion implements Sprit
     }
 
     /**
-     * if not set mBottomBase and mRightSide, set Canvas Bottm and Width.
+     * if not set mBottomBase and mRightSide, set Canvas Bottom and Width.
      *
      * @param canvas This Canvas acquired by lookCanvas in FPSTextureView or FPSSurfaceView.
      */

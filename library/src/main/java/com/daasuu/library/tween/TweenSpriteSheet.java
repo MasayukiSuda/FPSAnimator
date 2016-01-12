@@ -16,6 +16,8 @@ import com.daasuu.library.spritesheet.SpritePause;
 import com.daasuu.library.spritesheet.SpriteSheet;
 import com.daasuu.library.util.Util;
 
+import java.util.List;
+
 /**
  * A Tween class tweens properties for a single SpriteSheet.
  */
@@ -67,6 +69,18 @@ public class TweenSpriteSheet extends Tween implements SpritePause {
      * member variables needed to skip a tick in mFrequency
      */
     private int mDrawingNum = Constant.DEFAULT_DRAWING_NUM;
+
+    /**
+     * Constructor
+     *
+     * @param bitmap      Bitmap to be drawn in FPSTextureView or FPSSurfaceView.
+     * @param frameWidth  The number of width of each frame
+     * @param frameHeight The number of height of each frame
+     * @param frameNum    the total number of frames in the specified animation
+     */
+    public TweenSpriteSheet(@NonNull Bitmap bitmap, float frameWidth, float frameHeight, int frameNum) {
+        this(bitmap, frameWidth, frameHeight, frameNum, (int) (bitmap.getWidth() / frameWidth));
+    }
 
     /**
      * Constructor
@@ -169,6 +183,17 @@ public class TweenSpriteSheet extends Tween implements SpritePause {
      */
     public TweenSpriteSheet transform(float x, float y, float alpha, float scaleX, float scaleY, float rotation) {
         setTransform(x, y, Util.convertAlphaFloatToInt(alpha), scaleX, scaleY, rotation);
+        return this;
+    }
+
+    /**
+     * It will animation play in the frame number order of the value of this array.
+     *
+     * @param list Integer List of Frame num.
+     * @return this
+     */
+    public TweenSpriteSheet customFrameList(List<Integer> list) {
+        mSpriteSheet.customFrameList = list;
         return this;
     }
 
