@@ -27,7 +27,7 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
 
     private SurfaceHolder mSurfaceHolder;
 
-    private List<DisplayObject> mDisplayObjectList = new ArrayList<>();
+    private List<DisplayObject> mDisplayList = new ArrayList<>();
 
     public FPSSurfaceView(Context context) {
         this(context, null, 0);
@@ -37,6 +37,16 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
         this(context, attrs, 0);
     }
 
+    /**
+     * Constructor
+     *
+     * @param context      The Context the view is running in, through which it can
+     *                     access the current theme, resources, etc.
+     * @param attrs        The attributes of the XML tag that is inflating the view.
+     * @param defStyleAttr An attribute in the current theme that contains a
+     *                     reference to a style resource that supplies default values for
+     *                     the view. Can be 0 to not look for defaults.
+     */
     public FPSSurfaceView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
@@ -47,9 +57,13 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
 
     }
 
-
+    /**
+     * Start tick
+     *
+     * @return this
+     */
     public FPSSurfaceView tickStart() {
-        stop();
+        tickStop();
         mTimer = new Timer();
         mTimer.schedule(new TimerTask() {
             @Override
@@ -60,33 +74,21 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
         return this;
     }
 
-    public void stop() {
+    /**
+     * Stop tick
+     */
+    public void tickStop() {
         if (mTimer != null) {
             mTimer.cancel();
             mTimer = null;
         }
     }
 
-    @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-        // do nothing
-    }
-
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        // do nothing
-    }
-
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-        stop();
-    }
-
     private void onTick() {
 
         synchronized (this) {
 
-            List<DisplayObject> copyDisplayObjectList = new ArrayList<DisplayObject>(mDisplayObjectList);
+            List<DisplayObject> copyDisplayObjectList = new ArrayList<DisplayObject>(mDisplayList);
 
             Canvas canvas = mSurfaceHolder.lockCanvas();
             if (canvas == null) return;
@@ -105,23 +107,117 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
 
     }
 
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        // do nothing
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+        // do nothing
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        tickStop();
+    }
+
+    /**
+     * Adds a child to the top of the display list.
+     *
+     * @param displayObject DisplayObject
+     * @return this
+     */
     public FPSSurfaceView addChild(@NonNull DisplayObject displayObject) {
         displayObject.setUp(mFps);
-        mDisplayObjectList.add(displayObject);
+        mDisplayList.add(displayObject);
         return this;
     }
 
+    /**
+     * Adds a child to the display list at the specified index, bumping children at equal or greater indexes up one, and setting its parent to this Container
+     *
+     * @param location      index
+     * @param displayObject DisplayObject
+     * @return this
+     */
+    public FPSSurfaceView addChildAt(int location, @NonNull DisplayObject displayObject) {
+        displayObject.setUp(mFps);
+        mDisplayList.add(location, displayObject);
+        return this;
+    }
+
+    /**
+     * Removes the specified child from the display list.
+     *
+     * @param displayObject DisplayObject
+     * @return this
+     */
     public FPSSurfaceView removeChild(@NonNull DisplayObject displayObject) {
-        mDisplayObjectList.remove(displayObject);
+        mDisplayList.remove(displayObject);
         return this;
     }
 
+    /**
+     * Removes the child at the specified index from the display list.
+     *
+     * @param location index
+     * @return this
+     */
+    public FPSSurfaceView removeChildAt(int location) {
+        mDisplayList.remove(location);
+        return this;
+    }
+
+    /**
+     * Removes all children from the display list.
+     *
+     * @return this
+     */
+    public FPSSurfaceView removeAllChildren() {
+        mDisplayList.clear();
+        return this;
+    }
+
+    /**
+     * Swaps the specified children's depth in the display list. If either child is not a child of this Container, return false.
+     *
+     * @param child1 DisplayObject
+     * @param child2 DisplayObject
+     * @return if true, success to swapChildren
+     */
+    public boolean swapChildren(@NonNull DisplayObject child1, @NonNull DisplayObject child2) {
+        int childIndex1 = mDisplayList.indexOf(child1);
+        int childIndex2 = mDisplayList.indexOf(child2);
+
+        if (childIndex1 == -1 || childIndex2 == -1) {
+            return false;
+        }
+
+        removeChildAt(childIndex1);
+        addChildAt(childIndex1, child2);
+        removeChildAt(childIndex2);
+        addChildAt(childIndex2, child1);
+        return true;
+    }
+
+    /**
+     * Indicates the target frame rate in frames per second.
+     *
+     * @param fps FPS
+     * @return this
+     */
     public FPSSurfaceView setFps(long fps) {
         this.mFps = fps;
         return this;
     }
 
-    public List<DisplayObject> getAnimList() {
-        return mDisplayObjectList;
+    /**
+     * Getter DisplayList
+     *
+     * @return DisplayList
+     */
+    public List<DisplayObject> getDisplayList() {
+        return mDisplayList;
     }
 }

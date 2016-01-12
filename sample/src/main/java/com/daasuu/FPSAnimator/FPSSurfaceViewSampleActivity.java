@@ -140,7 +140,7 @@ public class FPSSurfaceViewSampleActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        mFpsSurfaceView.stop();
+        mFpsSurfaceView.tickStop();
     }
 
 }
