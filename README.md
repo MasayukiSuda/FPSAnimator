@@ -8,6 +8,7 @@ A simple but powerful Tween / SpriteSheet / ParabolicMotion / animation library 
 * The controls Fps possible to animation.
 * Possible for animation of Tween and SpriteSheet and ParabolicMotion in one of TextureView.
 * Possible to animate with low load on the terminal.
+* 28 types of Easing
 
 # Basic Usage
 Gradle
