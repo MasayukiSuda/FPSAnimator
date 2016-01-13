@@ -1,5 +1,7 @@
 package com.daasuu.library.spritesheet;
 
+import android.util.Log;
+
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.constant.Constant;
 
@@ -171,18 +173,15 @@ public class SpriteSheet {
      */
     protected void updateCustomFrame() {
 
-        if (currentFrame == customFrameList.size()) {
+        if (currentFrame > customFrameList.size()) {
             if (!spriteLoop) return;
             currentFrame = Constant.DEFAULT_CURRENT_FRAME;
-            dx = 0;
-            dy = 0;
-            return;
         }
 
         int currentNum = customFrameList.get(currentFrame - 1);
 
-        dx = frameWidth * (currentNum % frameNumPerLine);
-        dy = frameHeight * (currentNum / frameNumPerLine);
+        dx = -(frameWidth * (currentNum % frameNumPerLine));
+        dy = -(frameHeight * (currentNum / frameNumPerLine));
 
         currentFrame++;
 
