@@ -51,6 +51,11 @@ public class DisplayObject2 extends DisplayObject {
     public Paint paint;
 
     public DisplayObject2() {
+        paint = new Paint();
+    }
+
+    public DisplayObject2(Paint paint) {
+        this.paint = paint;
     }
 
     public DisplayObject2 anim(Anim anim) {
@@ -62,19 +67,6 @@ public class DisplayObject2 extends DisplayObject {
     public DisplayObject2 painter(Painter painter) {
         this.mPainter = painter;
         return this;
-    }
-
-    public DisplayObject2(Anim mAnim, Painter mPainter) {
-        this.mAnim = mAnim;
-        this.mPainter = mPainter;
-        mPosition = mAnim.getInitialPosition();
-        paint = new Paint();
-    }
-
-    public DisplayObject2(Anim mAnim, Painter mPainter, Paint paint) {
-        this.mAnim = mAnim;
-        this.mPainter = mPainter;
-        this.paint = paint;
     }
 
     @Override

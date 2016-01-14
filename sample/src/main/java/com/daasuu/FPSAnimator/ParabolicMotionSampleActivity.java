@@ -14,7 +14,7 @@ import com.daasuu.library.FPSTextureView;
 import com.daasuu.library.anim.ParabolicAnim;
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.painter.BitmapPainter;
-import com.daasuu.library.parabolicmotion.ParabolicMotionText;
+import com.daasuu.library.painter.TextPainter;
 import com.daasuu.library.util.Util;
 
 import java.util.Timer;
@@ -40,12 +40,21 @@ public class ParabolicMotionSampleActivity extends AppCompatActivity {
         Paint paint = new Paint();
         paint.setColor(ContextCompat.getColor(this, R.color.colorPrimary));
         paint.setTextSize(Util.convertDpToPixel(20, this));
-        final ParabolicMotionText parabolicMotionText = new ParabolicMotionText("Text", paint);
-        parabolicMotionText
-                .transform(800, 800)
-                .initialVelocityY(-40);
+//        final ParabolicMotionText parabolicMotionText = new ParabolicMotionText("Text", paint);
+//        parabolicMotionText
+//                .transform(800, 800)
+//                .initialVelocityY(-40);
 
-        mFPSTextureView.addChild(parabolicMotionText);
+        final DisplayObject2 testDisplay = new DisplayObject2(paint)
+                .anim(ParabolicAnim.builder()
+                                .transform(800, 800)
+                                .initialVelocityY(-40)
+                                .build()
+                )
+                .painter(new TextPainter("Text"));
+
+//        mFPSTextureView.addChild(parabolicMotionText);
+        mFPSTextureView.addChild(testDisplay);
         mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
 
     }
