@@ -7,11 +7,11 @@ import android.graphics.Canvas;
  */
 public interface Anim {
 
-    void updatePosition(Position position);
+    void updateAnimParam(AnimParameter position);
 
     void setBaseLine(Canvas canvas, float width, float height);
 
-    Position getInitialPosition();
+    AnimParameter getInitialPosition();
 
     void setUp(long fps);
 }
