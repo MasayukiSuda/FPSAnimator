@@ -1,7 +1,6 @@
 package com.daasuu.library;
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
 
 import com.daasuu.library.constant.Constant;
 
@@ -45,17 +44,7 @@ public class DisplayObject2 extends DisplayObject {
      */
     private String id;
 
-    /**
-     * The Paint instance for this display object.
-     */
-    public Paint paint;
-
     public DisplayObject2() {
-        paint = new Paint();
-    }
-
-    public DisplayObject2(Paint paint) {
-        this.paint = paint;
     }
 
     public DisplayObject2 anim(Anim anim) {
@@ -71,9 +60,9 @@ public class DisplayObject2 extends DisplayObject {
 
     @Override
     public void draw(Canvas canvas) {
-        mAnim.setBaseLine(canvas, mPainter.getWidth(paint), mPainter.getHeight(paint));
+        mAnim.setBaseLine(canvas, mPainter.getWidth(), mPainter.getHeight());
         mAnim.updatePosition(mPosition);
-        mPainter.draw(canvas, mPosition.x(), mPosition.y(), paint);
+        mPainter.draw(canvas, mPosition.x(), mPosition.y());
     }
 
     @Override
@@ -81,21 +70,17 @@ public class DisplayObject2 extends DisplayObject {
         mAnim.setUp(fps);
     }
 
-    /**
-     * for debug.
-     *
-     * @return this display object Properties
-     */
+    @Override
     public String toString() {
-        return "DisplayObject{" +
-                "x='" + this.x + '\n' +
-                "y='" + this.y + '\n' +
-                "alpha='" + this.alpha + '\n' +
-                "scaleX='" + this.scaleX + '\n' +
-                "scaleY='" + this.scaleY + '\n' +
-                "rotation='" + this.rotation + '\n' +
-                "paint='" + this.paint + '\n' +
-                "id='" + this.id + '\n' +
-                '}';
+        return "DisplayObject2{" +
+                "mPosition=" + mPosition +
+                ", mAnim=" + mAnim +
+                ", mPainter=" + mPainter +
+                ", scaleX=" + scaleX +
+                ", scaleY=" + scaleY +
+                ", alpha=" + alpha +
+                ", rotation=" + rotation +
+                ", id='" + id + '\'' +
+                "} " + super.toString();
     }
 }

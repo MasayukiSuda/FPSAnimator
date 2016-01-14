@@ -40,42 +40,21 @@ public class ParabolicMotionSampleActivity extends AppCompatActivity {
         Paint paint = new Paint();
         paint.setColor(ContextCompat.getColor(this, R.color.colorPrimary));
         paint.setTextSize(Util.convertDpToPixel(20, this));
-//        final ParabolicMotionText parabolicMotionText = new ParabolicMotionText("Text", paint);
-//        parabolicMotionText
-//                .transform(800, 800)
-//                .initialVelocityY(-40);
 
-        final DisplayObject2 testDisplay = new DisplayObject2(paint)
+        final DisplayObject2 testDisplay = new DisplayObject2()
                 .anim(ParabolicAnim.builder()
                                 .transform(800, 800)
                                 .initialVelocityY(-40)
                                 .build()
                 )
-                .painter(new TextPainter("Text"));
+                .painter(new TextPainter("Text", paint));
 
-//        mFPSTextureView.addChild(parabolicMotionText);
         mFPSTextureView.addChild(testDisplay);
         mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
 
     }
 
     private void createParabolicMotionBitmap() {
-
-//        final ParabolicMotionBitmap parabolicMotionBitmap = new ParabolicMotionBitmap(mBitmap);
-//        parabolicMotionBitmap
-//                .transform(0, mFPSTextureView.getHeight())
-//                .dpSize(this)
-//                .reboundBottom(false)
-//                .accelerationX((float) (15 + Math.random() * 7))
-//                .initialVelocityY((float) (-65 + Math.random() * 15))
-//                .bottomHitCallback(new AnimCallBack() {
-//                    @Override
-//                    public void call() {
-//                        mFPSTextureView.removeChild(parabolicMotionBitmap);
-//                    }
-//                });
-//
-//        mFPSTextureView.addChild(parabolicMotionBitmap);
 
         final DisplayObject2 object2 = new DisplayObject2();
 

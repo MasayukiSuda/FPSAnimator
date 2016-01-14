@@ -42,8 +42,11 @@ public class BitmapPainter implements Painter {
      */
     private Rect mBitmapRect;
 
+    private final Paint mPaint;
+
     public BitmapPainter(Bitmap bitmap) {
         this.mBitmap = bitmap;
+        this.mPaint = new Paint();
     }
 
     /**
@@ -61,21 +64,21 @@ public class BitmapPainter implements Painter {
     }
 
     @Override
-    public float getWidth(Paint paint) {
+    public float getWidth() {
         return mDpSize ?
                 mBitmapDpWidth :
                 mBitmap.getWidth();
     }
 
     @Override
-    public float getHeight(Paint paint) {
+    public float getHeight() {
         return mDpSize ?
                 mBitmapDpHeight :
                 mBitmap.getHeight();
     }
 
     @Override
-    public void draw(Canvas canvas, float x, float y, Paint paint) {
+    public void draw(Canvas canvas, float x, float y) {
         if (mBitmap == null) {
             return;
         }
@@ -87,9 +90,9 @@ public class BitmapPainter implements Painter {
                     x + mBitmapDpWidth,
                     y + mBitmapDpHeight
             );
-            canvas.drawBitmap(mBitmap, mBitmapRect, dpSizeRect, paint);
+            canvas.drawBitmap(mBitmap, mBitmapRect, dpSizeRect, mPaint);
         } else {
-            canvas.drawBitmap(mBitmap, x, y, paint);
+            canvas.drawBitmap(mBitmap, x, y, mPaint);
         }
     }
 }

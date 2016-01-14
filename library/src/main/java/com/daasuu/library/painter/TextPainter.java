@@ -9,6 +9,7 @@ import com.daasuu.library.Painter;
  * Created by a13587 on 16/01/14.
  */
 public class TextPainter implements Painter {
+
     private static final String TAG = TextPainter.class.getSimpleName();
 
     /**
@@ -21,33 +22,32 @@ public class TextPainter implements Painter {
      */
     private float mAdjustTextMesureY = -1;
 
+    private final Paint mPaint;
+
     public TextPainter(String text) {
+        this(text, new Paint());
+    }
+
+    public TextPainter(String text, Paint paint) {
         this.mText = text;
+        this.mPaint = paint;
+        mAdjustTextMesureY = paint.getTextSize();
     }
 
     @Override
-    public void draw(Canvas canvas, float x, float y, Paint paint) {
+    public void draw(Canvas canvas, float x, float y) {
         if (mText != null) {
-            setAdjustTextMesureY(paint);
-            canvas.drawText(mText, x, y + mAdjustTextMesureY, paint);
+            canvas.drawText(mText, x, y + mAdjustTextMesureY, mPaint);
         }
     }
 
     @Override
-    public float getWidth(Paint paint) {
-        setAdjustTextMesureY(paint);
-        return paint.measureText(mText);
+    public float getWidth() {
+        return mPaint.measureText(mText);
     }
 
     @Override
-    public float getHeight(Paint paint) {
-        setAdjustTextMesureY(paint);
+    public float getHeight() {
         return mAdjustTextMesureY;
-    }
-
-    private void setAdjustTextMesureY(Paint paint) {
-        if (mAdjustTextMesureY == -1) {
-            mAdjustTextMesureY = paint.getTextSize();
-        }
     }
 }
