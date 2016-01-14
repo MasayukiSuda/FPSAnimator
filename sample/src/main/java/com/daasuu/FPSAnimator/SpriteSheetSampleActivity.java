@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.daasuu.FPSAnimator.util.UIUtil;
+import com.daasuu.library.DisplayObject2;
 import com.daasuu.library.FPSTextureView;
+import com.daasuu.library.anim.ParabolicAnim;
 import com.daasuu.library.callback.AnimCallBack;
-import com.daasuu.library.parabolicmotion.ParabolicMotionSpriteSheet;
+import com.daasuu.library.painter.SpriteSheetPainter;
 import com.daasuu.library.spritesheet.SpriteSheet;
 import com.daasuu.library.tween.TweenSpriteSheet;
 import com.daasuu.library.util.Util;
@@ -60,27 +62,31 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
                 64,
                 12
         );
-        final ParabolicMotionSpriteSheet parabolicMotion = new ParabolicMotionSpriteSheet(
-                spriteBitmapB,
-                overrideSpriteSheet
-        );
-        parabolicMotion
-                .dpSize(this)
-                .spriteLoop(true)
-                .transform(0, UIUtil.getWindowHeight(this) / 2)
-                .initialVelocityY(-30)
-                .reboundRight(false)
-                .rightHitCallback(new AnimCallBack() {
-                    @Override
-                    public void call() {
-                        mFPSTextureView.removeChild(parabolicMotion);
-                    }
-                });
 
+        final DisplayObject2 parabolicDisplay = new DisplayObject2();
+        parabolicDisplay
+                .painter(
+                        new SpriteSheetPainter(spriteBitmapB, overrideSpriteSheet)
+                                .dpSize(this)
+                                .spriteLoop(true)
+                )
+                .anim(
+                        ParabolicAnim.builder()
+                                .transform(0, UIUtil.getWindowHeight(this) / 2)
+                                .initialVelocityY(-30)
+                                .reboundRight(false)
+                                .rightHitCallback(new AnimCallBack() {
+                                    @Override
+                                    public void call() {
+                                        mFPSTextureView.removeChild(parabolicDisplay);
+                                    }
+                                })
+                                .build()
+                );
 
         mFPSTextureView
                 .setFps(24)
-                .addChild(parabolicMotion)
+                .addChild(parabolicDisplay)
                 .addChild(tweenSpriteSheetB);
     }
 
