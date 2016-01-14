@@ -5,13 +5,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Paint;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
+import com.daasuu.library.DisplayObject2;
 import com.daasuu.library.FPSTextureView;
+import com.daasuu.library.anim.ParabolicAnim;
 import com.daasuu.library.callback.AnimCallBack;
-import com.daasuu.library.parabolicmotion.ParabolicMotionBitmap;
+import com.daasuu.library.painter.BitmapPainter;
 import com.daasuu.library.parabolicmotion.ParabolicMotionText;
 import com.daasuu.library.util.Util;
 
@@ -50,21 +52,39 @@ public class ParabolicMotionSampleActivity extends AppCompatActivity {
 
     private void createParabolicMotionBitmap() {
 
-        final ParabolicMotionBitmap parabolicMotionBitmap = new ParabolicMotionBitmap(mBitmap);
-        parabolicMotionBitmap
-                .transform(0, mFPSTextureView.getHeight())
-                .dpSize(this)
-                .reboundBottom(false)
-                .accelerationX((float) (15 + Math.random() * 7))
-                .initialVelocityY((float) (-65 + Math.random() * 15))
-                .bottomHitCallback(new AnimCallBack() {
-                    @Override
-                    public void call() {
-                        mFPSTextureView.removeChild(parabolicMotionBitmap);
-                    }
-                });
+//        final ParabolicMotionBitmap parabolicMotionBitmap = new ParabolicMotionBitmap(mBitmap);
+//        parabolicMotionBitmap
+//                .transform(0, mFPSTextureView.getHeight())
+//                .dpSize(this)
+//                .reboundBottom(false)
+//                .accelerationX((float) (15 + Math.random() * 7))
+//                .initialVelocityY((float) (-65 + Math.random() * 15))
+//                .bottomHitCallback(new AnimCallBack() {
+//                    @Override
+//                    public void call() {
+//                        mFPSTextureView.removeChild(parabolicMotionBitmap);
+//                    }
+//                });
+//
+//        mFPSTextureView.addChild(parabolicMotionBitmap);
 
-        mFPSTextureView.addChild(parabolicMotionBitmap);
+        final DisplayObject2 object2 = new DisplayObject2();
+
+
+        object2.painter(new BitmapPainter(mBitmap).dpSize(this))
+                .anim(ParabolicAnim.builder()
+                        .transform(0, mFPSTextureView.getHeight())
+                        .reboundBottom(false)
+                        .accelerationX((float) (15 + Math.random() * 7))
+                        .initialVelocityY((float) (-65 + Math.random() * 15))
+                        .bottomHitCallback(new AnimCallBack() {
+                            @Override
+                            public void call() {
+                                mFPSTextureView.removeChild(object2);
+                            }
+                        })
+                        .build());
+        mFPSTextureView.addChild(object2);
     }
 
 
