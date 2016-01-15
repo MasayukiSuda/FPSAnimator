@@ -5,14 +5,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Paint;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
+import com.daasuu.library.DisplayObject2;
 import com.daasuu.library.FPSTextureView;
 import com.daasuu.library.callback.AnimCallBack;
-import com.daasuu.library.parabolicmotion.ParabolicMotionBitmap;
-import com.daasuu.library.parabolicmotion.ParabolicMotionText;
+import com.daasuu.library.painter.BitmapPainter;
+import com.daasuu.library.painter.TextPainter;
 import com.daasuu.library.util.Util;
 
 import java.util.Timer;
@@ -38,33 +39,40 @@ public class ParabolicMotionSampleActivity extends AppCompatActivity {
         Paint paint = new Paint();
         paint.setColor(ContextCompat.getColor(this, R.color.colorPrimary));
         paint.setTextSize(Util.convertDpToPixel(20, this));
-        final ParabolicMotionText parabolicMotionText = new ParabolicMotionText("Text", paint);
-        parabolicMotionText
-                .transform(800, 800)
-                .initialVelocityY(-40);
 
-        mFPSTextureView.addChild(parabolicMotionText);
+        final DisplayObject2 textDisplay = new DisplayObject2();
+        textDisplay.with(new TextPainter("Text", paint))
+                .parabolic()
+                .transform(800, 800)
+                .initialVelocityY(-40)
+                .build();
+
+
+        mFPSTextureView.addChild(textDisplay);
         mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
 
     }
 
     private void createParabolicMotionBitmap() {
 
-        final ParabolicMotionBitmap parabolicMotionBitmap = new ParabolicMotionBitmap(mBitmap);
-        parabolicMotionBitmap
+        final DisplayObject2 bitmapDisplay = new DisplayObject2();
+
+
+        bitmapDisplay.with(new BitmapPainter(mBitmap).dpSize(this))
+                .parabolic()
                 .transform(0, mFPSTextureView.getHeight())
-                .dpSize(this)
                 .reboundBottom(false)
                 .accelerationX((float) (15 + Math.random() * 7))
                 .initialVelocityY((float) (-65 + Math.random() * 15))
                 .bottomHitCallback(new AnimCallBack() {
                     @Override
                     public void call() {
-                        mFPSTextureView.removeChild(parabolicMotionBitmap);
+                        mFPSTextureView.removeChild(bitmapDisplay);
                     }
-                });
+                })
+                .build();
 
-        mFPSTextureView.addChild(parabolicMotionBitmap);
+        mFPSTextureView.addChild(bitmapDisplay);
     }
 
 

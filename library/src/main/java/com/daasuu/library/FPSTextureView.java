@@ -17,7 +17,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Created by sudamasayuki on 15/12/19.
  */
 public class FPSTextureView extends TextureView implements TextureView.SurfaceTextureListener {
 
@@ -160,7 +159,7 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
      * @return this
      */
     public FPSTextureView removeChild(@NonNull DisplayObject displayObject) {
-        mDisplayList.remove(displayObject);
+        boolean a = mDisplayList.remove(displayObject);
         return this;
     }
 
