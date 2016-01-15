@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 /**
- * Created by a13587 on 16/01/14.
  */
 public class TextPainter extends DeformablePainter {
 

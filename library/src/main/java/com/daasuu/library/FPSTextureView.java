@@ -17,7 +17,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Created by sudamasayuki on 15/12/19.
  */
 public class FPSTextureView extends TextureView implements TextureView.SurfaceTextureListener {
 

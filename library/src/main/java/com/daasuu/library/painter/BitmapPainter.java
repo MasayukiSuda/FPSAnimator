@@ -11,7 +11,6 @@ import android.support.annotation.NonNull;
 import com.daasuu.library.util.Util;
 
 /**
- * Created by a13587 on 16/01/14.
  */
 public class BitmapPainter extends DeformablePainter {
     private static final String TAG = BitmapPainter.class.getSimpleName();

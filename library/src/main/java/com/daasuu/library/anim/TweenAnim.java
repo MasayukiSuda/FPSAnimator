@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by m1noon on 16/01/14.
  */
 public class TweenAnim implements Anim {
     private static final String TAG = TweenAnim.class.getSimpleName();
