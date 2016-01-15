@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 
 import com.daasuu.library.Anim;
 import com.daasuu.library.AnimParameter;
+import com.daasuu.library.DisplayObject2;
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.constant.Constant;
 import com.daasuu.library.easing.Ease;
@@ -46,8 +47,8 @@ public class TweenAnim implements Anim {
 
     private final Map<AnimParameter, AnimCallBack> mCallbacks;
 
-    public static Builder builder() {
-        return new Builder();
+    public static Builder builder(DisplayObject2 displayObject) {
+        return new Builder(displayObject);
     }
 
     public TweenAnim(boolean tweenLoop, AnimParameter initialParam, List<TweenParameter> tweenParameters) {
@@ -216,6 +217,8 @@ public class TweenAnim implements Anim {
      */
     public static class Builder {
 
+        private final DisplayObject2 mDisplayObject;
+
         protected List<TweenParameter> mTweenParameterList = new ArrayList<>();
 
         /**
@@ -227,9 +230,12 @@ public class TweenAnim implements Anim {
 
         private AnimParameter mInitialParam = new AnimParameter(0, 0);
 
+        private Builder(DisplayObject2 displayObject) {
+            mDisplayObject = displayObject;
+        }
 
-        public TweenAnim build() {
-            return new TweenAnim(mTweenLoop, mInitialParam, mTweenParameterList);
+        public void build() {
+            mDisplayObject.setAnim(new TweenAnim(mTweenLoop, mInitialParam, mTweenParameterList));
         }
 
         /**

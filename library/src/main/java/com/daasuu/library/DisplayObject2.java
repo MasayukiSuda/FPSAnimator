@@ -2,41 +2,42 @@ package com.daasuu.library;
 
 import android.graphics.Canvas;
 
+import com.daasuu.library.anim.ParabolicAnim;
+import com.daasuu.library.anim.TweenAnim;
+
 /**
  */
 public class DisplayObject2 extends DisplayObject {
     private static final String TAG = DisplayObject2.class.getSimpleName();
 
-    private AnimParameter mPosition;
+    private AnimParameter mAnimParameter;
 
     private Anim mAnim;
 
     private Painter mPainter;
 
-    /**
-     * Unique ID for this display object. Makes display objects easier for some uses.
-     */
-    private String id;
-
     public DisplayObject2() {
     }
 
-    public DisplayObject2 anim(Anim anim) {
-        mAnim = anim;
-        mPosition = mAnim.getInitialPosition();
-        return this;
+    public DisplayObjectComposer with(Painter painter) {
+        mPainter = painter;
+        return new DisplayObjectComposer();
     }
 
-    public DisplayObject2 painter(Painter painter) {
+    public void setAnim(Anim anim) {
+        this.mAnim = anim;
+        mAnimParameter = mAnim.getInitialPosition();
+    }
+
+    public void setPainter(Painter painter) {
         this.mPainter = painter;
-        return this;
     }
 
     @Override
     public void draw(Canvas canvas) {
         mAnim.setBaseLine(canvas, mPainter.getWidth(), mPainter.getHeight());
-        mAnim.updateAnimParam(mPosition);
-        mPainter.draw(canvas, mPosition.x(), mPosition.y(), mPosition.alpha(), mPosition.scaleX(), mPosition.scaleY(), mPosition.rotation());
+        mAnim.updateAnimParam(mAnimParameter);
+        mPainter.draw(canvas, mAnimParameter.x(), mAnimParameter.y(), mAnimParameter.alpha(), mAnimParameter.scaleX(), mAnimParameter.scaleY(), mAnimParameter.rotation());
     }
 
     @Override
@@ -44,14 +45,24 @@ public class DisplayObject2 extends DisplayObject {
         mAnim.setUp(fps);
     }
 
-    @Override
-    public String toString() {
-        return "DisplayObject2{" +
-                "mPosition=" + mPosition +
-                ", mAnim=" + mAnim +
-                ", mPainter=" + mPainter +
-                ", id='" + id + '\'' +
-                "} " + super.toString();
+
+    /**
+     *
+     */
+    public class DisplayObjectComposer {
+        /**
+         * @return
+         */
+        public TweenAnim.Builder tween() {
+            return TweenAnim.builder(DisplayObject2.this);
+        }
+
+        /**
+         * @return
+         */
+        public ParabolicAnim.Builder parabolic() {
+            return ParabolicAnim.builder(DisplayObject2.this);
+        }
     }
 }
 
