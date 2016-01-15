@@ -6,7 +6,7 @@ import android.graphics.Paint;
 import com.daasuu.library.Painter;
 
 /**
- * Created by m1noon on 16/01/15.
+ * The base drawing class which allows the deformation of the scale, rotation, and alpha value.
  */
 public abstract class DeformablePainter implements Painter {
     private static final String TAG = DeformablePainter.class.getSimpleName();
@@ -42,13 +42,19 @@ public abstract class DeformablePainter implements Painter {
         this.mPaint = paint;
     }
 
+    /**
+     * Setter for mScaleRegistrationX and mScaleRegistrationY
+     *
+     * @param regX The horizontal scale registration point in pixels
+     * @param regY The vertical scale registration point in pixels
+     */
     protected void setScaleRegistration(float regX, float regY) {
         mScaleRegistrationX = regX;
         mScaleRegistrationY = regY;
     }
 
     /**
-     * Setter mRotateRegistrationX and mRotateRegistrationY
+     * Setter for mRotateRegistrationX and mRotateRegistrationY
      *
      * @param regX The horizontal rotate registration point in pixels
      * @param regY The vertical rotate registration point in pixels
@@ -71,5 +77,12 @@ public abstract class DeformablePainter implements Painter {
         canvas.restore();
     }
 
+    /**
+     * perform the actual drawing on the canvas.
+     *
+     * @param canvas
+     * @param x
+     * @param y
+     */
     protected abstract void draw(Canvas canvas, float x, float y);
 }
