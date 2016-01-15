@@ -3,7 +3,6 @@ package com.daasuu.library;
 import com.daasuu.library.constant.Constant;
 
 /**
- * Created by a13587 on 16/01/14.
  */
 public class AnimParameter {
 

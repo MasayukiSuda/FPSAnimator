@@ -3,7 +3,6 @@ package com.daasuu.library;
 import android.graphics.Canvas;
 
 /**
- * Created by a13587 on 16/01/14.
  */
 public class DisplayObject2 extends DisplayObject {
     private static final String TAG = DisplayObject2.class.getSimpleName();
@@ -55,3 +54,4 @@ public class DisplayObject2 extends DisplayObject {
                 "} " + super.toString();
     }
 }
+

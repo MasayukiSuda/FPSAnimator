@@ -9,7 +9,6 @@ import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.constant.Constant;
 
 /**
- * Created by a13587 on 16/01/14.
  */
 public class ParabolicAnim implements Anim {
     private static final String TAG = ParabolicAnim.class.getSimpleName();
