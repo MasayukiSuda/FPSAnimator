@@ -7,7 +7,7 @@ import android.graphics.Canvas;
  */
 public interface Painter {
 
-    void draw(Canvas canvas, float x, float y);
+    void draw(Canvas canvas, float x, float y, int alpha, float scaleX, float scaleY, float rotation);
 
     float getWidth();
 

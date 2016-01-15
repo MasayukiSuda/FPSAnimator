@@ -8,13 +8,12 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
 
-import com.daasuu.library.Painter;
 import com.daasuu.library.util.Util;
 
 /**
  * Created by a13587 on 16/01/14.
  */
-public class BitmapPainter implements Painter {
+public class BitmapPainter extends DeformablePainter {
     private static final String TAG = BitmapPainter.class.getSimpleName();
 
     /**
@@ -42,11 +41,9 @@ public class BitmapPainter implements Painter {
      */
     private Rect mBitmapRect;
 
-    private final Paint mPaint;
-
     public BitmapPainter(Bitmap bitmap) {
+        super(new Paint());
         this.mBitmap = bitmap;
-        this.mPaint = new Paint();
     }
 
     /**
@@ -60,6 +57,16 @@ public class BitmapPainter implements Painter {
         mBitmapDpWidth = Util.convertPixelsToDp(mBitmap.getWidth(), context);
         mBitmapDpHeight = Util.convertPixelsToDp(mBitmap.getHeight(), context);
         mBitmapRect = new Rect(0, 0, mBitmap.getWidth(), mBitmap.getHeight());
+        return this;
+    }
+
+    public BitmapPainter scaleRegistration(float regX, float regY) {
+        setScaleRegistration(regX, regY);
+        return this;
+    }
+
+    public BitmapPainter rotateRegistration(float regX, float regY) {
+        setRotateRegistration(regX, regY);
         return this;
     }
 
@@ -78,7 +85,7 @@ public class BitmapPainter implements Painter {
     }
 
     @Override
-    public void draw(Canvas canvas, float x, float y) {
+    protected void draw(Canvas canvas, float x, float y) {
         if (mBitmap == null) {
             return;
         }

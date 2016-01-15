@@ -7,7 +7,6 @@ import android.graphics.PorterDuff;
 import android.graphics.SurfaceTexture;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.TextureView;
 
 import com.daasuu.library.constant.Constant;
@@ -162,7 +161,6 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
      */
     public FPSTextureView removeChild(@NonNull DisplayObject displayObject) {
         boolean a = mDisplayList.remove(displayObject);
-        Log.d("[DEBUG]", "list.size=" + mDisplayList.size() + ", success=" + a + ",displayObject=" + displayObject);
         return this;
     }
 

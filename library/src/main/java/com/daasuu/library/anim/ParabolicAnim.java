@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 
 import com.daasuu.library.Anim;
-import com.daasuu.library.Position;
+import com.daasuu.library.AnimParameter;
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.constant.Constant;
 
@@ -16,7 +16,7 @@ public class ParabolicAnim implements Anim {
 
     private int mDrawingNum = Constant.DEFAULT_DRAWING_NUM;
 
-    private final Position mInitialPosition;
+    private final AnimParameter mInitialPosition;
 
     /**
      * The amount of transfer of the y-direction in pixels
@@ -111,7 +111,7 @@ public class ParabolicAnim implements Anim {
     }
 
 
-    private ParabolicAnim(Position initialPosition, int mDrawingNum, float mMovementY, float mCoefficientRestitutionY, float mCoefficientRestitutionX, float mInitialVelocityY, float mAccelerationY, float mAccelerationX, int mFrequency, float mBottomBase, float mRightSide, float mLeftSide, boolean mReboundBottom, boolean mReboundLeft, boolean mReboundRight, AnimCallBack mBottomHitCallback, AnimCallBack mLeftHitCallback, AnimCallBack mRightHitCallback, boolean mParabolicMotionPause) {
+    private ParabolicAnim(AnimParameter initialPosition, int mDrawingNum, float mMovementY, float mCoefficientRestitutionY, float mCoefficientRestitutionX, float mInitialVelocityY, float mAccelerationY, float mAccelerationX, int mFrequency, float mBottomBase, float mRightSide, float mLeftSide, boolean mReboundBottom, boolean mReboundLeft, boolean mReboundRight, AnimCallBack mBottomHitCallback, AnimCallBack mLeftHitCallback, AnimCallBack mRightHitCallback, boolean mParabolicMotionPause) {
         this.mInitialPosition = initialPosition;
         this.mDrawingNum = mDrawingNum;
         this.mMovementY = mMovementY;
@@ -134,7 +134,7 @@ public class ParabolicAnim implements Anim {
     }
 
     @Override
-    public Position getInitialPosition() {
+    public AnimParameter getInitialPosition() {
         return mInitialPosition;
     }
 
@@ -149,7 +149,7 @@ public class ParabolicAnim implements Anim {
     }
 
     @Override
-    public void updatePosition(Position position) {
+    public void updateAnimParam(AnimParameter position) {
         if (mDrawingNum != mFrequency) {
             mDrawingNum++;
             return;
@@ -203,7 +203,7 @@ public class ParabolicAnim implements Anim {
             }
         }
 
-        position.update(x, y);
+        position.updatePosition(x, y);
     }
 
     @Override
@@ -317,7 +317,7 @@ public class ParabolicAnim implements Anim {
 
         public ParabolicAnim build() {
             ParabolicAnim anim = new ParabolicAnim(
-                    new Position(x, y),
+                    new AnimParameter(x, y),
                     mDrawingNum,
                     mMovementY,
                     mCoefficientRestitutionY,

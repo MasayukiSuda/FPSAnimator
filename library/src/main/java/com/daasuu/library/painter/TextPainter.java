@@ -3,12 +3,10 @@ package com.daasuu.library.painter;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-import com.daasuu.library.Painter;
-
 /**
  * Created by a13587 on 16/01/14.
  */
-public class TextPainter implements Painter {
+public class TextPainter extends DeformablePainter {
 
     private static final String TAG = TextPainter.class.getSimpleName();
 
@@ -22,20 +20,19 @@ public class TextPainter implements Painter {
      */
     private float mAdjustTextMesureY = -1;
 
-    private final Paint mPaint;
-
     public TextPainter(String text) {
         this(text, new Paint());
     }
 
+
     public TextPainter(String text, Paint paint) {
+        super(paint);
         this.mText = text;
-        this.mPaint = paint;
         mAdjustTextMesureY = paint.getTextSize();
     }
 
     @Override
-    public void draw(Canvas canvas, float x, float y) {
+    protected void draw(Canvas canvas, float x, float y) {
         if (mText != null) {
             canvas.drawText(mText, x, y + mAdjustTextMesureY, mPaint);
         }
@@ -49,5 +46,15 @@ public class TextPainter implements Painter {
     @Override
     public float getHeight() {
         return mAdjustTextMesureY;
+    }
+
+    public TextPainter scaleRegistration(float regX, float regY) {
+        setScaleRegistration(regX, regY);
+        return this;
+    }
+
+    public TextPainter rotateRegistration(float regX, float regY) {
+        setRotateRegistration(regX, regY);
+        return this;
     }
 }
