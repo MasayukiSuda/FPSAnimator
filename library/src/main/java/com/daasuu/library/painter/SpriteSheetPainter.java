@@ -14,6 +14,7 @@ import com.daasuu.library.spritesheet.SpriteSheet;
 import com.daasuu.library.util.Util;
 
 /**
+ * Class for drawing SpriteSheet on canvas.
  */
 public class SpriteSheetPainter implements Painter {
     private static final String TAG = SpriteSheetPainter.class.getSimpleName();

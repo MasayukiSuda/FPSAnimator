@@ -3,6 +3,7 @@ package com.daasuu.library;
 import com.daasuu.library.constant.Constant;
 
 /**
+ * Class to hold a parameter related to the drawing on the canvas.
  */
 public class AnimParameter {
 
@@ -80,9 +81,13 @@ public class AnimParameter {
 
     @Override
     public String toString() {
-        return "Position{" +
+        return "AnimParameter{" +
                 "x=" + x +
                 ", y=" + y +
+                ", alpha=" + alpha +
+                ", scaleX=" + scaleX +
+                ", scaleY=" + scaleY +
+                ", rotation=" + rotation +
                 '}';
     }
 }

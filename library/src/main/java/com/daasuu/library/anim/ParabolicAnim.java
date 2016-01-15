@@ -10,6 +10,7 @@ import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.constant.Constant;
 
 /**
+ * Class for heavy acceleration motion
  */
 public class ParabolicAnim implements Anim {
     private static final String TAG = ParabolicAnim.class.getSimpleName();
@@ -106,6 +107,12 @@ public class ParabolicAnim implements Anim {
      */
     private boolean mParabolicMotionPause = false;
 
+    /**
+     * create builder instance.
+     *
+     * @param displayObject
+     * @return builder
+     */
     public static Builder builder(DisplayObject2 displayObject) {
         return new Builder(displayObject);
     }
@@ -134,7 +141,7 @@ public class ParabolicAnim implements Anim {
     }
 
     @Override
-    public AnimParameter getInitialPosition() {
+    public AnimParameter getInitialAnimParameter() {
         return mInitialPosition;
     }
 

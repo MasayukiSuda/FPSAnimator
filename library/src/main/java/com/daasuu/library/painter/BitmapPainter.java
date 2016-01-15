@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import com.daasuu.library.util.Util;
 
 /**
+ * Class for drawing Bitmap on canvas.
  */
 public class BitmapPainter extends DeformablePainter {
     private static final String TAG = BitmapPainter.class.getSimpleName();

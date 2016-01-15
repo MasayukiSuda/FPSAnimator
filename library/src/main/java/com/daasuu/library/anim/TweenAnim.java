@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Class for tween animation
  */
 public class TweenAnim implements Anim {
     private static final String TAG = TweenAnim.class.getSimpleName();
@@ -51,7 +52,7 @@ public class TweenAnim implements Anim {
         return new Builder(displayObject);
     }
 
-    public TweenAnim(boolean tweenLoop, AnimParameter initialParam, List<TweenParameter> tweenParameters) {
+    private TweenAnim(boolean tweenLoop, AnimParameter initialParam, List<TweenParameter> tweenParameters) {
         this.mTweenLoop = tweenLoop;
         this.mInitialParam = initialParam;
         mTweenParameters = tweenParameters;
@@ -88,7 +89,7 @@ public class TweenAnim implements Anim {
     }
 
     @Override
-    public AnimParameter getInitialPosition() {
+    public AnimParameter getInitialAnimParameter() {
         return mInitialParam;
     }
 
