@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.daasuu.library.Anim;
 import com.daasuu.library.AnimParameter;
+import com.daasuu.library.DisplayObject2;
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.constant.Constant;
 
@@ -105,8 +106,8 @@ public class ParabolicAnim implements Anim {
      */
     private boolean mParabolicMotionPause = false;
 
-    public static Builder builder() {
-        return new Builder();
+    public static Builder builder(DisplayObject2 displayObject) {
+        return new Builder(displayObject);
     }
 
 
@@ -215,6 +216,8 @@ public class ParabolicAnim implements Anim {
      */
     public static final class Builder {
 
+        private final DisplayObject2 mDisplayObject;
+
         private float x;
 
         private float y;
@@ -310,12 +313,13 @@ public class ParabolicAnim implements Anim {
         private boolean mParabolicMotionPause = false;
 
 
-        private Builder() {
+        private Builder(DisplayObject2 displayObject2) {
+            mDisplayObject = displayObject2;
         }
 
 
-        public ParabolicAnim build() {
-            ParabolicAnim anim = new ParabolicAnim(
+        public void build() {
+            mDisplayObject.setAnim(new ParabolicAnim(
                     new AnimParameter(x, y),
                     mDrawingNum,
                     mMovementY,
@@ -335,9 +339,7 @@ public class ParabolicAnim implements Anim {
                     mLeftHitCallback,
                     mRightHitCallback,
                     mParabolicMotionPause
-            );
-
-            return anim;
+            ));
         }
 
         /**

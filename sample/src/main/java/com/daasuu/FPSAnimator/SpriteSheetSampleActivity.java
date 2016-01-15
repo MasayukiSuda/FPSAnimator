@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import com.daasuu.FPSAnimator.util.UIUtil;
 import com.daasuu.library.DisplayObject2;
 import com.daasuu.library.FPSTextureView;
-import com.daasuu.library.anim.ParabolicAnim;
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.painter.SpriteSheetPainter;
 import com.daasuu.library.spritesheet.SpriteSheet;
@@ -65,24 +64,22 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
 
         final DisplayObject2 parabolicDisplay = new DisplayObject2();
         parabolicDisplay
-                .painter(
+                .with(
                         new SpriteSheetPainter(spriteBitmapB, overrideSpriteSheet)
                                 .dpSize(this)
                                 .spriteLoop(true)
                 )
-                .anim(
-                        ParabolicAnim.builder()
-                                .transform(0, UIUtil.getWindowHeight(this) / 2)
-                                .initialVelocityY(-30)
-                                .reboundRight(false)
-                                .rightHitCallback(new AnimCallBack() {
-                                    @Override
-                                    public void call() {
-                                        mFPSTextureView.removeChild(parabolicDisplay);
-                                    }
-                                })
-                                .build()
-                );
+                .parabolic()
+                .transform(0, UIUtil.getWindowHeight(this) / 2)
+                .initialVelocityY(-30)
+                .reboundRight(false)
+                .rightHitCallback(new AnimCallBack() {
+                    @Override
+                    public void call() {
+                        mFPSTextureView.removeChild(parabolicDisplay);
+                    }
+                })
+                .build();
 
         mFPSTextureView
                 .setFps(24)
