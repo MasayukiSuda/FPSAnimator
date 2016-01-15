@@ -124,7 +124,7 @@ public class SpriteSheetPainter implements Painter {
     }
 
     @Override
-    public void draw(Canvas canvas, float x, float y) {
+    public void draw(Canvas canvas, float x, float y, int alpha, float scaleX, float scaleY, float rotation) {
         if (mBitmap == null) {
             return;
         }

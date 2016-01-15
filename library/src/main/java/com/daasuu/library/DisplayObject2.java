@@ -37,7 +37,7 @@ public class DisplayObject2 extends DisplayObject {
     public void draw(Canvas canvas) {
         mAnim.setBaseLine(canvas, mPainter.getWidth(), mPainter.getHeight());
         mAnim.updateAnimParam(mPosition);
-        mPainter.draw(canvas, mPosition.x(), mPosition.y());
+        mPainter.draw(canvas, mPosition.x(), mPosition.y(), mPosition.alpha(), mPosition.scaleX(), mPosition.scaleY(), mPosition.rotation());
     }
 
     @Override

@@ -57,22 +57,26 @@ public class AnimParameter {
         return this.rotation;
     }
 
-    public void updatePosition(float x, float y) {
+    public AnimParameter updatePosition(float x, float y) {
         this.x = x;
         this.y = y;
+        return this;
     }
 
-    public void updateAlpha(int alpha) {
+    public AnimParameter updateAlpha(int alpha) {
         this.alpha = alpha;
+        return this;
     }
 
-    public void updateScale(float scaleX, float scaleY) {
+    public AnimParameter updateScale(float scaleX, float scaleY) {
         this.scaleX = scaleX;
         this.scaleY = scaleY;
+        return this;
     }
 
-    public void updateRotation(float rotation) {
+    public AnimParameter updateRotation(float rotation) {
         this.rotation = rotation;
+        return this;
     }
 
     @Override
