@@ -1,14 +1,15 @@
-package com.daasuu.library.painter;
+package com.daasuu.library.drawer;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.support.annotation.NonNull;
 
 /**
  * Class for drawing Text on canvas.
  */
-public class TextPainter extends DeformablePainter {
+public class TextDrawer extends BaseDrawer {
 
-    private static final String TAG = TextPainter.class.getSimpleName();
+    private static final String TAG = TextDrawer.class.getSimpleName();
 
     /**
      * String text to be drawn in FPSTextureView or FPSSurfaceView.
@@ -20,12 +21,12 @@ public class TextPainter extends DeformablePainter {
      */
     private float mAdjustTextMesureY = -1;
 
-    public TextPainter(String text) {
+    public TextDrawer(@NonNull String text) {
         this(text, new Paint());
     }
 
 
-    public TextPainter(String text, Paint paint) {
+    public TextDrawer(@NonNull String text, Paint paint) {
         super(paint);
         this.mText = text;
         mAdjustTextMesureY = paint.getTextSize();
@@ -48,12 +49,12 @@ public class TextPainter extends DeformablePainter {
         return mAdjustTextMesureY;
     }
 
-    public TextPainter scaleRegistration(float regX, float regY) {
+    public TextDrawer scaleRegistration(float regX, float regY) {
         setScaleRegistration(regX, regY);
         return this;
     }
 
-    public TextPainter rotateRegistration(float regX, float regY) {
+    public TextDrawer rotateRegistration(float regX, float regY) {
         setRotateRegistration(regX, regY);
         return this;
     }

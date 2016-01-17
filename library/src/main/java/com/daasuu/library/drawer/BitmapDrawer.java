@@ -1,4 +1,4 @@
-package com.daasuu.library.painter;
+package com.daasuu.library.drawer;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -13,8 +13,8 @@ import com.daasuu.library.util.Util;
 /**
  * Class for drawing Bitmap on canvas.
  */
-public class BitmapPainter extends DeformablePainter {
-    private static final String TAG = BitmapPainter.class.getSimpleName();
+public class BitmapDrawer extends BaseDrawer {
+    private static final String TAG = BitmapDrawer.class.getSimpleName();
 
     /**
      * Bitmap to be drawn in FPSTextureView or FPSSurfaceView.
@@ -41,7 +41,7 @@ public class BitmapPainter extends DeformablePainter {
      */
     private Rect mBitmapRect;
 
-    public BitmapPainter(Bitmap bitmap) {
+    public BitmapDrawer(@NonNull Bitmap bitmap) {
         super(new Paint());
         this.mBitmap = bitmap;
     }
@@ -52,7 +52,7 @@ public class BitmapPainter extends DeformablePainter {
      * @param context Activity or view context
      * @return this
      */
-    public BitmapPainter dpSize(@NonNull Context context) {
+    public BitmapDrawer dpSize(@NonNull Context context) {
         mDpSize = true;
         mBitmapDpWidth = Util.convertPixelsToDp(mBitmap.getWidth(), context);
         mBitmapDpHeight = Util.convertPixelsToDp(mBitmap.getHeight(), context);
@@ -60,12 +60,12 @@ public class BitmapPainter extends DeformablePainter {
         return this;
     }
 
-    public BitmapPainter scaleRegistration(float regX, float regY) {
+    public BitmapDrawer scaleRegistration(float regX, float regY) {
         setScaleRegistration(regX, regY);
         return this;
     }
 
-    public BitmapPainter rotateRegistration(float regX, float regY) {
+    public BitmapDrawer rotateRegistration(float regX, float regY) {
         setRotateRegistration(regX, regY);
         return this;
     }

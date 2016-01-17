@@ -1,9 +1,9 @@
-package com.daasuu.library.anim;
+package com.daasuu.library.animator;
 
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 
-import com.daasuu.library.Anim;
+import com.daasuu.library.Animator;
 import com.daasuu.library.AnimParameter;
 import com.daasuu.library.DisplayObject2;
 import com.daasuu.library.callback.AnimCallBack;
@@ -12,8 +12,8 @@ import com.daasuu.library.constant.Constant;
 /**
  * Class for heavy acceleration motion
  */
-public class ParabolicAnim implements Anim {
-    private static final String TAG = ParabolicAnim.class.getSimpleName();
+public class ParabolicAnimator implements Animator {
+    private static final String TAG = ParabolicAnimator.class.getSimpleName();
 
     private int mDrawingNum = Constant.DEFAULT_DRAWING_NUM;
 
@@ -108,17 +108,17 @@ public class ParabolicAnim implements Anim {
     private boolean mParabolicMotionPause = false;
 
     /**
-     * create builder instance.
+     * create composer instance.
      *
      * @param displayObject
-     * @return builder
+     * @return composer
      */
-    public static Builder builder(DisplayObject2 displayObject) {
-        return new Builder(displayObject);
+    public static Composer composer(DisplayObject2 displayObject) {
+        return new Composer(displayObject);
     }
 
 
-    private ParabolicAnim(AnimParameter initialPosition, int mDrawingNum, float mMovementY, float mCoefficientRestitutionY, float mCoefficientRestitutionX, float mInitialVelocityY, float mAccelerationY, float mAccelerationX, int mFrequency, float mBottomBase, float mRightSide, float mLeftSide, boolean mReboundBottom, boolean mReboundLeft, boolean mReboundRight, AnimCallBack mBottomHitCallback, AnimCallBack mLeftHitCallback, AnimCallBack mRightHitCallback, boolean mParabolicMotionPause) {
+    private ParabolicAnimator(AnimParameter initialPosition, int mDrawingNum, float mMovementY, float mCoefficientRestitutionY, float mCoefficientRestitutionX, float mInitialVelocityY, float mAccelerationY, float mAccelerationX, int mFrequency, float mBottomBase, float mRightSide, float mLeftSide, boolean mReboundBottom, boolean mReboundLeft, boolean mReboundRight, AnimCallBack mBottomHitCallback, AnimCallBack mLeftHitCallback, AnimCallBack mRightHitCallback, boolean mParabolicMotionPause) {
         this.mInitialPosition = initialPosition;
         this.mDrawingNum = mDrawingNum;
         this.mMovementY = mMovementY;
@@ -168,8 +168,8 @@ public class ParabolicAnim implements Anim {
 
         mMovementY += mAccelerationY;
 
-        float y = position.y();
-        float x = position.x();
+        float y = position.y;
+        float x = position.x;
 
         y += mMovementY;
         x += mAccelerationX;
@@ -210,7 +210,8 @@ public class ParabolicAnim implements Anim {
             }
         }
 
-        position.updatePosition(x, y);
+        position.x = x;
+        position.y = y;
     }
 
     @Override
@@ -219,9 +220,9 @@ public class ParabolicAnim implements Anim {
     }
 
     /**
-     * Builder for {@link ParabolicAnim}
+     * Builder for {@link ParabolicAnimator}
      */
-    public static final class Builder {
+    public static final class Composer {
 
         private final DisplayObject2 mDisplayObject;
 
@@ -320,13 +321,13 @@ public class ParabolicAnim implements Anim {
         private boolean mParabolicMotionPause = false;
 
 
-        private Builder(DisplayObject2 displayObject2) {
+        private Composer(DisplayObject2 displayObject2) {
             mDisplayObject = displayObject2;
         }
 
 
         public void build() {
-            mDisplayObject.setAnim(new ParabolicAnim(
+            mDisplayObject.setAnim(new ParabolicAnimator(
                     new AnimParameter(x, y),
                     mDrawingNum,
                     mMovementY,
@@ -356,7 +357,7 @@ public class ParabolicAnim implements Anim {
          * @param y The vertical translation (y position) in pixels
          * @return this
          */
-        public Builder transform(float x, float y) {
+        public Composer transform(float x, float y) {
             this.x = x;
             this.y = y;
             return this;
@@ -368,7 +369,7 @@ public class ParabolicAnim implements Anim {
          * @param frequency The number to be updated in every times of tick
          * @return this
          */
-        public Builder frequency(int frequency) {
+        public Composer frequency(int frequency) {
             mFrequency = frequency;
             return this;
         }
@@ -379,7 +380,7 @@ public class ParabolicAnim implements Anim {
          * @param velocityY Initial velocity of parabolic movement (y position) in pixels
          * @return this
          */
-        public Builder initialVelocityY(float velocityY) {
+        public Composer initialVelocityY(float velocityY) {
             mInitialVelocityY = velocityY;
             return this;
         }
@@ -390,7 +391,7 @@ public class ParabolicAnim implements Anim {
          * @param accelerationY By one tick, the number to accelerate (y position) in pixels
          * @return this
          */
-        public Builder accelerationY(float accelerationY) {
+        public Composer accelerationY(float accelerationY) {
             mAccelerationY = accelerationY;
             return this;
         }
@@ -401,7 +402,7 @@ public class ParabolicAnim implements Anim {
          * @param accelerationX By one tick, the number to accelerate (x position) in pixels
          * @return this
          */
-        public Builder accelerationX(float accelerationX) {
+        public Composer accelerationX(float accelerationX) {
             mAccelerationX = accelerationX;
             return this;
         }
@@ -412,7 +413,7 @@ public class ParabolicAnim implements Anim {
          * @param coefficientRestitutionY Coefficient Of Restitution Y, as a percentage of 1
          * @return this
          */
-        public Builder coefficientRestitutionY(float coefficientRestitutionY) {
+        public Composer coefficientRestitutionY(float coefficientRestitutionY) {
             mCoefficientRestitutionY = coefficientRestitutionY;
             return this;
         }
@@ -423,7 +424,7 @@ public class ParabolicAnim implements Anim {
          * @param coefficientRestitutionX Coefficient Of Restitution X, as a percentage of 1
          * @return this
          */
-        public Builder coefficientRestitutionX(float coefficientRestitutionX) {
+        public Composer coefficientRestitutionX(float coefficientRestitutionX) {
             mCoefficientRestitutionX = coefficientRestitutionX;
             return this;
         }
@@ -434,7 +435,7 @@ public class ParabolicAnim implements Anim {
          * @param reboundBottom The flag indicating whether not rebound bottom
          * @return this
          */
-        public Builder reboundBottom(boolean reboundBottom) {
+        public Composer reboundBottom(boolean reboundBottom) {
             mReboundBottom = reboundBottom;
             return this;
         }
@@ -445,7 +446,7 @@ public class ParabolicAnim implements Anim {
          * @param reboundLeft The flag indicating whether not rebound left
          * @return this
          */
-        public Builder reboundLeft(boolean reboundLeft) {
+        public Composer reboundLeft(boolean reboundLeft) {
             mReboundLeft = reboundLeft;
             return this;
         }
@@ -456,7 +457,7 @@ public class ParabolicAnim implements Anim {
          * @param reboundRight The flag indicating whether not rebound right
          * @return this
          */
-        public Builder reboundRight(boolean reboundRight) {
+        public Composer reboundRight(boolean reboundRight) {
             mReboundRight = reboundRight;
             return this;
         }
@@ -467,7 +468,7 @@ public class ParabolicAnim implements Anim {
          * @param bottomBase The number to rebound bottom (y position) in pixels
          * @return this
          */
-        public Builder bottomBase(float bottomBase) {
+        public Composer bottomBase(float bottomBase) {
             this.mBottomBase = bottomBase;
             return this;
         }
@@ -478,7 +479,7 @@ public class ParabolicAnim implements Anim {
          * @param rightSide The number to rebound right (x position) in pixels
          * @return this
          */
-        public Builder rightSide(float rightSide) {
+        public Composer rightSide(float rightSide) {
             this.mRightSide = rightSide;
             return this;
         }
@@ -489,7 +490,7 @@ public class ParabolicAnim implements Anim {
          * @param leftSide The number to rebound left (x position) in pixels
          * @return this
          */
-        public Builder leftSide(float leftSide) {
+        public Composer leftSide(float leftSide) {
             this.mLeftSide = leftSide;
             return this;
         }
@@ -500,7 +501,7 @@ public class ParabolicAnim implements Anim {
          * @param animCallBack callback when responding to a bottom base
          * @return this
          */
-        public Builder bottomHitCallback(@NonNull AnimCallBack animCallBack) {
+        public Composer bottomHitCallback(@NonNull AnimCallBack animCallBack) {
             mBottomHitCallback = animCallBack;
             return this;
         }
@@ -511,7 +512,7 @@ public class ParabolicAnim implements Anim {
          * @param animCallBack callback when responding to a left side
          * @return this
          */
-        public Builder leftHitCallback(@NonNull AnimCallBack animCallBack) {
+        public Composer leftHitCallback(@NonNull AnimCallBack animCallBack) {
             mLeftHitCallback = animCallBack;
             return this;
         }
@@ -522,7 +523,7 @@ public class ParabolicAnim implements Anim {
          * @param animCallBack callback when responding to a right side
          * @return this
          */
-        public Builder rightHitCallback(@NonNull AnimCallBack animCallBack) {
+        public Composer rightHitCallback(@NonNull AnimCallBack animCallBack) {
             mRightHitCallback = animCallBack;
             return this;
         }

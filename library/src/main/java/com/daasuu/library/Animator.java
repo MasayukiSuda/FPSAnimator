@@ -7,7 +7,7 @@ import android.graphics.Canvas;
  * The main role of the animation class is to determine the information
  * about position and deformation ({@link AnimParameter}) to draw on canvas.
  */
-public interface Anim {
+public interface Animator {
 
     /**
      * Sets a next drawing value to the given animation parameter instance.

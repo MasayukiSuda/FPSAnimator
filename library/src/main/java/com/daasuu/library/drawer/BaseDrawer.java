@@ -1,15 +1,14 @@
-package com.daasuu.library.painter;
+package com.daasuu.library.drawer;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-import com.daasuu.library.Painter;
+import com.daasuu.library.Drawer;
 
 /**
  * The base drawing class which allows the deformation of the scale, rotation, and alpha value.
  */
-public abstract class DeformablePainter implements Painter {
-    private static final String TAG = DeformablePainter.class.getSimpleName();
+public abstract class BaseDrawer implements Drawer {
 
     protected final Paint mPaint;
 
@@ -38,7 +37,7 @@ public abstract class DeformablePainter implements Painter {
     protected float mRotateRegistrationY = 0f;
 
 
-    public DeformablePainter(Paint paint) {
+    public BaseDrawer(Paint paint) {
         this.mPaint = paint;
     }
 

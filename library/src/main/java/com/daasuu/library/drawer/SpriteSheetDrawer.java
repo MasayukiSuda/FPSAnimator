@@ -1,4 +1,4 @@
-package com.daasuu.library.painter;
+package com.daasuu.library.drawer;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,7 +8,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
 
-import com.daasuu.library.Painter;
+import com.daasuu.library.Drawer;
 import com.daasuu.library.constant.Constant;
 import com.daasuu.library.spritesheet.SpriteSheet;
 import com.daasuu.library.util.Util;
@@ -16,8 +16,7 @@ import com.daasuu.library.util.Util;
 /**
  * Class for drawing SpriteSheet on canvas.
  */
-public class SpriteSheetPainter implements Painter {
-    private static final String TAG = SpriteSheetPainter.class.getSimpleName();
+public class SpriteSheetDrawer extends BaseDrawer {
 
     /**
      * Bitmap to be drawn in FPSTextureView or FPSSurfaceView.
@@ -53,8 +52,6 @@ public class SpriteSheetPainter implements Painter {
 
     private int mFrequency = Constant.DEFAULT_FREQUENCY;
 
-    private final Paint mPaint;
-
 
     /**
      * Constructor
@@ -64,8 +61,8 @@ public class SpriteSheetPainter implements Painter {
      * @param frameHeight The number of height of each frame
      * @param frameNum    the total number of frames in the specified animation
      */
-    public SpriteSheetPainter(@NonNull Bitmap bitmap, float frameWidth, float frameHeight, int frameNum) {
-        this(bitmap, frameWidth, frameHeight, frameNum, (int) (bitmap.getWidth() / frameWidth));
+    public SpriteSheetDrawer(@NonNull Bitmap bitmap, float frameWidth, float frameHeight, int frameNum) {
+        this(bitmap, new SpriteSheet(frameWidth, frameHeight, frameNum, (int) (bitmap.getWidth() / frameWidth)));
     }
 
     /**
@@ -77,7 +74,7 @@ public class SpriteSheetPainter implements Painter {
      * @param frameNum        the total number of frames in the specified animation
      * @param frameNumPerLine The number of which frame, there is about line 1 of side
      */
-    public SpriteSheetPainter(@NonNull Bitmap bitmap, float frameWidth, float frameHeight, int frameNum, int frameNumPerLine) {
+    public SpriteSheetDrawer(@NonNull Bitmap bitmap, float frameWidth, float frameHeight, int frameNum, int frameNumPerLine) {
         this(bitmap, new SpriteSheet(frameWidth, frameHeight, frameNum, frameNumPerLine));
     }
 
@@ -87,9 +84,9 @@ public class SpriteSheetPainter implements Painter {
      * @param bitmap      Bitmap to be drawn in FPSTextureView or FPSSurfaceView.
      * @param spriteSheet The SpriteSheet instance to play back. This includes frame dimensions, and frame data.
      */
-    public SpriteSheetPainter(@NonNull Bitmap bitmap, @NonNull SpriteSheet spriteSheet) {
+    public SpriteSheetDrawer(@NonNull Bitmap bitmap, @NonNull SpriteSheet spriteSheet) {
+        super(new Paint());
         this.mBitmap = bitmap;
-        this.mPaint = new Paint();
         this.mSpriteSheet = spriteSheet;
     }
 
@@ -100,7 +97,7 @@ public class SpriteSheetPainter implements Painter {
      * @param context Activity or view context
      * @return this
      */
-    public SpriteSheetPainter dpSize(@NonNull Context context) {
+    public SpriteSheetDrawer dpSize(@NonNull Context context) {
         mDpSize = true;
 
         mSpriteSheet.frameWidth = Util.convertPixelsToDp(mSpriteSheet.frameWidth, context);
@@ -118,18 +115,27 @@ public class SpriteSheetPainter implements Painter {
      * @param loop If true, the Sprite Animation will loop when it reaches the last frame.
      * @return this
      */
-    public SpriteSheetPainter spriteLoop(boolean loop) {
+    public SpriteSheetDrawer spriteLoop(boolean loop) {
         mSpriteSheet.spriteLoop = loop;
         return this;
     }
 
+    public SpriteSheetDrawer scaleRegistration(float regX, float regY) {
+        setScaleRegistration(regX, regY);
+        return this;
+    }
+
+    public SpriteSheetDrawer rotateRegistration(float regX, float regY) {
+        setRotateRegistration(regX, regY);
+        return this;
+    }
+
     @Override
-    public void draw(Canvas canvas, float x, float y, int alpha, float scaleX, float scaleY, float rotation) {
+    protected void draw(Canvas canvas, float x, float y) {
         if (mBitmap == null) {
             return;
         }
 
-        canvas.save();
         RectF bounds = new RectF(
                 x,
                 y,
@@ -150,7 +156,7 @@ public class SpriteSheetPainter implements Painter {
         } else {
             canvas.drawBitmap(mBitmap, x + mSpriteSheet.dx, y + mSpriteSheet.dy, mPaint);
         }
-        canvas.restore();
+
     }
 
     /**

@@ -2,26 +2,25 @@ package com.daasuu.library;
 
 import android.graphics.Canvas;
 
-import com.daasuu.library.anim.ParabolicAnim;
-import com.daasuu.library.anim.TweenAnim;
+import com.daasuu.library.animator.ParabolicAnimator;
+import com.daasuu.library.animator.TweenAnimator;
 
 /**
  * DisplayObject class.
- *
+ * <p/>
  * When you only use default animation and drawing class which is provided by this library,
- * you can use simple interface to compose DisplayObject by calling {@link #with(Painter)}.
- *
- * If you need to use your custom animation or drawing class which implements {@link Anim} or {@link Painter},
- * you prepare their instances and simply set by calling {@link #setAnim(Anim)} or {@link #setPainter(Painter)}.
+ * you can use simple interface to compose DisplayObject by calling {@link #with(Drawer)}.
+ * <p/>
+ * If you need to use your custom animation or drawing class which implements {@link Animator} or {@link Drawer},
+ * you prepare their instances and simply set by calling {@link #setAnim(Animator)} or {@link #setDrawer(Drawer)}.
  */
 public class DisplayObject2 extends DisplayObject {
-    private static final String TAG = DisplayObject2.class.getSimpleName();
 
     private AnimParameter mAnimParameter;
 
-    private Anim mAnim;
+    private Animator mAnimator;
 
-    private Painter mPainter;
+    private Drawer mDrawer;
 
     public DisplayObject2() {
     }
@@ -30,47 +29,47 @@ public class DisplayObject2 extends DisplayObject {
      * Return Composer instance to setup this DisplayObject instance.
      * This method is useful when you use only default class of animation.
      *
-     * @param painter
+     * @param drawer
      * @return
      */
-    public DisplayObjectComposer with(Painter painter) {
-        mPainter = painter;
+    public DisplayObjectComposer with(Drawer drawer) {
+        mDrawer = drawer;
         return new DisplayObjectComposer();
     }
 
     /**
      * Set animation class.
      * Use this method only when there is need to your own custom class of animation,
-     * in other cases, use {@link #with(Painter)} instead.
+     * in other cases, use {@link #with(Drawer)} instead.
      *
-     * @param anim
+     * @param animator
      */
-    public void setAnim(Anim anim) {
-        this.mAnim = anim;
-        mAnimParameter = mAnim.getInitialAnimParameter();
+    public void setAnim(Animator animator) {
+        this.mAnimator = animator;
+        mAnimParameter = mAnimator.getInitialAnimParameter();
     }
 
     /**
      * Set drawing class.
      * Use this method only when there is need to your own custom class of animation,
-     * in other cases, use {@link #with(Painter)} instead.
+     * in other cases, use {@link #with(Drawer)} instead.
      *
-     * @param painter
+     * @param drawer
      */
-    public void setPainter(Painter painter) {
-        this.mPainter = painter;
+    public void setDrawer(Drawer drawer) {
+        this.mDrawer = drawer;
     }
 
     @Override
     public void draw(Canvas canvas) {
-        mAnim.setBaseLine(canvas, mPainter.getWidth(), mPainter.getHeight());
-        mAnim.updateAnimParam(mAnimParameter);
-        mPainter.draw(canvas, mAnimParameter.x(), mAnimParameter.y(), mAnimParameter.alpha(), mAnimParameter.scaleX(), mAnimParameter.scaleY(), mAnimParameter.rotation());
+        mAnimator.setBaseLine(canvas, mDrawer.getWidth(), mDrawer.getHeight());
+        mAnimator.updateAnimParam(mAnimParameter);
+        mDrawer.draw(canvas, mAnimParameter.x, mAnimParameter.y, mAnimParameter.alpha, mAnimParameter.scaleX, mAnimParameter.scaleY, mAnimParameter.rotation);
     }
 
     @Override
     public void setUp(long fps) {
-        mAnim.setUp(fps);
+        mAnimator.setUp(fps);
     }
 
 
@@ -81,15 +80,15 @@ public class DisplayObject2 extends DisplayObject {
         /**
          * @return tween composer
          */
-        public TweenAnim.Builder tween() {
-            return TweenAnim.builder(DisplayObject2.this);
+        public TweenAnimator.Composer tween() {
+            return TweenAnimator.composer(DisplayObject2.this);
         }
 
         /**
          * @return parabolic composer
          */
-        public ParabolicAnim.Builder parabolic() {
-            return ParabolicAnim.builder(DisplayObject2.this);
+        public ParabolicAnimator.Composer parabolic() {
+            return ParabolicAnimator.composer(DisplayObject2.this);
         }
     }
 }

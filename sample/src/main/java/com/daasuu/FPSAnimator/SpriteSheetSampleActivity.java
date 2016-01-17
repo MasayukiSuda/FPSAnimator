@@ -11,7 +11,7 @@ import com.daasuu.FPSAnimator.util.UIUtil;
 import com.daasuu.library.DisplayObject2;
 import com.daasuu.library.FPSTextureView;
 import com.daasuu.library.callback.AnimCallBack;
-import com.daasuu.library.painter.SpriteSheetPainter;
+import com.daasuu.library.drawer.SpriteSheetDrawer;
 import com.daasuu.library.spritesheet.SpriteSheet;
 import com.daasuu.library.tween.TweenSpriteSheet;
 import com.daasuu.library.util.Util;
@@ -65,7 +65,7 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
         final DisplayObject2 parabolicDisplay = new DisplayObject2();
         parabolicDisplay
                 .with(
-                        new SpriteSheetPainter(spriteBitmapB, overrideSpriteSheet)
+                        new SpriteSheetDrawer(spriteBitmapB, overrideSpriteSheet)
                                 .dpSize(this)
                                 .spriteLoop(true)
                 )

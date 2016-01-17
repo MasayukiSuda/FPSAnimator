@@ -1,8 +1,8 @@
-package com.daasuu.library.anim;
+package com.daasuu.library.animator;
 
 import android.graphics.Canvas;
 
-import com.daasuu.library.Anim;
+import com.daasuu.library.Animator;
 import com.daasuu.library.AnimParameter;
 import com.daasuu.library.DisplayObject2;
 import com.daasuu.library.callback.AnimCallBack;
@@ -19,8 +19,8 @@ import java.util.Map;
 /**
  * Class for tween animation
  */
-public class TweenAnim implements Anim {
-    private static final String TAG = TweenAnim.class.getSimpleName();
+public class TweenAnimator implements Animator {
+    private static final String TAG = TweenAnimator.class.getSimpleName();
 
     /**
      * If true, the tween will loop when it reaches the end. Can be set via the props param.
@@ -40,7 +40,6 @@ public class TweenAnim implements Anim {
 
     /**
      * Array of parameters required when to Tween animation DisplayObject.
-     * TODO 初期化
      */
     protected final List<AnimParameter> mAnimParameters;
 
@@ -48,11 +47,11 @@ public class TweenAnim implements Anim {
 
     private final Map<AnimParameter, AnimCallBack> mCallbacks;
 
-    public static Builder builder(DisplayObject2 displayObject) {
-        return new Builder(displayObject);
+    public static Composer composer(DisplayObject2 displayObject) {
+        return new Composer(displayObject);
     }
 
-    private TweenAnim(boolean tweenLoop, AnimParameter initialParam, List<TweenParameter> tweenParameters) {
+    private TweenAnimator(boolean tweenLoop, AnimParameter initialParam, List<TweenParameter> tweenParameters) {
         this.mTweenLoop = tweenLoop;
         this.mInitialParam = initialParam;
         mTweenParameters = tweenParameters;
@@ -65,10 +64,12 @@ public class TweenAnim implements Anim {
         AnimParameter nextParam = getNextAnimParameter();
 
         // update parameters
-        parameter.updatePosition(nextParam.x(), nextParam.y());
-        parameter.updateAlpha(nextParam.alpha());
-        parameter.updateRotation(nextParam.rotation());
-        parameter.updateScale(nextParam.scaleX(), nextParam.scaleY());
+        parameter.x = nextParam.x;
+        parameter.y = nextParam.y;
+        parameter.alpha = nextParam.alpha;
+        parameter.scaleX = nextParam.scaleX;
+        parameter.scaleY = nextParam.scaleY;
+        parameter.rotation = nextParam.rotation;
 
         // run callback. delete callback if tween animation will not be loop.
         AnimCallBack callBack;
@@ -98,7 +99,7 @@ public class TweenAnim implements Anim {
         mFps = 1000 / fps;
         mAnimParameters.clear();
         mCallbacks.clear();
-        for (int i = 0; i < mTweenParameters.size(); i++) {
+        for (int i = 0, n = mTweenParameters.size(); i < n; i++) {
             TweenParameter tp = mTweenParameters.get(i);
             // set anim parameter
             mAnimParameters.addAll(createAnimParamList(tp, i));
@@ -158,24 +159,24 @@ public class TweenAnim implements Anim {
                 mInitialParam :
                 mTweenParameters.get(position - 1);
 
-        cntX = (tweenParameter.x() - beforeParam.x()) / animParamNum;
-        cntY = (tweenParameter.y() - beforeParam.y()) / animParamNum;
-        cntAlpha = (int) ((tweenParameter.alpha() - beforeParam.alpha()) / animParamNum);
-        cntRotation = (tweenParameter.rotation() - beforeParam.rotation()) / animParamNum;
-        cntScaleX = (tweenParameter.scaleX() - beforeParam.scaleX()) / animParamNum;
-        cntScaleY = (tweenParameter.scaleY() - beforeParam.scaleY()) / animParamNum;
+        cntX = (tweenParameter.x - beforeParam.x) / animParamNum;
+        cntY = (tweenParameter.y - beforeParam.y) / animParamNum;
+        cntAlpha = (int) ((tweenParameter.alpha - beforeParam.alpha) / animParamNum);
+        cntRotation = (tweenParameter.rotation - beforeParam.rotation) / animParamNum;
+        cntScaleX = (tweenParameter.scaleX - beforeParam.scaleX) / animParamNum;
+        cntScaleY = (tweenParameter.scaleY - beforeParam.scaleY) / animParamNum;
 
         for (int i = 0; i <= animParamNum; i++) {
             float elapsedTimeRate = (float) i / (float) animParamNum;
             float valueChangeRate = EaseProvider.get(tweenParameter.ease, elapsedTimeRate);
 
             AnimParameter animParameter = new AnimParameter(
-                    beforeParam.x() + cntX * i * valueChangeRate,
-                    beforeParam.y() + cntY * i * valueChangeRate,
-                    (int) (beforeParam.alpha() + cntAlpha * i * valueChangeRate),
-                    beforeParam.scaleX() + cntScaleX * i * valueChangeRate,
-                    beforeParam.scaleY() + cntScaleY * i * valueChangeRate,
-                    beforeParam.rotation() + cntRotation * i * valueChangeRate
+                    beforeParam.x + cntX * i * valueChangeRate,
+                    beforeParam.y + cntY * i * valueChangeRate,
+                    (int) (beforeParam.alpha + cntAlpha * i * valueChangeRate),
+                    beforeParam.scaleX + cntScaleX * i * valueChangeRate,
+                    beforeParam.scaleY + cntScaleY * i * valueChangeRate,
+                    beforeParam.rotation + cntRotation * i * valueChangeRate
             );
 
             params.add(animParameter);
@@ -185,7 +186,7 @@ public class TweenAnim implements Anim {
     }
 
     /**
-     * Arrangement for generating AnimPrameter
+     * Arrangement for generating AnimParameter
      */
     private static class TweenParameter extends AnimParameter {
         private long animDuration;
@@ -214,9 +215,9 @@ public class TweenAnim implements Anim {
 
 
     /**
-     * Builder for {@link TweenAnim}
+     * Builder for {@link TweenAnimator}
      */
-    public static class Builder {
+    public static class Composer {
 
         private final DisplayObject2 mDisplayObject;
 
@@ -227,16 +228,14 @@ public class TweenAnim implements Anim {
          */
         private boolean mTweenLoop = false;
 
-        protected long mFps = 1000 / Constant.DEFAULT_FPS;
-
         private AnimParameter mInitialParam = new AnimParameter(0, 0);
 
-        private Builder(DisplayObject2 displayObject) {
+        private Composer(DisplayObject2 displayObject) {
             mDisplayObject = displayObject;
         }
 
         public void build() {
-            mDisplayObject.setAnim(new TweenAnim(mTweenLoop, mInitialParam, mTweenParameterList));
+            mDisplayObject.setAnim(new TweenAnimator(mTweenLoop, mInitialParam, mTweenParameterList));
         }
 
         /**
@@ -244,7 +243,7 @@ public class TweenAnim implements Anim {
          *
          * @param repeat If true, the tween will loop when it reaches the end.
          */
-        public Builder tweenLoop(boolean repeat) {
+        public Composer tweenLoop(boolean repeat) {
             mTweenLoop = repeat;
             return this;
         }
@@ -252,11 +251,11 @@ public class TweenAnim implements Anim {
         /**
          * see {@link #transform(float, float, int, float, float, float)}
          */
-        public Builder transform(float x, float y) {
+        public Composer transform(float x, float y) {
             AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
                     mTweenParameterList.get(mTweenParameterList.size() - 1) :
                     mInitialParam;
-            return transform(x, y, beforeParam.alpha(), beforeParam.scaleX(), beforeParam.scaleY(), beforeParam.rotation());
+            return transform(x, y, beforeParam.alpha, beforeParam.scaleX, beforeParam.scaleY, beforeParam.rotation);
         }
 
         /**
@@ -269,7 +268,7 @@ public class TweenAnim implements Anim {
          * @param scaleY   The vertical scale, as a percentage of 1
          * @param rotation The rotation, in degrees
          */
-        public Builder transform(float x, float y, int alpha, float scaleX, float scaleY, float rotation) {
+        public Composer transform(float x, float y, int alpha, float scaleX, float scaleY, float rotation) {
             if (mTweenParameterList.size() > 0) {
                 to(0, x, y, alpha, scaleX, scaleY, rotation, Ease.NONE);
             } else {
@@ -282,44 +281,44 @@ public class TweenAnim implements Anim {
         /**
          * see {@link #to(long, float, float, int, float, float, float, Ease)}
          */
-        public Builder to(long animDuration, float x, float y, Ease ease) {
+        public Composer to(long animDuration, float x, float y, Ease ease) {
             AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
                     mTweenParameterList.get(mTweenParameterList.size() - 1) :
                     mInitialParam;
-            return to(animDuration, x, y, beforeParam.alpha(), beforeParam.scaleX(), beforeParam.scaleY(), beforeParam.rotation(), ease);
+            return to(animDuration, x, y, beforeParam.alpha, beforeParam.scaleX, beforeParam.scaleY, beforeParam.rotation, ease);
         }
 
         /**
          * see {@link #to(long, float, float, int, float, float, float, Ease)}
          */
-        public Builder to(long animDuration, float x, float y, int alpha, Ease ease) {
+        public Composer to(long animDuration, float x, float y, int alpha, Ease ease) {
             AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
                     mTweenParameterList.get(mTweenParameterList.size() - 1) :
                     mInitialParam;
 
-            return to(animDuration, x, y, alpha, beforeParam.scaleX(), beforeParam.scaleY(), beforeParam.rotation(), ease);
+            return to(animDuration, x, y, alpha, beforeParam.scaleX, beforeParam.scaleY, beforeParam.rotation, ease);
         }
 
         /**
          * see {@link #to(long, float, float, int, float, float, float, Ease)}
          */
-        public Builder to(long animDuration, float x, float y, float scaleX, float scaleY, Ease ease) {
+        public Composer to(long animDuration, float x, float y, float scaleX, float scaleY, Ease ease) {
             AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
                     mTweenParameterList.get(mTweenParameterList.size() - 1) :
                     mInitialParam;
 
-            return to(animDuration, x, y, beforeParam.alpha(), scaleX, scaleY, beforeParam.rotation(), ease);
+            return to(animDuration, x, y, beforeParam.alpha, scaleX, scaleY, beforeParam.rotation, ease);
         }
 
         /**
          * see {@link #to(long, float, float, int, float, float, float, Ease)}
          */
-        public Builder to(long animDuration, float x, float y, float rotation, Ease ease) {
+        public Composer to(long animDuration, float x, float y, float rotation, Ease ease) {
             AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
                     mTweenParameterList.get(mTweenParameterList.size() - 1) :
                     mInitialParam;
 
-            return to(animDuration, x, y, beforeParam.alpha(), beforeParam.scaleX(), beforeParam.scaleY(), rotation, ease);
+            return to(animDuration, x, y, beforeParam.alpha, beforeParam.scaleX, beforeParam.scaleY, rotation, ease);
         }
 
         /**
@@ -335,7 +334,7 @@ public class TweenAnim implements Anim {
          * @param rotation     The rotation, in degrees
          * @param ease         The easing function to use for this tween.
          */
-        public Builder to(long animDuration, float x, float y, int alpha, float scaleX, float scaleY, float rotation, Ease ease) {
+        public Composer to(long animDuration, float x, float y, int alpha, float scaleX, float scaleY, float rotation, Ease ease) {
             mTweenParameterList.add(new TweenParameter(
                     x,
                     y,
@@ -357,18 +356,18 @@ public class TweenAnim implements Anim {
          * @param x            The horizontal translation (x position) in pixels
          * @param ease         The easing function to use for this tween.
          */
-        public Builder toX(long animDuration, float x, Ease ease) {
+        public Composer toX(long animDuration, float x, Ease ease) {
             AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
                     mTweenParameterList.get(mTweenParameterList.size() - 1) :
                     mInitialParam;
 
             mTweenParameterList.add(new TweenParameter(
                     x,
-                    beforeParam.y(),
-                    beforeParam.alpha(),
-                    beforeParam.scaleX(),
-                    beforeParam.scaleY(),
-                    beforeParam.rotation(),
+                    beforeParam.y,
+                    beforeParam.alpha,
+                    beforeParam.scaleX,
+                    beforeParam.scaleY,
+                    beforeParam.rotation,
                     animDuration,
                     ease
             ));
@@ -384,18 +383,18 @@ public class TweenAnim implements Anim {
          * @param y            The vertical translation (y position) in pixels
          * @param ease         The easing function to use for this tween.
          */
-        public Builder toY(long animDuration, float y, Ease ease) {
+        public Composer toY(long animDuration, float y, Ease ease) {
             AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
                     mTweenParameterList.get(mTweenParameterList.size() - 1) :
                     mInitialParam;
 
             mTweenParameterList.add(new TweenParameter(
-                    beforeParam.x(),
+                    beforeParam.x,
                     y,
-                    beforeParam.alpha(),
-                    beforeParam.scaleX(),
-                    beforeParam.scaleY(),
-                    beforeParam.rotation(),
+                    beforeParam.alpha,
+                    beforeParam.scaleX,
+                    beforeParam.scaleY,
+                    beforeParam.rotation,
                     animDuration,
                     ease
             ));
@@ -406,7 +405,7 @@ public class TweenAnim implements Anim {
         /**
          * see {@link #alpha(long, float, Ease)}
          */
-        public Builder alpha(long animDuration, float alpha) {
+        public Composer alpha(long animDuration, float alpha) {
             return alpha(animDuration, alpha, Ease.NONE);
         }
 
@@ -418,18 +417,18 @@ public class TweenAnim implements Anim {
          * @param alpha        The alpha (transparency) ,as a percentage of 255.
          * @param ease         The easing function to use for this tween.
          */
-        public Builder alpha(long animDuration, float alpha, Ease ease) {
+        public Composer alpha(long animDuration, float alpha, Ease ease) {
             AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
                     mTweenParameterList.get(mTweenParameterList.size() - 1) :
                     mInitialParam;
 
             mTweenParameterList.add(new TweenParameter(
-                    beforeParam.x(),
-                    beforeParam.y(),
+                    beforeParam.x,
+                    beforeParam.y,
                     Util.convertAlphaFloatToInt(alpha),
-                    beforeParam.scaleX(),
-                    beforeParam.scaleY(),
-                    beforeParam.rotation(),
+                    beforeParam.scaleX,
+                    beforeParam.scaleY,
+                    beforeParam.rotation,
                     animDuration,
                     ease
             ));
@@ -446,18 +445,18 @@ public class TweenAnim implements Anim {
          * @param scaleY       The vertical scale, as a percentage of 1
          * @param ease         The easing function to use for this tween.
          */
-        public Builder scale(long animDuration, float scaleX, float scaleY, Ease ease) {
+        public Composer scale(long animDuration, float scaleX, float scaleY, Ease ease) {
             AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
                     mTweenParameterList.get(mTweenParameterList.size() - 1) :
                     mInitialParam;
 
             mTweenParameterList.add(new TweenParameter(
-                    beforeParam.x(),
-                    beforeParam.y(),
-                    beforeParam.alpha(),
+                    beforeParam.x,
+                    beforeParam.y,
+                    beforeParam.alpha,
                     scaleX,
                     scaleY,
-                    beforeParam.rotation(),
+                    beforeParam.rotation,
                     animDuration,
                     ease
             ));
@@ -473,17 +472,17 @@ public class TweenAnim implements Anim {
          * @param rotation     The rotation, in degrees
          * @param ease         The easing function to use for this tween.
          */
-        public Builder rotation(long animDuration, float rotation, Ease ease) {
+        public Composer rotation(long animDuration, float rotation, Ease ease) {
             AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
                     mTweenParameterList.get(mTweenParameterList.size() - 1) :
                     mInitialParam;
 
             mTweenParameterList.add(new TweenParameter(
-                    beforeParam.x(),
-                    beforeParam.y(),
-                    beforeParam.alpha(),
-                    beforeParam.scaleX(),
-                    beforeParam.scaleY(),
+                    beforeParam.x,
+                    beforeParam.y,
+                    beforeParam.alpha,
+                    beforeParam.scaleX,
+                    beforeParam.scaleY,
                     rotation,
                     animDuration,
                     ease
@@ -497,19 +496,19 @@ public class TweenAnim implements Anim {
          *
          * @param animDuration The duration of the wait in milliseconds
          */
-        public Builder waitTime(long animDuration) {
+        public Composer waitTime(long animDuration) {
 
             AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
                     mTweenParameterList.get(mTweenParameterList.size() - 1) :
                     mInitialParam;
 
             mTweenParameterList.add(new TweenParameter(
-                    beforeParam.x(),
-                    beforeParam.y(),
-                    beforeParam.alpha(),
-                    beforeParam.scaleX(),
-                    beforeParam.scaleY(),
-                    beforeParam.rotation(),
+                    beforeParam.x,
+                    beforeParam.y,
+                    beforeParam.alpha,
+                    beforeParam.scaleX,
+                    beforeParam.scaleY,
+                    beforeParam.rotation,
                     animDuration,
                     Ease.NONE
             ));
@@ -517,7 +516,7 @@ public class TweenAnim implements Anim {
             return this;
         }
 
-        public Builder call(AnimCallBack callBack) {
+        public Composer call(AnimCallBack callBack) {
             if (!mTweenParameterList.isEmpty()) {
                 mTweenParameterList.get(mTweenParameterList.size() - 1).callBack = callBack;
             }

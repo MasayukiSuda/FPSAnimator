@@ -12,8 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import com.daasuu.library.DisplayObject2;
 import com.daasuu.library.FPSTextureView;
 import com.daasuu.library.callback.AnimCallBack;
-import com.daasuu.library.painter.BitmapPainter;
-import com.daasuu.library.painter.TextPainter;
+import com.daasuu.library.drawer.BitmapDrawer;
+import com.daasuu.library.drawer.TextDrawer;
 import com.daasuu.library.util.Util;
 
 import java.util.Timer;
@@ -41,7 +41,7 @@ public class ParabolicMotionSampleActivity extends AppCompatActivity {
         paint.setTextSize(Util.convertDpToPixel(20, this));
 
         final DisplayObject2 textDisplay = new DisplayObject2();
-        textDisplay.with(new TextPainter("Text", paint))
+        textDisplay.with(new TextDrawer("Text", paint))
                 .parabolic()
                 .transform(800, 800)
                 .initialVelocityY(-40)
@@ -58,7 +58,7 @@ public class ParabolicMotionSampleActivity extends AppCompatActivity {
         final DisplayObject2 bitmapDisplay = new DisplayObject2();
 
 
-        bitmapDisplay.with(new BitmapPainter(mBitmap).dpSize(this))
+        bitmapDisplay.with(new BitmapDrawer(mBitmap).dpSize(this))
                 .parabolic()
                 .transform(0, mFPSTextureView.getHeight())
                 .reboundBottom(false)

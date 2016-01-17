@@ -7,17 +7,39 @@ import com.daasuu.library.constant.Constant;
  */
 public class AnimParameter {
 
-    private float x;
+    /**
+     * The x (horizontal) position of the display object, relative to its parent.
+     */
+    public float x;
 
-    private float y;
+    /**
+     * The y (vertical) position of the display object, relative to its parent.
+     */
+    public float y;
 
-    private int alpha = Constant.DEFAULT_ALPHA;
+    /**
+     * The alpha (transparency) for this display object. 0 is fully transparent, 255 is fully opaque.
+     * default 255.
+     */
+    public int alpha = Constant.DEFAULT_ALPHA;
 
-    private float scaleX = Constant.DEFAULT_SCALE;
+    /**
+     * The factor to stretch this display object horizontally. For example, setting scaleX to 2 will stretch the display
+     * object to twice its nominal width. To horizontally flip an object, set the scale to a negative number.
+     */
+    public float scaleX = Constant.DEFAULT_SCALE;
 
-    private float scaleY = Constant.DEFAULT_SCALE;
+    /**
+     * The factor to stretch this display object vertically. For example, setting scaleY to 0.5 will stretch the display
+     * object to half its nominal height. To vertically flip an object, set the scale to a negative number.
+     */
+    public float scaleY = Constant.DEFAULT_SCALE;
 
-    private float rotation = Constant.DEFAULT_ROTATION;
+    /**
+     * The rotation in degrees for this display object.
+     */
+    public float rotation = Constant.DEFAULT_ROTATION;
+
 
     public AnimParameter(float x, float y) {
         this.x = x;
@@ -31,52 +53,6 @@ public class AnimParameter {
         this.scaleX = scaleX;
         this.scaleY = scaleY;
         this.rotation = rotation;
-    }
-
-    public float x() {
-        return this.x;
-    }
-
-    public float y() {
-        return this.y;
-    }
-
-    public int alpha() {
-        return this.alpha;
-    }
-
-    public float scaleX() {
-        return this.scaleX;
-    }
-
-    public float scaleY() {
-        return this.scaleY;
-    }
-
-    public float rotation() {
-        return this.rotation;
-    }
-
-    public AnimParameter updatePosition(float x, float y) {
-        this.x = x;
-        this.y = y;
-        return this;
-    }
-
-    public AnimParameter updateAlpha(int alpha) {
-        this.alpha = alpha;
-        return this;
-    }
-
-    public AnimParameter updateScale(float scaleX, float scaleY) {
-        this.scaleX = scaleX;
-        this.scaleY = scaleY;
-        return this;
-    }
-
-    public AnimParameter updateRotation(float rotation) {
-        this.rotation = rotation;
-        return this;
     }
 
     @Override
