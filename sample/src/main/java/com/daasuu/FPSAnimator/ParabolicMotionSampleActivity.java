@@ -45,7 +45,7 @@ public class ParabolicMotionSampleActivity extends AppCompatActivity {
                 .parabolic()
                 .transform(800, 800)
                 .initialVelocityY(-40)
-                .build();
+                .end();
 
 
         mFPSTextureView.addChild(textDisplay);
@@ -70,7 +70,7 @@ public class ParabolicMotionSampleActivity extends AppCompatActivity {
                         mFPSTextureView.removeChild(bitmapDisplay);
                     }
                 })
-                .build();
+                .end();
 
         mFPSTextureView.addChild(bitmapDisplay);
     }

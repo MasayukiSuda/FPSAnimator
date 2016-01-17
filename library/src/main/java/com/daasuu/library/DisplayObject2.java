@@ -12,7 +12,7 @@ import com.daasuu.library.animator.TweenAnimator;
  * you can use simple interface to compose DisplayObject by calling {@link #with(Drawer)}.
  * <p/>
  * If you need to use your custom animation or drawing class which implements {@link Animator} or {@link Drawer},
- * you prepare their instances and simply set by calling {@link #setAnim(Animator)} or {@link #setDrawer(Drawer)}.
+ * you prepare their instances and simply set by calling {@link #animator(Animator)}.
  */
 public class DisplayObject2 extends DisplayObject {
 
@@ -21,9 +21,6 @@ public class DisplayObject2 extends DisplayObject {
     private Animator mAnimator;
 
     private Drawer mDrawer;
-
-    public DisplayObject2() {
-    }
 
     /**
      * Return Composer instance to setup this DisplayObject instance.
@@ -44,20 +41,10 @@ public class DisplayObject2 extends DisplayObject {
      *
      * @param animator
      */
-    public void setAnim(Animator animator) {
+    public DisplayObject2 animator(Animator animator) {
         this.mAnimator = animator;
         mAnimParameter = mAnimator.getInitialAnimParameter();
-    }
-
-    /**
-     * Set drawing class.
-     * Use this method only when there is need to your own custom class of animation,
-     * in other cases, use {@link #with(Drawer)} instead.
-     *
-     * @param drawer
-     */
-    public void setDrawer(Drawer drawer) {
-        this.mDrawer = drawer;
+        return this;
     }
 
     @Override
@@ -72,6 +59,9 @@ public class DisplayObject2 extends DisplayObject {
         mAnimator.setUp(fps);
     }
 
+    public AnimParameter getAnimParameter() {
+        return mAnimParameter;
+    }
 
     /**
      * Composer provide simple composing interface.

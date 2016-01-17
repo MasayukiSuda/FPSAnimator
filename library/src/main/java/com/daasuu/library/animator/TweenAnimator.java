@@ -1,6 +1,7 @@
 package com.daasuu.library.animator;
 
 import android.graphics.Canvas;
+import android.util.Log;
 
 import com.daasuu.library.Animator;
 import com.daasuu.library.AnimParameter;
@@ -63,7 +64,6 @@ public class TweenAnimator implements Animator {
     public void updateAnimParam(AnimParameter parameter) {
         AnimParameter nextParam = getNextAnimParameter();
 
-        // update parameters
         parameter.x = nextParam.x;
         parameter.y = nextParam.y;
         parameter.alpha = nextParam.alpha;
@@ -111,7 +111,7 @@ public class TweenAnimator implements Animator {
     }
 
     protected AnimParameter getNextAnimParameter() {
-        if (mAnimParameters.size() == 0) return null;
+        if (mAnimParameters.size() == 0) return mInitialParam;
 
         if (mTweenPause) {
             if (mDrawCount == -1) mDrawCount = 0;
@@ -234,8 +234,8 @@ public class TweenAnimator implements Animator {
             mDisplayObject = displayObject;
         }
 
-        public void build() {
-            mDisplayObject.setAnim(new TweenAnimator(mTweenLoop, mInitialParam, mTweenParameterList));
+        public void end() {
+            mDisplayObject.animator(new TweenAnimator(mTweenLoop, mInitialParam, mTweenParameterList));
         }
 
         /**

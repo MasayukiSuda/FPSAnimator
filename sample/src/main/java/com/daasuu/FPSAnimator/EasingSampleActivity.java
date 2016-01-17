@@ -10,7 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.daasuu.FPSAnimator.util.UIUtil;
+import com.daasuu.library.DisplayObject2;
 import com.daasuu.library.FPSTextureView;
+import com.daasuu.library.drawer.BitmapDrawer;
+import com.daasuu.library.drawer.TextDrawer;
 import com.daasuu.library.easing.Ease;
 import com.daasuu.library.tween.TweenBitmap;
 import com.daasuu.library.tween.TweenText;
@@ -37,26 +40,36 @@ public class EasingSampleActivity extends AppCompatActivity {
         paint.setColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         paint.setTextSize(Util.convertDpToPixel(12, this));
 
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+        float bitmapInitialX = paint.measureText(Ease.BOUNCE_IN_OUT.name()) + 50;
+
+
         for (Ease ease : Ease.values()) {
 
             float initialY = paint.getTextSize() * cnt * 1.3f;
-            TweenText tweenText = new TweenText(ease.name(), paint)
-                    .transform(0, initialY);
 
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-            float bitmapInitialX = paint.measureText(Ease.BOUNCE_IN_OUT.name()) + 50;
-            TweenBitmap tweenBitmap = new TweenBitmap(bitmap)
-                    .dpSize(this)
-                    .loop(true)
+            DisplayObject2 easeName = new DisplayObject2();
+            easeName.with(new TextDrawer(ease.name(), paint))
+                    .tween()
+                    .transform(0, initialY)
+                    .end();
+
+
+            DisplayObject2 bitmapTween = new DisplayObject2();
+            bitmapTween.with(new BitmapDrawer(bitmap).dpSize(this))
+                    .tween()
+                    .tweenLoop(true)
                     .transform(bitmapInitialX, initialY)
                     .waitTime(1000)
                     .toX(1000, UIUtil.getWindowWidth(this) - Util.convertPixelsToDp(bitmap.getWidth(), this), ease)
                     .waitTime(1000)
-                    .toX(1000, bitmapInitialX, ease);
+                    .toX(1000, bitmapInitialX, ease)
+                    .end();
+
 
             mFPSTextureView
-                    .addChild(tweenText)
-                    .addChild(tweenBitmap);
+                    .addChild(easeName)
+                    .addChild(bitmapTween);
 
             cnt++;
         }

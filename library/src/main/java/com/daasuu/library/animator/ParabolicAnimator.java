@@ -326,8 +326,8 @@ public class ParabolicAnimator implements Animator {
         }
 
 
-        public void build() {
-            mDisplayObject.setAnim(new ParabolicAnimator(
+        public void end() {
+            mDisplayObject.animator(new ParabolicAnimator(
                     new AnimParameter(x, y),
                     mDrawingNum,
                     mMovementY,

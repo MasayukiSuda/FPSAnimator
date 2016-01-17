@@ -50,7 +50,7 @@ public class TweenSampleActivity extends AppCompatActivity {
                                 .setAction("Action", null).show();
                     }
                 })
-                .build();
+                .end();
 
         DisplayObject2 bitmapDisplayB = new DisplayObject2();
         bitmapDisplayB.with(new BitmapDrawer(bitmap)
@@ -63,7 +63,7 @@ public class TweenSampleActivity extends AppCompatActivity {
                 .waitTime(300)
                 .transform(300, 400, 1, 1f, 1f, 0)
                 .waitTime(300)
-                .build();
+                .end();
 
 
         Paint paint = new Paint();
@@ -80,7 +80,7 @@ public class TweenSampleActivity extends AppCompatActivity {
                 .to(1000, UIUtil.getWindowWidth(this) - paint.measureText(tweenTxt), 800, 720f, Ease.SINE_OUT)
                 .waitTime(300)
                 .to(1000, 0, 1000, 0f, Ease.SINE_IN)
-                .build();
+                .end();
 
         mFPSTextureView
                 .addChild(bitmapDisplayA)

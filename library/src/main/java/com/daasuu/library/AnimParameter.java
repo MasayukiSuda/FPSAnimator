@@ -10,12 +10,12 @@ public class AnimParameter {
     /**
      * The x (horizontal) position of the display object, relative to its parent.
      */
-    public float x;
+    public float x = 0;
 
     /**
      * The y (vertical) position of the display object, relative to its parent.
      */
-    public float y;
+    public float y = 0;
 
     /**
      * The alpha (transparency) for this display object. 0 is fully transparent, 255 is fully opaque.
