@@ -11,7 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import com.daasuu.FPSAnimator.util.UIUtil;
-import com.daasuu.library.DisplayObject2;
+import com.daasuu.library.DisplayObject;
 import com.daasuu.library.FPSTextureView;
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.drawer.BitmapDrawer;
@@ -35,7 +35,7 @@ public class TweenSampleActivity extends AppCompatActivity {
         mFPSTextureView = (FPSTextureView) findViewById(R.id.animation_texture_view);
 
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-        DisplayObject2 bitmapDisplayA = new DisplayObject2();
+        DisplayObject bitmapDisplayA = new DisplayObject();
         bitmapDisplayA
                 .with(new BitmapDrawer(bitmap))
                 .tween()
@@ -52,7 +52,7 @@ public class TweenSampleActivity extends AppCompatActivity {
                 })
                 .end();
 
-        DisplayObject2 bitmapDisplayB = new DisplayObject2();
+        DisplayObject bitmapDisplayB = new DisplayObject();
         bitmapDisplayB.with(new BitmapDrawer(bitmap)
                 .dpSize(this)
                 .scaleRegistration(Util.convertPixelsToDp(bitmap.getWidth(), this) / 2, Util.convertPixelsToDp(bitmap.getHeight(), this) / 2))
@@ -71,7 +71,7 @@ public class TweenSampleActivity extends AppCompatActivity {
         paint.setTextSize(Util.convertDpToPixel(16, this));
 
         String tweenTxt = "TweenText";
-        DisplayObject2 textDisplay = new DisplayObject2();
+        DisplayObject textDisplay = new DisplayObject();
         textDisplay.with(new TextDrawer(tweenTxt, paint).rotateRegistration(paint.measureText(tweenTxt) / 2, paint.getTextSize() / 2))
                 .tween()
                 .tweenLoop(true)

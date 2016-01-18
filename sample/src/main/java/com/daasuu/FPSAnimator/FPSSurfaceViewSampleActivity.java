@@ -12,17 +12,12 @@ import android.os.Bundle;
 
 import com.daasuu.FPSAnimator.util.UIUtil;
 import com.daasuu.library.DisplayObject;
-import com.daasuu.library.DisplayObject2;
 import com.daasuu.library.FPSSurfaceView;
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.drawer.BitmapDrawer;
 import com.daasuu.library.drawer.SpriteSheetDrawer;
 import com.daasuu.library.drawer.TextDrawer;
 import com.daasuu.library.easing.Ease;
-import com.daasuu.library.parabolicmotion.ParabolicMotionSpriteSheet;
-import com.daasuu.library.tween.TweenBitmap;
-import com.daasuu.library.tween.TweenSpriteSheet;
-import com.daasuu.library.tween.TweenText;
 import com.daasuu.library.util.Util;
 
 public class FPSSurfaceViewSampleActivity extends AppCompatActivity {
@@ -43,7 +38,7 @@ public class FPSSurfaceViewSampleActivity extends AppCompatActivity {
 
 
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-        DisplayObject2 bitmapDisplayA = new DisplayObject2();
+        DisplayObject bitmapDisplayA = new DisplayObject();
         bitmapDisplayA
                 .with(new BitmapDrawer(bitmap))
                 .tween()
@@ -61,7 +56,7 @@ public class FPSSurfaceViewSampleActivity extends AppCompatActivity {
                 .end();
 
 
-        DisplayObject2 bitmapDisplayB = new DisplayObject2();
+        DisplayObject bitmapDisplayB = new DisplayObject();
         bitmapDisplayB.with(new BitmapDrawer(bitmap)
                 .dpSize(this)
                 .scaleRegistration(Util.convertPixelsToDp(bitmap.getWidth(), this) / 2, Util.convertPixelsToDp(bitmap.getHeight(), this) / 2))
@@ -80,7 +75,7 @@ public class FPSSurfaceViewSampleActivity extends AppCompatActivity {
         paint.setTextSize(Util.convertDpToPixel(16, this));
 
         String tweenTxt = "Better to use FPSTextureView.";
-        DisplayObject2 tweenText = new DisplayObject2();
+        DisplayObject tweenText = new DisplayObject();
         tweenText.with(new TextDrawer(tweenTxt, paint)
                 .rotateRegistration(paint.measureText(tweenTxt) / 2, paint.getTextSize() / 2))
                 .tween()
@@ -110,7 +105,7 @@ public class FPSSurfaceViewSampleActivity extends AppCompatActivity {
                 12)
                 .spriteLoop(true);
 
-        DisplayObject2 tweenSprite = new DisplayObject2();
+        DisplayObject tweenSprite = new DisplayObject();
         tweenSprite.with(spriteSheetDrawer)
                 .tween()
                 .tweenLoop(true)
@@ -118,7 +113,7 @@ public class FPSSurfaceViewSampleActivity extends AppCompatActivity {
                 .toX(3000, UIUtil.getWindowWidth(this))
                 .end();
 
-        final DisplayObject2 tweenParabolic = new DisplayObject2();
+        final DisplayObject tweenParabolic = new DisplayObject();
         tweenParabolic.with(new SpriteSheetDrawer(spriteBitmapB,
                 frameWidth,
                 frameHeight,

@@ -10,7 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.daasuu.FPSAnimator.util.UIUtil;
-import com.daasuu.library.DisplayObject2;
+import com.daasuu.library.DisplayObject;
 import com.daasuu.library.FPSTextureView;
 import com.daasuu.library.drawer.BitmapDrawer;
 import com.daasuu.library.drawer.TextDrawer;
@@ -46,14 +46,14 @@ public class EasingSampleActivity extends AppCompatActivity {
 
             float initialY = paint.getTextSize() * cnt * 1.3f;
 
-            DisplayObject2 easeName = new DisplayObject2();
+            DisplayObject easeName = new DisplayObject();
             easeName.with(new TextDrawer(ease.name(), paint))
                     .tween()
                     .transform(0, initialY)
                     .end();
 
 
-            DisplayObject2 bitmapTween = new DisplayObject2();
+            DisplayObject bitmapTween = new DisplayObject();
             bitmapTween.with(new BitmapDrawer(bitmap).dpSize(this))
                     .tween()
                     .tweenLoop(true)

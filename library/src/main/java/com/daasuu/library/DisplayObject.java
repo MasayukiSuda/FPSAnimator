@@ -1,89 +1,101 @@
 package com.daasuu.library;
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
 
-import com.daasuu.library.constant.Constant;
+import com.daasuu.library.animator.ParabolicAnimator;
+import com.daasuu.library.animator.TweenAnimator;
 
 /**
- * DisplayObject is the base class for all display classes in this library. It defines the core properties and
- * methods that are shared between all display objects, such as transformation properties (x, y, scaleX, scaleY, etc).
+ * DisplayObject class.
+ * <p/>
+ * When you only use default animation and drawing class which is provided by this library,
+ * you can use simple interface to compose DisplayObject by calling {@link #with(Drawer)}.
+ * <p/>
+ * If you need to use your custom animation or drawing class which implements {@link Animator} or {@link Drawer},
+ * you prepare their instances and simply set by calling {@link #animator(Animator)}.
  */
-public abstract class DisplayObject {
+public class DisplayObject {
+
+    private AnimParameter mAnimParameter;
+
+    private Animator mAnimator;
+
+    private Drawer mDrawer;
 
     /**
-     * The x (horizontal) position of the display object, relative to its parent.
+     * Return Composer instance to setup this DisplayObject instance.
+     * This method is useful when you use only default class of animation.
+     *
+     * @param drawer
+     * @return
      */
-    public float x = 0f;
+    public DisplayObjectComposer with(Drawer drawer) {
+        mDrawer = drawer;
+        return new DisplayObjectComposer();
+    }
 
     /**
-     * The y (vertical) position of the display object, relative to its parent.
+     * Set animation class.
+     * Use this method only when there is need to your own custom class of animation,
+     * in other cases, use {@link #with(Drawer)} instead.
+     *
+     * @param animator
      */
-    public float y = 0f;
-
-    /**
-     * The factor to stretch this display object horizontally. For example, setting scaleX to 2 will stretch the display
-     * object to twice its nominal width. To horizontally flip an object, set the scale to a negative number.
-     */
-    public float scaleX = Constant.DEFAULT_SCALE;
-
-    /**
-     * The factor to stretch this display object vertically. For example, setting scaleY to 0.5 will stretch the display
-     * object to half its nominal height. To vertically flip an object, set the scale to a negative number.
-     */
-    public float scaleY = Constant.DEFAULT_SCALE;
-
-    /**
-     * The alpha (transparency) for this display object. 0 is fully transparent, 255 is fully opaque.
-     * default 255.
-     */
-    public int alpha = Constant.DEFAULT_ALPHA;
-
-    /**
-     * The rotation in degrees for this display object.
-     */
-    public float rotation = Constant.DEFAULT_ROTATION;
-
-    /**
-     * Unique ID for this display object. Makes display objects easier for some uses.
-     */
-    public String id;
-
-    /**
-     * The Paint instance for this display object.
-     */
-    public Paint paint;
+    public DisplayObject animator(Animator animator) {
+        this.mAnimator = animator;
+        mAnimParameter = mAnimator.getInitialAnimParameter();
+        return this;
+    }
 
     /**
      * Draws the display object into the specified context ignoring its visible, alpha, shadow, and transform.
      *
      * @param canvas This Canvas acquired by lookCanvas in FPSTextureView or FPSSurfaceView.
      */
-    public abstract void draw(Canvas canvas);
+    public void draw(Canvas canvas) {
+        mAnimator.setBaseLine(canvas, mDrawer.getWidth(), mDrawer.getHeight());
+        mAnimator.updateAnimParam(mAnimParameter);
+        mDrawer.draw(canvas, mAnimParameter.x, mAnimParameter.y, mAnimParameter.alpha, mAnimParameter.scaleX, mAnimParameter.scaleY, mAnimParameter.rotation);
+    }
 
     /**
      * call from FPSTextureView or FPSSurfaceView when it is addChild.
      *
      * @param fps Set in FPSTextureView or FPSSurfaceView.
      */
-    public abstract void setUp(long fps);
-
-    /**
-     * for debug.
-     *
-     * @return this display object Properties
-     */
-    public String toString() {
-        return "DisplayObject{" +
-                "x='" + this.x + '\n' +
-                "y='" + this.y + '\n' +
-                "alpha='" + this.alpha + '\n' +
-                "scaleX='" + this.scaleX + '\n' +
-                "scaleY='" + this.scaleY + '\n' +
-                "rotation='" + this.rotation + '\n' +
-                "paint='" + this.paint + '\n' +
-                "id='" + this.id + '\n' +
-                '}';
+    public void setUp(long fps) {
+        mAnimator.setUp(fps);
     }
 
+    public AnimParameter getAnimParameter() {
+        return mAnimParameter;
+    }
+
+    public void pause(boolean pause) {
+        mAnimator.pause(pause);
+    }
+
+    public boolean isPause() {
+        return mAnimator.isPause();
+    }
+
+    /**
+     * Composer provide simple composing interface.
+     */
+    public class DisplayObjectComposer {
+        /**
+         * @return tween composer
+         */
+        public TweenAnimator.Composer tween() {
+            return TweenAnimator.composer(DisplayObject.this);
+        }
+
+        /**
+         * @return parabolic composer
+         */
+        public ParabolicAnimator.Composer parabolic() {
+            return ParabolicAnimator.composer(DisplayObject.this);
+        }
+    }
 }
+

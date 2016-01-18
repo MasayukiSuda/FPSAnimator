@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 
 import com.daasuu.library.AnimParameter;
 import com.daasuu.library.Animator;
-import com.daasuu.library.DisplayObject2;
+import com.daasuu.library.DisplayObject;
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.constant.Constant;
 import com.daasuu.library.easing.Ease;
@@ -47,7 +47,7 @@ public class TweenAnimator implements Animator {
 
     private final Map<AnimParameter, AnimCallBack> mCallbacks;
 
-    public static Composer composer(DisplayObject2 displayObject) {
+    public static Composer composer(DisplayObject displayObject) {
         return new Composer(displayObject);
     }
 
@@ -228,7 +228,7 @@ public class TweenAnimator implements Animator {
      */
     public static class Composer {
 
-        private final DisplayObject2 mDisplayObject;
+        private final DisplayObject mDisplayObject;
 
         protected List<TweenParameter> mTweenParameterList = new ArrayList<>();
 
@@ -239,7 +239,7 @@ public class TweenAnimator implements Animator {
 
         private AnimParameter mInitialParam = new AnimParameter(0, 0);
 
-        private Composer(DisplayObject2 displayObject) {
+        private Composer(DisplayObject displayObject) {
             mDisplayObject = displayObject;
         }
 

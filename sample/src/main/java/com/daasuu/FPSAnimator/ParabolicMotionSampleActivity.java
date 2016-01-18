@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
-import com.daasuu.library.DisplayObject2;
+import com.daasuu.library.DisplayObject;
 import com.daasuu.library.FPSTextureView;
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.drawer.BitmapDrawer;
@@ -40,7 +40,7 @@ public class ParabolicMotionSampleActivity extends AppCompatActivity {
         paint.setColor(ContextCompat.getColor(this, R.color.colorPrimary));
         paint.setTextSize(Util.convertDpToPixel(20, this));
 
-        final DisplayObject2 textDisplay = new DisplayObject2();
+        final DisplayObject textDisplay = new DisplayObject();
         textDisplay.with(new TextDrawer("Text", paint))
                 .parabolic()
                 .transform(800, 800)
@@ -55,7 +55,7 @@ public class ParabolicMotionSampleActivity extends AppCompatActivity {
 
     private void createParabolicMotionBitmap() {
 
-        final DisplayObject2 bitmapDisplay = new DisplayObject2();
+        final DisplayObject bitmapDisplay = new DisplayObject();
 
 
         bitmapDisplay.with(new BitmapDrawer(mBitmap).dpSize(this))

@@ -41,14 +41,14 @@ public interface Animator {
 
 
     /**
-     * Setter status of pause Motion Animation
+     * Setter status of pause Motion Animator
      *
      * @param pause indicates whether to start the motion animation paused.
      */
     void pause(boolean pause);
 
     /**
-     * Getter status of pause Motion Animation
+     * Getter status of pause Motion Animator
      *
      * @return indicates whether to start the motion animation paused.
      */

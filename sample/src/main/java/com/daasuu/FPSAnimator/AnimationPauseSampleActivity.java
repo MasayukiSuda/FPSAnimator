@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.daasuu.FPSAnimator.util.UIUtil;
-import com.daasuu.library.DisplayObject2;
+import com.daasuu.library.DisplayObject;
 import com.daasuu.library.FPSTextureView;
 import com.daasuu.library.drawer.SpriteSheetDrawer;
 import com.daasuu.library.drawer.TextDrawer;
@@ -26,9 +26,9 @@ public class AnimationPauseSampleActivity extends AppCompatActivity {
     private Button mSpritePauseBtn;
     private Button mParabolicPauseBtn;
 
-    private DisplayObject2 mTweenText;
-    private DisplayObject2 mTweenSpriteSheet;
-    private DisplayObject2 mParabolicMotionText;
+    private DisplayObject mTweenText;
+    private DisplayObject mTweenSpriteSheet;
+    private DisplayObject mParabolicMotionText;
     private SpriteSheetDrawer mSpriteSheetDrawer;
 
     public static void startActivity(Context context) {
@@ -53,13 +53,13 @@ public class AnimationPauseSampleActivity extends AppCompatActivity {
                 .rotateRegistration(paint.measureText(tweenTxt) / 2, paint.getTextSize() / 2)
                 .scaleRegistration(paint.measureText(tweenTxt) / 2, paint.getTextSize() / 2);
 
-        mTweenText = new DisplayObject2();
+        mTweenText = new DisplayObject();
         mTweenText.with(textDrawer)
                 .tween()
                 .tweenLoop(true)
                 .transform(0, 300, Util.convertAlphaFloatToInt(0.3f), 1f, 1f, 0)
                 .waitTime(300)
-                .to(1500, UIUtil.getWindowWidth(this) - paint.measureText(tweenTxt) * 1.5f, 300, Util.convertAlphaFloatToInt(0.3f), 2f, 2f, 720, Ease.LINEAR)
+                .to(1500, UIUtil.getWindowWidth(this) - paint.measureText(tweenTxt) * 1.5f, 300, Util.convertAlphaFloatToInt(1f), 2f, 2f, 720, Ease.LINEAR)
                 .waitTime(300)
                 .to(1500, 0, 300, Util.convertAlphaFloatToInt(0.3f), 1f, 1f, 0, Ease.LINEAR)
                 .end();
@@ -82,7 +82,7 @@ public class AnimationPauseSampleActivity extends AppCompatActivity {
                 12)
                 .spriteLoop(true);
 
-        mTweenSpriteSheet = new DisplayObject2();
+        mTweenSpriteSheet = new DisplayObject();
         mTweenSpriteSheet.with(mSpriteSheetDrawer)
                 .tween()
                 .tweenLoop(true)
@@ -93,7 +93,7 @@ public class AnimationPauseSampleActivity extends AppCompatActivity {
         Paint paint2 = new Paint();
         paint2.setColor(ContextCompat.getColor(this, R.color.colorPrimary));
         paint2.setTextSize(Util.convertDpToPixel(16, this));
-        mParabolicMotionText = new DisplayObject2();
+        mParabolicMotionText = new DisplayObject();
         mParabolicMotionText.with(new TextDrawer("ParabolicMotion", paint2))
                 .parabolic()
                 .transform(UIUtil.getWindowWidth(this) / 2, UIUtil.getWindowHeight(this) / 2)

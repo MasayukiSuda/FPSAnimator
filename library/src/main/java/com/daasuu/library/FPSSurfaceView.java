@@ -95,11 +95,11 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
 
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
-            for (DisplayObject displayObject : copyDisplayObjectList) {
-                if (displayObject == null) {
+            for (DisplayObject DisplayObject : copyDisplayObjectList) {
+                if (DisplayObject == null) {
                     continue;
                 }
-                displayObject.draw(canvas);
+                DisplayObject.draw(canvas);
             }
 
             mSurfaceHolder.unlockCanvasAndPost(canvas);
@@ -125,36 +125,36 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
     /**
      * Adds a child to the top of the display list.
      *
-     * @param displayObject DisplayObject
+     * @param DisplayObject DisplayObject2
      * @return this
      */
-    public FPSSurfaceView addChild(@NonNull DisplayObject displayObject) {
-        displayObject.setUp(mFps);
-        mDisplayList.add(displayObject);
+    public FPSSurfaceView addChild(@NonNull DisplayObject DisplayObject) {
+        DisplayObject.setUp(mFps);
+        mDisplayList.add(DisplayObject);
         return this;
     }
 
     /**
      * Adds a child to the display list at the specified index, bumping children at equal or greater indexes up one, and setting its parent to this Container
      *
-     * @param location      index
-     * @param displayObject DisplayObject
+     * @param location       index
+     * @param DisplayObject DisplayObject2
      * @return this
      */
-    public FPSSurfaceView addChildAt(int location, @NonNull DisplayObject displayObject) {
-        displayObject.setUp(mFps);
-        mDisplayList.add(location, displayObject);
+    public FPSSurfaceView addChildAt(int location, @NonNull DisplayObject DisplayObject) {
+        DisplayObject.setUp(mFps);
+        mDisplayList.add(location, DisplayObject);
         return this;
     }
 
     /**
      * Removes the specified child from the display list.
      *
-     * @param displayObject DisplayObject
+     * @param DisplayObject DisplayObject2
      * @return this
      */
-    public FPSSurfaceView removeChild(@NonNull DisplayObject displayObject) {
-        mDisplayList.remove(displayObject);
+    public FPSSurfaceView removeChild(@NonNull DisplayObject DisplayObject) {
+        mDisplayList.remove(DisplayObject);
         return this;
     }
 
@@ -182,8 +182,8 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
     /**
      * Swaps the specified children's depth in the display list. If either child is not a child of this Container, return false.
      *
-     * @param child1 DisplayObject
-     * @param child2 DisplayObject
+     * @param child1 DisplayObject2
+     * @param child2 DisplayObject2
      * @return if true, success to swapChildren
      */
     public boolean swapChildren(@NonNull DisplayObject child1, @NonNull DisplayObject child2) {

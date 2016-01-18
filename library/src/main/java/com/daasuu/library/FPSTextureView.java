@@ -87,11 +87,11 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
 
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
-            for (DisplayObject displayObject : copyDisplayObjectList) {
-                if (displayObject == null) {
+            for (DisplayObject DisplayObject : copyDisplayObjectList) {
+                if (DisplayObject == null) {
                     continue;
                 }
-                displayObject.draw(canvas);
+                DisplayObject.draw(canvas);
             }
 
             this.unlockCanvasAndPost(canvas);
@@ -130,36 +130,36 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
     /**
      * Adds a child to the top of the display list.
      *
-     * @param displayObject DisplayObject
+     * @param DisplayObject DisplayObject2
      * @return this
      */
-    public FPSTextureView addChild(@NonNull DisplayObject displayObject) {
-        displayObject.setUp(mFps);
-        mDisplayList.add(displayObject);
+    public FPSTextureView addChild(@NonNull DisplayObject DisplayObject) {
+        DisplayObject.setUp(mFps);
+        mDisplayList.add(DisplayObject);
         return this;
     }
 
     /**
      * Adds a child to the display list at the specified index, bumping children at equal or greater indexes up one, and setting its parent to this Container
      *
-     * @param location      index
-     * @param displayObject DisplayObject
+     * @param location       index
+     * @param DisplayObject DisplayObject2
      * @return this
      */
-    public FPSTextureView addChildAt(int location, @NonNull DisplayObject displayObject) {
-        displayObject.setUp(mFps);
-        mDisplayList.add(location, displayObject);
+    public FPSTextureView addChildAt(int location, @NonNull DisplayObject DisplayObject) {
+        DisplayObject.setUp(mFps);
+        mDisplayList.add(location, DisplayObject);
         return this;
     }
 
     /**
      * Removes the specified child from the display list.
      *
-     * @param displayObject DisplayObject
+     * @param DisplayObject DisplayObject2
      * @return this
      */
-    public FPSTextureView removeChild(@NonNull DisplayObject displayObject) {
-        boolean a = mDisplayList.remove(displayObject);
+    public FPSTextureView removeChild(@NonNull DisplayObject DisplayObject) {
+        boolean a = mDisplayList.remove(DisplayObject);
         return this;
     }
 
@@ -187,8 +187,8 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
     /**
      * Swaps the specified children's depth in the display list. If either child is not a child of this Container, return false.
      *
-     * @param child1 DisplayObject
-     * @param child2 DisplayObject
+     * @param child1 DisplayObject2
+     * @param child2 DisplayObject2
      * @return if true, success to swapChildren
      */
     public boolean swapChildren(@NonNull DisplayObject child1, @NonNull DisplayObject child2) {

@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.daasuu.FPSAnimator.util.UIUtil;
-import com.daasuu.library.DisplayObject2;
+import com.daasuu.library.DisplayObject;
 import com.daasuu.library.FPSTextureView;
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.drawer.SpriteSheetDrawer;
@@ -42,8 +42,8 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
                 (int) Util.convertDpToPixel(1024f, this),
                 false);
 
-        DisplayObject2 displayObject2 = new DisplayObject2();
-        displayObject2
+        DisplayObject displayObject = new DisplayObject();
+        displayObject
                 .with(new SpriteSheetDrawer(spriteBitmapB, frameWidth, frameHeight, 64, 12).spriteLoop(true))
                 .tween()
                 .tweenLoop(true)
@@ -59,7 +59,7 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
                 12
         );
 
-        final DisplayObject2 parabolicDisplay = new DisplayObject2();
+        final DisplayObject parabolicDisplay = new DisplayObject();
         parabolicDisplay
                 .with(
                         new SpriteSheetDrawer(spriteBitmapB, overrideSpriteSheet)
@@ -81,7 +81,7 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
         mFPSTextureView
                 .setFps(24)
                 .addChild(parabolicDisplay)
-                .addChild(displayObject2);
+                .addChild(displayObject);
     }
 
     private class OverrideSpriteSheet extends SpriteSheet {
@@ -150,13 +150,13 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
                         .spriteLoop(true)
                         .frequency((int) (1 + Math.random() * 3));
 
-                DisplayObject2 displayObject2 = new DisplayObject2();
-                displayObject2.with(spriteSheetDrawer)
+                DisplayObject displayObject = new DisplayObject();
+                displayObject.with(spriteSheetDrawer)
                         .tween()
                         .transform(i * interval, j * interval)
                         .end();
 
-                mFPSTextureView.addChild(displayObject2);
+                mFPSTextureView.addChild(displayObject);
 
             }
 
