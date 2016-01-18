@@ -61,7 +61,7 @@ public class TweenSampleActivity extends AppCompatActivity {
                 .transform(300, 400)
                 .to(500, 300, 400, 0, 6f, 6f, 0, Ease.SINE_IN_OUT)
                 .waitTime(300)
-                .transform(300, 400, 1, 1f, 1f, 0)
+                .transform(300, 400, Util.convertAlphaFloatToInt(1f), 1f, 1f, 0)
                 .waitTime(300)
                 .end();
 

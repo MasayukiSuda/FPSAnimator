@@ -15,8 +15,6 @@ import com.daasuu.library.FPSTextureView;
 import com.daasuu.library.drawer.BitmapDrawer;
 import com.daasuu.library.drawer.TextDrawer;
 import com.daasuu.library.easing.Ease;
-import com.daasuu.library.tween.TweenBitmap;
-import com.daasuu.library.tween.TweenText;
 import com.daasuu.library.util.Util;
 
 public class EasingSampleActivity extends AppCompatActivity {
