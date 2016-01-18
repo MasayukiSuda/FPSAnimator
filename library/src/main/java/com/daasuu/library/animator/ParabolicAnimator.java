@@ -118,7 +118,7 @@ public class ParabolicAnimator implements Animator {
     }
 
 
-    private ParabolicAnimator(AnimParameter initialPosition, int mDrawingNum, float mMovementY, float mCoefficientRestitutionY, float mCoefficientRestitutionX, float mInitialVelocityY, float mAccelerationY, float mAccelerationX, int mFrequency, float mBottomBase, float mRightSide, float mLeftSide, boolean mReboundBottom, boolean mReboundLeft, boolean mReboundRight, AnimCallBack mBottomHitCallback, AnimCallBack mLeftHitCallback, AnimCallBack mRightHitCallback, boolean mParabolicMotionPause) {
+    private ParabolicAnimator(AnimParameter initialPosition, int mDrawingNum, float mMovementY, float mCoefficientRestitutionY, float mCoefficientRestitutionX, float mInitialVelocityY, float mAccelerationY, float mAccelerationX, int mFrequency, float mBottomBase, float mRightSide, float mLeftSide, boolean mReboundBottom, boolean mReboundLeft, boolean mReboundRight, AnimCallBack mBottomHitCallback, AnimCallBack mLeftHitCallback, AnimCallBack mRightHitCallback) {
         this.mInitialPosition = initialPosition;
         this.mDrawingNum = mDrawingNum;
         this.mMovementY = mMovementY;
@@ -137,7 +137,6 @@ public class ParabolicAnimator implements Animator {
         this.mBottomHitCallback = mBottomHitCallback;
         this.mLeftHitCallback = mLeftHitCallback;
         this.mRightHitCallback = mRightHitCallback;
-        this.mParabolicMotionPause = mParabolicMotionPause;
     }
 
     @Override
@@ -325,12 +324,6 @@ public class ParabolicAnimator implements Animator {
          */
         private AnimCallBack mRightHitCallback;
 
-        /**
-         * indicates whether to start the tween paused.
-         */
-        private boolean mParabolicMotionPause = false;
-
-
         private Composer(DisplayObject2 displayObject2) {
             mDisplayObject = displayObject2;
         }
@@ -355,8 +348,7 @@ public class ParabolicAnimator implements Animator {
                     mReboundRight,
                     mBottomHitCallback,
                     mLeftHitCallback,
-                    mRightHitCallback,
-                    mParabolicMotionPause
+                    mRightHitCallback
             ));
         }
 
