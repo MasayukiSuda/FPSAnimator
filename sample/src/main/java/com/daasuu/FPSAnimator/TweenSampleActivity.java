@@ -14,9 +14,9 @@ import com.daasuu.FPSAnimator.util.UIUtil;
 import com.daasuu.library.DisplayObject2;
 import com.daasuu.library.FPSTextureView;
 import com.daasuu.library.callback.AnimCallBack;
-import com.daasuu.library.easing.Ease;
 import com.daasuu.library.drawer.BitmapDrawer;
 import com.daasuu.library.drawer.TextDrawer;
+import com.daasuu.library.easing.Ease;
 import com.daasuu.library.util.Util;
 
 public class TweenSampleActivity extends AppCompatActivity {
@@ -79,7 +79,7 @@ public class TweenSampleActivity extends AppCompatActivity {
                 .waitTime(300)
                 .to(1000, UIUtil.getWindowWidth(this) - paint.measureText(tweenTxt), 800, 720f, Ease.SINE_OUT)
                 .waitTime(300)
-                .to(1000, 0, 1000, 0f, Ease.SINE_IN)
+                .to(1000, 0, 800, 0f, Ease.SINE_IN)
                 .end();
 
         mFPSTextureView

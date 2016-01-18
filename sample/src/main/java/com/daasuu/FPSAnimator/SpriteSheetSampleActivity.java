@@ -13,7 +13,6 @@ import com.daasuu.library.FPSTextureView;
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.drawer.SpriteSheetDrawer;
 import com.daasuu.library.spritesheet.SpriteSheet;
-import com.daasuu.library.tween.TweenSpriteSheet;
 import com.daasuu.library.util.Util;
 
 public class SpriteSheetSampleActivity extends AppCompatActivity {
@@ -43,16 +42,14 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
                 (int) Util.convertDpToPixel(1024f, this),
                 false);
 
-        TweenSpriteSheet tweenSpriteSheetB = new TweenSpriteSheet(
-                spriteBitmapB,
-                frameWidth,
-                frameHeight,
-                64,
-                12)
-                .spriteLoop(true)
-                .loop(true)
+        DisplayObject2 displayObject2 = new DisplayObject2();
+        displayObject2
+                .with(new SpriteSheetDrawer(spriteBitmapB, frameWidth, frameHeight, 64, 12).spriteLoop(true))
+                .tween()
+                .tweenLoop(true)
                 .transform(-Util.convertDpToPixel(82.875f, this), UIUtil.getWindowHeight(this) / 2)
-                .toX(3000, UIUtil.getWindowWidth(this));
+                .toX(3000, UIUtil.getWindowWidth(this))
+                .end();
 
 
         OverrideSpriteSheet overrideSpriteSheet = new OverrideSpriteSheet(
@@ -84,7 +81,7 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
         mFPSTextureView
                 .setFps(24)
                 .addChild(parabolicDisplay)
-                .addChild(tweenSpriteSheetB);
+                .addChild(displayObject2);
     }
 
     private class OverrideSpriteSheet extends SpriteSheet {
@@ -145,17 +142,21 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
 
             for (int j = 0; j <= intervalHeight; j++) {
 
-                final TweenSpriteSheet tweenSpriteSheetA = new TweenSpriteSheet(
-                        spriteBitmapA,
+                SpriteSheetDrawer spriteSheetDrawer = new SpriteSheetDrawer(spriteBitmapA,
                         spriteBitmapA.getWidth() / spriteBitmapANum,
                         spriteBitmapA.getHeight(),
                         spriteBitmapANum,
                         spriteBitmapANum)
-                        .frequency((int) (1 + Math.random() * 3))
-                        .transform(i * interval, j * interval)
-                        .spriteLoop(true);
+                        .spriteLoop(true)
+                        .frequency((int) (1 + Math.random() * 3));
 
-                mFPSTextureView.addChild(tweenSpriteSheetA);
+                DisplayObject2 displayObject2 = new DisplayObject2();
+                displayObject2.with(spriteSheetDrawer)
+                        .tween()
+                        .transform(i * interval, j * interval)
+                        .end();
+
+                mFPSTextureView.addChild(displayObject2);
 
             }
 

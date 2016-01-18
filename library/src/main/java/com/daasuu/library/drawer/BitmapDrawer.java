@@ -60,11 +60,27 @@ public class BitmapDrawer extends BaseDrawer {
         return this;
     }
 
+    /**
+     * The left offset and y offset for this display object's registration point. For example, to make a 100x100px Bitmap scale
+     * around its center, you would set regX and regY to 50.
+     *
+     * @param regX The horizontal rotate registration point in pixels
+     * @param regY The vertical rotate registration point in pixels
+     * @return this
+     */
     public BitmapDrawer scaleRegistration(float regX, float regY) {
         setScaleRegistration(regX, regY);
         return this;
     }
 
+    /**
+     * The left offset and y offset for this display object's registration point. For example, to make a 100x100px Bitmap rotate
+     * around its center, you would set regX and regY to 50.
+     *
+     * @param regX The horizontal rotate registration point in pixels
+     * @param regY The vertical rotate registration point in pixels
+     * @return this
+     */
     public BitmapDrawer rotateRegistration(float regX, float regY) {
         setRotateRegistration(regX, regY);
         return this;

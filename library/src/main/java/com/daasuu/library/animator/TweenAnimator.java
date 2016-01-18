@@ -280,11 +280,25 @@ public class TweenAnimator implements Animator {
         /**
          * see {@link #to(long, float, float, int, float, float, float, Ease)}
          */
+        public Composer to(long animDuration, float x, float y) {
+            return to(animDuration, x, y, Ease.LINEAR);
+        }
+
+        /**
+         * see {@link #to(long, float, float, int, float, float, float, Ease)}
+         */
         public Composer to(long animDuration, float x, float y, Ease ease) {
             AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
                     mTweenParameterList.get(mTweenParameterList.size() - 1) :
                     mInitialParam;
             return to(animDuration, x, y, beforeParam.alpha, beforeParam.scaleX, beforeParam.scaleY, beforeParam.rotation, ease);
+        }
+
+        /**
+         * see {@link #to(long, float, float, int, float, float, float, Ease)}
+         */
+        public Composer to(long animDuration, float x, float y, int alpha) {
+            return to(animDuration, x, y, alpha, Ease.LINEAR);
         }
 
         /**
@@ -301,12 +315,26 @@ public class TweenAnimator implements Animator {
         /**
          * see {@link #to(long, float, float, int, float, float, float, Ease)}
          */
+        public Composer to(long animDuration, float x, float y, float scaleX, float scaleY) {
+            return to(animDuration, x, y, scaleX, scaleY, Ease.LINEAR);
+        }
+
+        /**
+         * see {@link #to(long, float, float, int, float, float, float, Ease)}
+         */
         public Composer to(long animDuration, float x, float y, float scaleX, float scaleY, Ease ease) {
             AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
                     mTweenParameterList.get(mTweenParameterList.size() - 1) :
                     mInitialParam;
 
             return to(animDuration, x, y, beforeParam.alpha, scaleX, scaleY, beforeParam.rotation, ease);
+        }
+
+        /**
+         * see {@link #to(long, float, float, int, float, float, float, Ease)}
+         */
+        public Composer to(long animDuration, float x, float y, float rotation) {
+            return to(animDuration, x, y, rotation, Ease.LINEAR);
         }
 
         /**
@@ -348,6 +376,13 @@ public class TweenAnimator implements Animator {
         }
 
         /**
+         * see {@link #toX(long, float, Ease)}
+         */
+        public Composer toX(long animDuration, float x) {
+            return toX(animDuration, x, Ease.LINEAR);
+        }
+
+        /**
          * Queues a tween from the current values to the target properties. Set duration to 0 to jump to these value.
          * Numeric properties will be tweened from their current value in the tween to the target value.
          *
@@ -372,6 +407,13 @@ public class TweenAnimator implements Animator {
             ));
 
             return this;
+        }
+
+        /**
+         * see {@link #toY(long, float, Ease)}
+         */
+        public Composer toY(long animDuration, float y) {
+            return toY(animDuration, y, Ease.LINEAR);
         }
 
         /**
@@ -405,7 +447,7 @@ public class TweenAnimator implements Animator {
          * see {@link #alpha(long, float, Ease)}
          */
         public Composer alpha(long animDuration, float alpha) {
-            return alpha(animDuration, alpha, Ease.NONE);
+            return alpha(animDuration, alpha, Ease.LINEAR);
         }
 
         /**
@@ -436,6 +478,13 @@ public class TweenAnimator implements Animator {
         }
 
         /**
+         * see {@link #scale(long, float, float, Ease)}
+         */
+        public Composer scale(long animDuration, float scaleX, float scaleY) {
+            return scale(animDuration, scaleX, scaleY, Ease.LINEAR);
+        }
+
+        /**
          * Queues a tween from the current values to the target properties. Set duration to 0 to jump to these value.
          * Numeric properties will be tweened from their current value in the tween to the target value.
          *
@@ -461,6 +510,13 @@ public class TweenAnimator implements Animator {
             ));
 
             return this;
+        }
+
+        /**
+         * see {@link #rotation(long, float, Ease)}
+         */
+        public Composer rotation(long animDuration, float rotation) {
+            return rotation(animDuration, rotation, Ease.LINEAR);
         }
 
         /**
@@ -521,6 +577,7 @@ public class TweenAnimator implements Animator {
             }
             return this;
         }
+
     }
 
 }

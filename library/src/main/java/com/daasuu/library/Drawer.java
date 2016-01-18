@@ -11,7 +11,7 @@ public interface Drawer {
     /**
      * Draw the object on the canvas with given properties.
      *
-     * @param canvas
+     * @param canvas   This Canvas acquired by lookCanvas in FPSTextureView or FPSSurfaceView.
      * @param x        The horizontal translation (x position) in pixels
      * @param y        The vertical translation (y position) in pixels
      * @param alpha    The alpha (transparency) ,as a percentage of 255.
