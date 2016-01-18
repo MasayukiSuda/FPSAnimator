@@ -1,10 +1,9 @@
 package com.daasuu.library.animator;
 
 import android.graphics.Canvas;
-import android.util.Log;
 
-import com.daasuu.library.Animator;
 import com.daasuu.library.AnimParameter;
+import com.daasuu.library.Animator;
 import com.daasuu.library.DisplayObject2;
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.constant.Constant;
@@ -166,7 +165,7 @@ public class TweenAnimator implements Animator {
         cntScaleX = (tweenParameter.scaleX - beforeParam.scaleX) / animParamNum;
         cntScaleY = (tweenParameter.scaleY - beforeParam.scaleY) / animParamNum;
 
-        for (int i = 0; i <= animParamNum; i++) {
+        for (int i = 0; i < animParamNum; i++) {
             float elapsedTimeRate = (float) i / (float) animParamNum;
             float valueChangeRate = EaseProvider.get(tweenParameter.ease, elapsedTimeRate);
 
