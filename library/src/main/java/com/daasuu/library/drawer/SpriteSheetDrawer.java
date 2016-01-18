@@ -181,6 +181,24 @@ public class SpriteSheetDrawer extends BaseDrawer {
         return this;
     }
 
+    /**
+     * indicates whether to start the SpriteAnimation paused.
+     *
+     * @param pause If true, SpriteAnimation pause.
+     */
+    public void spritePause(boolean pause) {
+        mSpriteSheet.setSpritePause(pause);
+    }
+
+    /**
+     * Getter SpriteAnimation pause state
+     *
+     * @return spritePause
+     */
+    public boolean isSpritePause() {
+        return mSpriteSheet.isSpritePause();
+    }
+
     @Override
     protected void draw(Canvas canvas, float x, float y) {
         if (mBitmap == null) {

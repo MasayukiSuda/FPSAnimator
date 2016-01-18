@@ -38,4 +38,20 @@ public interface Animator {
      * @param fps Set in FPSTextureView or FPSSurfaceView.
      */
     void setUp(long fps);
+
+
+    /**
+     * Setter status of pause Motion Animation
+     *
+     * @param pause indicates whether to start the motion animation paused.
+     */
+    void pause(boolean pause);
+
+    /**
+     * Getter status of pause Motion Animation
+     *
+     * @return indicates whether to start the motion animation paused.
+     */
+    boolean isPause();
+
 }

@@ -109,6 +109,16 @@ public class TweenAnimator implements Animator {
         }
     }
 
+    @Override
+    public void pause(boolean pause) {
+        mTweenPause = pause;
+    }
+
+    @Override
+    public boolean isPause() {
+        return mTweenPause;
+    }
+
     protected AnimParameter getNextAnimParameter() {
         if (mAnimParameters.size() == 0) return mInitialParam;
 

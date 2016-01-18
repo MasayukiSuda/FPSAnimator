@@ -103,7 +103,7 @@ public class ParabolicAnimator implements Animator {
     private AnimCallBack mRightHitCallback;
 
     /**
-     * indicates whether to start the tween paused.
+     * indicates whether to start the parabolicMotion paused.
      */
     private boolean mParabolicMotionPause = false;
 
@@ -153,6 +153,16 @@ public class ParabolicAnimator implements Animator {
         if (mRightSide < 0) {
             mRightSide = canvas.getWidth() - width;
         }
+    }
+
+    @Override
+    public void pause(boolean pause) {
+        mParabolicMotionPause = pause;
+    }
+
+    @Override
+    public boolean isPause() {
+        return mParabolicMotionPause;
     }
 
     @Override

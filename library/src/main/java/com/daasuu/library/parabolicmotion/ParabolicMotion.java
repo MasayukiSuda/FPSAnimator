@@ -98,7 +98,7 @@ class ParabolicMotion extends DisplayObject {
     protected AnimCallBack mRightHitCallback;
 
     /**
-     * indicates whether to start the tween paused.
+     * indicates whether to start the parabolicMotion paused.
      */
     private boolean mParabolicMotionPause = false;
 

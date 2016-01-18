@@ -12,11 +12,11 @@ import android.view.View;
 import android.widget.Button;
 
 import com.daasuu.FPSAnimator.util.UIUtil;
+import com.daasuu.library.DisplayObject2;
 import com.daasuu.library.FPSTextureView;
+import com.daasuu.library.drawer.SpriteSheetDrawer;
+import com.daasuu.library.drawer.TextDrawer;
 import com.daasuu.library.easing.Ease;
-import com.daasuu.library.parabolicmotion.ParabolicMotionText;
-import com.daasuu.library.tween.TweenSpriteSheet;
-import com.daasuu.library.tween.TweenText;
 import com.daasuu.library.util.Util;
 
 public class AnimationPauseSampleActivity extends AppCompatActivity {
@@ -26,9 +26,10 @@ public class AnimationPauseSampleActivity extends AppCompatActivity {
     private Button mSpritePauseBtn;
     private Button mParabolicPauseBtn;
 
-    private TweenText mTweenText;
-    private TweenSpriteSheet mTweenSpriteSheet;
-    private ParabolicMotionText mParabolicMotionText;
+    private DisplayObject2 mTweenText;
+    private DisplayObject2 mTweenSpriteSheet;
+    private DisplayObject2 mParabolicMotionText;
+    private SpriteSheetDrawer mSpriteSheetDrawer;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, AnimationPauseSampleActivity.class);
@@ -48,15 +49,20 @@ public class AnimationPauseSampleActivity extends AppCompatActivity {
         paint.setTextSize(Util.convertDpToPixel(16, this));
         String tweenTxt = "TweenPause";
 
-        mTweenText = new TweenText(tweenTxt, paint)
+        TextDrawer textDrawer = new TextDrawer(tweenTxt, paint)
                 .rotateRegistration(paint.measureText(tweenTxt) / 2, paint.getTextSize() / 2)
-                .scaleRegistration(paint.measureText(tweenTxt) / 2, paint.getTextSize() / 2)
-                .loop(true)
-                .transform(0, 300, 0.3f, 1f, 1f, 0)
+                .scaleRegistration(paint.measureText(tweenTxt) / 2, paint.getTextSize() / 2);
+
+        mTweenText = new DisplayObject2();
+        mTweenText.with(textDrawer)
+                .tween()
+                .tweenLoop(true)
+                .transform(0, 300, Util.convertAlphaFloatToInt(0.3f), 1f, 1f, 0)
                 .waitTime(300)
-                .to(1500, UIUtil.getWindowWidth(this) - paint.measureText(tweenTxt) * 1.5f, 300, 1f, 2f, 2f, 720, Ease.LINEAR)
+                .to(1500, UIUtil.getWindowWidth(this) - paint.measureText(tweenTxt) * 1.5f, 300, Util.convertAlphaFloatToInt(0.3f), 2f, 2f, 720, Ease.LINEAR)
                 .waitTime(300)
-                .to(1500, 0, 300, 0.3f, 1f, 1f, 0, Ease.LINEAR);
+                .to(1500, 0, 300, Util.convertAlphaFloatToInt(0.3f), 1f, 1f, 0, Ease.LINEAR)
+                .end();
 
 
         float frameWidth = Util.convertDpToPixel(82.875f, this);
@@ -69,23 +75,30 @@ public class AnimationPauseSampleActivity extends AppCompatActivity {
                 (int) Util.convertDpToPixel(1024f, this),
                 false);
 
-        mTweenSpriteSheet = new TweenSpriteSheet(
-                spriteBitmapB,
+        mSpriteSheetDrawer = new SpriteSheetDrawer(spriteBitmapB,
                 frameWidth,
                 frameHeight,
                 64,
                 12)
-                .spriteLoop(true)
-                .loop(true)
+                .spriteLoop(true);
+
+        mTweenSpriteSheet = new DisplayObject2();
+        mTweenSpriteSheet.with(mSpriteSheetDrawer)
+                .tween()
+                .tweenLoop(true)
                 .transform(-Util.convertDpToPixel(82.875f, this), UIUtil.getWindowHeight(this) / 3)
-                .toX(3000, UIUtil.getWindowWidth(this));
+                .toX(3000, UIUtil.getWindowWidth(this))
+                .end();
 
         Paint paint2 = new Paint();
         paint2.setColor(ContextCompat.getColor(this, R.color.colorPrimary));
         paint2.setTextSize(Util.convertDpToPixel(16, this));
-        mParabolicMotionText = new ParabolicMotionText("ParabolicMotion", paint2)
+        mParabolicMotionText = new DisplayObject2();
+        mParabolicMotionText.with(new TextDrawer("ParabolicMotion", paint2))
+                .parabolic()
                 .transform(UIUtil.getWindowWidth(this) / 2, UIUtil.getWindowHeight(this) / 2)
-                .initialVelocityY(-30);
+                .initialVelocityY(-30)
+                .end();
 
         mFPSTextureView
                 .addChild(mTweenText)
@@ -113,11 +126,11 @@ public class AnimationPauseSampleActivity extends AppCompatActivity {
         mTweenPauseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mTweenText.isTweenPause()) {
-                    mTweenText.tweenPause(false);
+                if (mTweenText.isPause()) {
+                    mTweenText.pause(false);
                     mTweenPauseBtn.setText("Tween Pause");
                 } else {
-                    mTweenText.tweenPause(true);
+                    mTweenText.pause(true);
                     mTweenPauseBtn.setText("Tween Play");
                 }
             }
@@ -126,11 +139,11 @@ public class AnimationPauseSampleActivity extends AppCompatActivity {
         mSpritePauseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mTweenSpriteSheet.isSpritePause()) {
-                    mTweenSpriteSheet.spritePause(false);
+                if (mSpriteSheetDrawer.isSpritePause()) {
+                    mSpriteSheetDrawer.spritePause(false);
                     mSpritePauseBtn.setText("SpriteSheet Pause");
                 } else {
-                    mTweenSpriteSheet.spritePause(true);
+                    mSpriteSheetDrawer.spritePause(true);
                     mSpritePauseBtn.setText("SpriteSheet Play");
                 }
             }
@@ -139,11 +152,11 @@ public class AnimationPauseSampleActivity extends AppCompatActivity {
         mParabolicPauseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mParabolicMotionText.isParabolicMotionPause()) {
-                    mParabolicMotionText.parabolicMotionPause(false);
+                if (mParabolicMotionText.isPause()) {
+                    mParabolicMotionText.pause(false);
                     mParabolicPauseBtn.setText("ParabolicMotion Pause");
                 } else {
-                    mParabolicMotionText.parabolicMotionPause(true);
+                    mParabolicMotionText.pause(true);
                     mParabolicPauseBtn.setText("ParabolicMotion Play");
                 }
             }

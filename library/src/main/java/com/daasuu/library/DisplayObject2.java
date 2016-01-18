@@ -63,6 +63,14 @@ public class DisplayObject2 extends DisplayObject {
         return mAnimParameter;
     }
 
+    public void pause(boolean pause) {
+        mAnimator.pause(pause);
+    }
+
+    public boolean isPause() {
+        return mAnimator.isPause();
+    }
+
     /**
      * Composer provide simple composing interface.
      */
