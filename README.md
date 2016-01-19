@@ -182,6 +182,11 @@ This is the implementation of the sample application.
 # Easing
 <img src="art/easingDemo.gif" width="80%">
 
+Contributers
+-------
+
+* [m1noon](https://github.com/m1noon)
+
 ## License
     Copyright 2016 MasayukiSuda
 
