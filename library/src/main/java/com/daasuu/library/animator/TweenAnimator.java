@@ -276,6 +276,7 @@ public class TweenAnimator implements Animator {
          * @param scaleX   The horizontal scale, as a percentage of 1
          * @param scaleY   The vertical scale, as a percentage of 1
          * @param rotation The rotation, in degrees
+         * @return this
          */
         public Composer transform(float x, float y, int alpha, float scaleX, float scaleY, float rotation) {
             if (mTweenParameterList.size() > 0) {
@@ -370,6 +371,7 @@ public class TweenAnimator implements Animator {
          * @param scaleY       The vertical scale, as a percentage of 1
          * @param rotation     The rotation, in degrees
          * @param ease         The easing function to use for this tween.
+         * @return this
          */
         public Composer to(long animDuration, float x, float y, int alpha, float scaleX, float scaleY, float rotation, Ease ease) {
             mTweenParameterList.add(new TweenParameter(
@@ -399,6 +401,7 @@ public class TweenAnimator implements Animator {
          * @param animDuration The duration of the tween in milliseconds
          * @param x            The horizontal translation (x position) in pixels
          * @param ease         The easing function to use for this tween.
+         * @return this
          */
         public Composer toX(long animDuration, float x, Ease ease) {
             AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
@@ -433,6 +436,7 @@ public class TweenAnimator implements Animator {
          * @param animDuration The duration of the tween in milliseconds
          * @param y            The vertical translation (y position) in pixels
          * @param ease         The easing function to use for this tween.
+         * @return this
          */
         public Composer toY(long animDuration, float y, Ease ease) {
             AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
@@ -467,6 +471,7 @@ public class TweenAnimator implements Animator {
          * @param animDuration The duration of the tween in milliseconds
          * @param alpha        The alpha (transparency) ,as a percentage of 255.
          * @param ease         The easing function to use for this tween.
+         * @return this
          */
         public Composer alpha(long animDuration, float alpha, Ease ease) {
             AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
@@ -502,6 +507,7 @@ public class TweenAnimator implements Animator {
          * @param scaleX       The horizontal scale, as a percentage of 1
          * @param scaleY       The vertical scale, as a percentage of 1
          * @param ease         The easing function to use for this tween.
+         * @return this
          */
         public Composer scale(long animDuration, float scaleX, float scaleY, Ease ease) {
             AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
@@ -536,6 +542,7 @@ public class TweenAnimator implements Animator {
          * @param animDuration The duration of the tween in milliseconds
          * @param rotation     The rotation, in degrees
          * @param ease         The easing function to use for this tween.
+         * @return this
          */
         public Composer rotation(long animDuration, float rotation, Ease ease) {
             AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
@@ -560,6 +567,7 @@ public class TweenAnimator implements Animator {
          * Queues a wait (essentially an empty tween).
          *
          * @param animDuration The duration of the wait in milliseconds
+         * @return this
          */
         public Composer waitTime(long animDuration) {
 
@@ -581,6 +589,12 @@ public class TweenAnimator implements Animator {
             return this;
         }
 
+        /**
+         * Set queues an action to call the specified function.
+         *
+         * @param callBack callback The function to call.
+         * @return this
+         */
         public Composer call(AnimCallBack callBack) {
             if (!mTweenParameterList.isEmpty()) {
                 mTweenParameterList.get(mTweenParameterList.size() - 1).callBack = callBack;

@@ -24,8 +24,8 @@ public class DisplayObject {
      * Return Composer instance to setup this DisplayObject instance.
      * This method is useful when you use only default class of animation.
      *
-     * @param drawer
-     * @return
+     * @param drawer drawing object
+     * @return composer
      */
     public DisplayObjectComposer with(Drawer drawer) {
         mDrawer = drawer;
@@ -37,7 +37,7 @@ public class DisplayObject {
      * Use this method only when there is need to your own custom class of animation,
      * in other cases, use {@link #with(Drawer)} instead.
      *
-     * @param animator
+     * @param animator Animator instance
      */
     public DisplayObject animator(Animator animator) {
         this.mAnimator = animator;
@@ -69,10 +69,20 @@ public class DisplayObject {
         return mAnimParameter;
     }
 
+    /**
+     * Setter status of pause Motion Animator
+     *
+     * @param pause indicates whether to start the motion animation paused.
+     */
     public void pause(boolean pause) {
         mAnimator.pause(pause);
     }
 
+    /**
+     * Getter status of pause Motion Animator
+     *
+     * @return indicates whether to start the motion animation paused.
+     */
     public boolean isPause() {
         return mAnimator.isPause();
     }

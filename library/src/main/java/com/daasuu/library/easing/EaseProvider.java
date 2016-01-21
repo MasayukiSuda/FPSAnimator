@@ -3,13 +3,14 @@ package com.daasuu.library.easing;
 import android.support.annotation.NonNull;
 
 /**
- * Created by sudamasayuki on 15/12/29.
+ * The Ease class provides a collection of ease functions. It does not use the standard 4 param
+ * ease signature. Instead it uses a single param which indicates the current linear ratio (0 to 1) of the tween.
  */
 public class EaseProvider {
 
     /**
-     * @param ease
-     * @param elapsedTimeRate
+     * @param ease            Easing type
+     * @param elapsedTimeRate Elapsed time / Total time
      * @return easedValue
      */
     public static float get(@NonNull Ease ease, float elapsedTimeRate) {
@@ -88,27 +89,27 @@ public class EaseProvider {
     }
 
     /**
-     * @param elapsedTimeRate
-     * @param pow
-     * @return
+     * @param elapsedTimeRate Elapsed time / Total time
+     * @param pow             pow The exponent to use (ex. 3 would return a cubic ease).
+     * @return easedValue
      */
     private static float getPowIn(float elapsedTimeRate, double pow) {
         return (float) Math.pow(elapsedTimeRate, pow);
     }
 
     /**
-     * @param elapsedTimeRate
-     * @param pow
-     * @return
+     * @param elapsedTimeRate Elapsed time / Total time
+     * @param pow             pow The exponent to use (ex. 3 would return a cubic ease).
+     * @return easedValue
      */
     private static float getPowOut(float elapsedTimeRate, double pow) {
         return (float) ((float) 1 - Math.pow(1 - elapsedTimeRate, pow));
     }
 
     /**
-     * @param elapsedTimeRate
-     * @param pow
-     * @return
+     * @param elapsedTimeRate Elapsed time / Total time
+     * @param pow             pow The exponent to use (ex. 3 would return a cubic ease).
+     * @return easedValue
      */
     private static float getPowInOut(float elapsedTimeRate, double pow) {
         if ((elapsedTimeRate *= 2) < 1) {
@@ -119,9 +120,9 @@ public class EaseProvider {
     }
 
     /**
-     * @param elapsedTimeRate
-     * @param amount
-     * @return
+     * @param elapsedTimeRate Elapsed time / Total time
+     * @param amount          amount The strength of the ease.
+     * @return easedValue
      */
     private static float getBackInOut(float elapsedTimeRate, float amount) {
         amount *= 1.525;
@@ -132,16 +133,16 @@ public class EaseProvider {
     }
 
     /**
-     * @param elapsedTimeRate
-     * @return
+     * @param elapsedTimeRate Elapsed time / Total time
+     * @return easedValue
      */
     private static float getBounceIn(float elapsedTimeRate) {
         return 1f - getBounceOut(1f - elapsedTimeRate);
     }
 
     /**
-     * @param elapsedTimeRate
-     * @return
+     * @param elapsedTimeRate Elapsed time / Total time
+     * @return easedValue
      */
     private static float getBounceOut(float elapsedTimeRate) {
         if (elapsedTimeRate < 1 / 2.75) {
@@ -156,10 +157,10 @@ public class EaseProvider {
     }
 
     /**
-     * @param elapsedTimeRate
-     * @param amplitude
-     * @param period
-     * @return
+     * @param elapsedTimeRate Elapsed time / Total time
+     * @param amplitude       Amplitude of easing
+     * @param period          Animation of period
+     * @return easedValue
      */
     private static float getElasticIn(float elapsedTimeRate, double amplitude, double period) {
         if (elapsedTimeRate == 0 || elapsedTimeRate == 1) return elapsedTimeRate;
@@ -169,10 +170,10 @@ public class EaseProvider {
     }
 
     /**
-     * @param elapsedTimeRate
-     * @param amplitude
-     * @param period
-     * @return
+     * @param elapsedTimeRate Elapsed time / Total time
+     * @param amplitude       Amplitude of easing
+     * @param period          Animation of period
+     * @return easedValue
      */
     private static float getElasticOut(float elapsedTimeRate, double amplitude, double period) {
         if (elapsedTimeRate == 0 || elapsedTimeRate == 1) return elapsedTimeRate;
@@ -183,10 +184,10 @@ public class EaseProvider {
     }
 
     /**
-     * @param elapsedTimeRate
-     * @param amplitude
-     * @param period
-     * @return
+     * @param elapsedTimeRate Elapsed time / Total time
+     * @param amplitude       Amplitude of easing
+     * @param period          Animation of period
+     * @return easedValue
      */
     private static float getElasticInOut(float elapsedTimeRate, double amplitude, double period) {
         double pi2 = Math.PI * 2;

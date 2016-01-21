@@ -12,16 +12,16 @@ public interface Animator {
     /**
      * Sets a next drawing value to the given animation parameter instance.
      *
-     * @param animParameter
+     * @param animParameter parameter related to the drawing on the canvas
      */
     void updateAnimParam(AnimParameter animParameter);
 
     /**
      * Setup the base drawing position.
      *
-     * @param canvas
-     * @param width
-     * @param height
+     * @param canvas This Canvas acquired by lookCanvas in FPSTextureView or FPSSurfaceView.
+     * @param width  return the width of the object to be drawn.
+     * @param height return the height of the object to be drawn.
      */
     void setBaseLine(Canvas canvas, float width, float height);
 

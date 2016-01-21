@@ -40,12 +40,27 @@ public class AnimParameter {
      */
     public float rotation = Constant.DEFAULT_ROTATION;
 
-
+    /**
+     * Constructor
+     *
+     * @param x The horizontal translation (x position) in pixels
+     * @param y The vertical translation (y position) in pixels
+     */
     public AnimParameter(float x, float y) {
         this.x = x;
         this.y = y;
     }
 
+    /**
+     * Constructor
+     *
+     * @param x        The horizontal translation (x position) in pixels
+     * @param y        The vertical translation (y position) in pixels
+     * @param alpha    The alpha (transparency) ,as a percentage of 255.
+     * @param scaleX   The horizontal scale, as a percentage of 1
+     * @param scaleY   The vertical scale, as a percentage of 1
+     * @param rotation rotation angle
+     */
     public AnimParameter(float x, float y, int alpha, float scaleX, float scaleY, float rotation) {
         this.x = x;
         this.y = y;

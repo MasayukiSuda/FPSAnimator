@@ -77,11 +77,11 @@ abstract class BaseDrawer implements Drawer {
     }
 
     /**
-     * perform the actual drawing on the canvas.
+     * Draw the object on the canvas with given properties.
      *
-     * @param canvas
-     * @param x
-     * @param y
+     * @param canvas This Canvas acquired by lookCanvas in FPSTextureView or FPSSurfaceView.
+     * @param x      The horizontal translation (x position) in pixels
+     * @param y      The vertical translation (y position) in pixels
      */
     protected abstract void draw(Canvas canvas, float x, float y);
 }
