@@ -36,20 +36,23 @@ In your onCreate method (or onCreateView for a fragment), bind the widget.
         mFPSTextureView = (FPSTextureView) findViewById(R.id.animation_texture_view);
     }
 ```
-Create an instance of the Tween, please add it to the FPSTextureView.
+Create an instance of the DisplayObject, please add it to the FPSTextureView.
 ```JAVA
     Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
     
-    TweenBitmap tweenBitmap = new TweenBitmap(bitmap);
-    tweenBitmap
+    DisplayObject bitmapDisplay = new DisplayObject();
+    bitmapDisplay
+            .with(new BitmapDrawer(bitmap))
+            .tween()
             .toX(1600, windowWidth - bitmap.getWidth(), Ease.BACK_IN_OUT)
             .waitTime(1000)
             .alpha(1000, 0f)
-            .alpha(1000, 1f);
+            .alpha(1000, 1f)
+            .end();
             
     mFPSTextureView
                 .setFps(24)
-                .addChild(tweenBitmap)
+                .addChild(bitmapDisplay)
                 .tickStart();
 ```
 <img src="art/tweenBitmapSampleDemo.gif" width="32%">
@@ -69,20 +72,25 @@ This is the implementation of the sample application.
 
 ```JAVA
     
-    TweenSpriteSheet tweenSpriteSheet = new TweenSpriteSheet(
-            spriteBitmap,
-            frameWidth,
-            frameHeight,
-            frameNum,
-            frameNumPerLine)
-            .spriteLoop(true)
-            .loop(true)
+    SpriteSheetDrawer spriteSheetDrawer = new SpriteSheetDrawer(
+        spriteBitmapB, 
+        frameWidth, 
+        frameHeight, 
+        frameNum)
+        .spriteLoop(true);
+    
+    DisplayObject displayObject = new DisplayObject();
+    displayObject
+            .with(spriteSheetDrawer)
+            .tween()
+            .tweenLoop(true)
             .transform(frameWidth, windowHeight / 2)
-            .toX(3000, windowWidth);
+            .toX(3000, windowWidth)
+            .end();
 
     mFPSTextureView
                 .setFps(24)
-                .addChild(tweenSpriteSheet);
+                .addChild(displayObject);
 ```
 
 
@@ -94,30 +102,42 @@ This is the implementation of the sample application.
     paint.setTextSize(Util.convertDpToPixel(16, this));
 
     String tweenTxt = "TweenText";
-    final TweenText tweenText = new TweenText(tweenTxt, paint);
-    tweenText
-            .rotateRegistration(paint.measureText(tweenTxt) / 2, paint.getTextSize() / 2)
-            .loop(true)
+    float textWidth = paint.measureText(tweenTxt);
+    
+    TextDrawer textDrawer = new TextDrawer(tweenTxt, paint)
+            .rotateRegistration(textWidth / 2, textWidth / 2);
+
+    DisplayObject textDisplay = new DisplayObject();
+    textDisplay.with(textDrawer)
+            .tween()
+            .tweenLoop(true)
             .transform(0, 800)
             .waitTime(300)
-            .to(1000, windowWidth - textWidth, 800, Ease.SINE_OUT, 720)
+            .to(1000, windowWidth - textWidth, 800, 720f, Ease.SINE_OUT)
             .waitTime(300)
-            .to(1000, 0, 800, Ease.SINE_IN, 0);
+            .to(1000, 0, 800, 0f, Ease.SINE_IN)
+            .end();
+
 ```
 
 #### TweenBitmap
 <img src="art/scaleAndAlpha.gif" width="16%">
 ```JAVA
-    TweenBitmap tweenBitmap = new TweenBitmap(bitmap);
-    tweenBitmap
-            .dpSize(context)
-            .scaleRegistration(bitmap.getWidth() / 2, bitmap.getHeight() / 2)
-            .loop(true)
-            .transform(300, 400)
-            .to(500, 300, 400, 0, 6f, 6f, 0, Ease.SINE_IN_OUT)
-            .waitTime(300)
-            .transform(300, 400, 1, 1f, 1f, 0)
-            .waitTime(300);
+        BitmapDrawer bitmapDrawer = new BitmapDrawer(bitmap)
+            .dpSize(this)
+            .scaleRegistration(bitmap.getWidth() / 2, bitmap.getHeight() / 2);
+
+        DisplayObject bitmapDisplay = new DisplayObject();
+        bitmapDisplay.with(bitmapDrawer)
+                .tween()
+                .tweenLoop(true)
+                .transform(300, 400)
+                .to(500, 300, 400, 0, 6f, 6f, 0, Ease.SINE_IN_OUT)
+                .waitTime(300)
+                .transform(300, 400, Util.convertAlphaFloatToInt(1f), 1f, 1f, 0)
+                .waitTime(300)
+                .end();
+
 ```
 
 #### ParabolicMotion
@@ -135,30 +155,36 @@ This is the implementation of the sample application.
         paint.setColor(ContextCompat.getColor(context, R.color.colorPrimary));
         paint.setTextSize(Util.convertDpToPixel(20, context));
         
-        ParabolicMotionText parabolicMotionText = new ParabolicMotionText("Text", paint);
-        parabolicMotionText
+        TextDrawer textDrawer = new TextDrawer("Text", paint);
+        
+        DisplayObject textDisplay = new DisplayObject();
+        textDisplay.with(textDrawer)
+                .parabolic()
                 .transform(800, 800)
-                .initialVelocityY(-40);
+                .initialVelocityY(-40)
+                .end();
 
-        mFPSTextureView.addChild(parabolicMotionText);
+        mFPSTextureView.addChild(textDisplay);
     }
 
     private void createParabolicMotionBitmap() {
-        ParabolicMotionBitmap parabolicMotionBitmap = new ParabolicMotionBitmap(mBitmap);
-        parabolicMotionBitmap
+        final DisplayObject bitmapDisplay = new DisplayObject();
+
+        bitmapDisplay.with(new BitmapDrawer(mBitmap).dpSize(context))
+                .parabolic()
                 .transform(0, mFPSTextureView.getHeight())
-                .dpSize(context)
                 .reboundBottom(false)
                 .accelerationX((float) (15 + Math.random() * 7))
                 .initialVelocityY((float) (-65 + Math.random() * 15))
                 .bottomHitCallback(new AnimCallBack() {
                     @Override
                     public void call() {
-                        mFPSTextureView.removeChild(parabolicMotionBitmap);
+                        mFPSTextureView.removeChild(bitmapDisplay);
                     }
-                });
+                })
+                .end();
 
-        mFPSTextureView.addChild(parabolicMotionBitmap);
+        mFPSTextureView.addChild(bitmapDisplay);
     }
 
     @Override
