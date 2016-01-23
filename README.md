@@ -15,15 +15,18 @@ Gradle
 ```groovy
     dependencies {
         // jCenter
-        compile 'com.daasuu:FPSAnimator:0.1.0'
+        compile 'com.daasuu:FPSAnimator:0.1.1'
     }
 ```
-Include the FPSTextureView widget in your layout.
+Include the FPSTextureView widget in your layout. Set FPS by attribute.
+Default FPS is 30.
 ```xml
     <com.daasuu.library.FPSTextureView
         android:id="@+id/animation_texture_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:FPSAnimator_fps="24"
+        />
 ```
 In your onCreate method (or onCreateView for a fragment), bind the widget.
 ```JAVA
@@ -51,7 +54,6 @@ Create an instance of the DisplayObject, please add it to the FPSTextureView.
             .end();
             
     mFPSTextureView
-                .setFps(24)
                 .addChild(bitmapDisplay)
                 .tickStart();
 ```
