@@ -1,6 +1,7 @@
 package com.daasuu.library;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -21,12 +22,17 @@ import java.util.TimerTask;
 public class FPSTextureView extends TextureView implements TextureView.SurfaceTextureListener {
 
     private Timer mTimer;
-    private long mFps = Constant.DEFAULT_FPS;
+    private int mFps = Constant.DEFAULT_FPS;
 
     private List<DisplayObject> mDisplayList = new ArrayList<>();
 
     public FPSTextureView(Context context) {
         this(context, null, 0);
+    }
+
+    public FPSTextureView(Context context, int fps) {
+        this(context, null, 0);
+        mFps = fps;
     }
 
     public FPSTextureView(Context context, AttributeSet attrs) {
@@ -47,6 +53,11 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
         super(context, attrs, defStyleAttr);
         setOpaque(false);
         setSurfaceTextureListener(this);
+
+        // FPS set
+        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.FPSAnimator);
+        mFps = ta.getInteger(R.styleable.FPSAnimator_FPSAnimator_fps, Constant.DEFAULT_FPS);
+        ta.recycle();
     }
 
     /**
@@ -142,7 +153,7 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
     /**
      * Adds a child to the display list at the specified index, bumping children at equal or greater indexes up one, and setting its parent to this Container
      *
-     * @param location       index
+     * @param location      index
      * @param DisplayObject DisplayObject2
      * @return this
      */
@@ -204,17 +215,6 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
         removeChildAt(childIndex2);
         addChildAt(childIndex2, child1);
         return true;
-    }
-
-    /**
-     * Indicates the target frame rate in frames per second.
-     *
-     * @param fps FPS
-     * @return this
-     */
-    public FPSTextureView setFps(long fps) {
-        this.mFps = fps;
-        return this;
     }
 
     /**

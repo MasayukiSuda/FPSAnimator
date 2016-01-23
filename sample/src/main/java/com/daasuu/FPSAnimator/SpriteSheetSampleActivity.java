@@ -85,7 +85,6 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
                 .end();
 
         mFPSTextureView
-                .setFps(24)
                 .addChild(parabolicDisplay)
                 .addChild(displayObject);
     }

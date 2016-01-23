@@ -1,6 +1,7 @@
 package com.daasuu.library;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
@@ -23,7 +24,7 @@ import java.util.TimerTask;
 public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
 
     private Timer mTimer;
-    private long mFps = Constant.DEFAULT_FPS;
+    private int mFps = Constant.DEFAULT_FPS;
 
     private SurfaceHolder mSurfaceHolder;
 
@@ -31,6 +32,11 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
 
     public FPSSurfaceView(Context context) {
         this(context, null, 0);
+    }
+
+    public FPSSurfaceView(Context context, int fps) {
+        this(context, null, 0);
+        mFps = fps;
     }
 
     public FPSSurfaceView(Context context, AttributeSet attrs) {
@@ -54,6 +60,11 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
         mSurfaceHolder.addCallback(this);
         mSurfaceHolder.setFormat(PixelFormat.TRANSLUCENT);
         setZOrderOnTop(true);
+
+        // FPS set
+        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.FPSAnimator);
+        mFps = ta.getInteger(R.styleable.FPSAnimator_FPSAnimator_fps, Constant.DEFAULT_FPS);
+        ta.recycle();
 
     }
 
@@ -137,7 +148,7 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
     /**
      * Adds a child to the display list at the specified index, bumping children at equal or greater indexes up one, and setting its parent to this Container
      *
-     * @param location       index
+     * @param location      index
      * @param DisplayObject DisplayObject2
      * @return this
      */
@@ -199,17 +210,6 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
         removeChildAt(childIndex2);
         addChildAt(childIndex2, child1);
         return true;
-    }
-
-    /**
-     * Indicates the target frame rate in frames per second.
-     *
-     * @param fps FPS
-     * @return this
-     */
-    public FPSSurfaceView setFps(long fps) {
-        this.mFps = fps;
-        return this;
     }
 
     /**
