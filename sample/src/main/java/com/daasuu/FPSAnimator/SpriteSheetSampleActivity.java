@@ -42,9 +42,15 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
                 (int) Util.convertDpToPixel(1024f, this),
                 false);
 
+        SpriteSheetDrawer spriteSheetDrawer = new SpriteSheetDrawer(
+                spriteBitmapB,
+                frameWidth,
+                frameHeight, 64, 12)
+                .spriteLoop(true);
+
         DisplayObject displayObject = new DisplayObject();
         displayObject
-                .with(new SpriteSheetDrawer(spriteBitmapB, frameWidth, frameHeight, 64, 12).spriteLoop(true))
+                .with(spriteSheetDrawer)
                 .tween()
                 .tweenLoop(true)
                 .transform(-Util.convertDpToPixel(82.875f, this), UIUtil.getWindowHeight(this) / 2)

@@ -52,10 +52,12 @@ public class TweenSampleActivity extends AppCompatActivity {
                 })
                 .end();
 
-        DisplayObject bitmapDisplayB = new DisplayObject();
-        bitmapDisplayB.with(new BitmapDrawer(bitmap)
+        BitmapDrawer bitmapDrawer = new BitmapDrawer(bitmap)
                 .dpSize(this)
-                .scaleRegistration(Util.convertPixelsToDp(bitmap.getWidth(), this) / 2, Util.convertPixelsToDp(bitmap.getHeight(), this) / 2))
+                .scaleRegistration(Util.convertPixelsToDp(bitmap.getWidth(), this) / 2, Util.convertPixelsToDp(bitmap.getHeight(), this) / 2);
+
+        DisplayObject bitmapDisplayB = new DisplayObject();
+        bitmapDisplayB.with(bitmapDrawer)
                 .tween()
                 .tweenLoop(true)
                 .transform(300, 400)
@@ -71,8 +73,11 @@ public class TweenSampleActivity extends AppCompatActivity {
         paint.setTextSize(Util.convertDpToPixel(16, this));
 
         String tweenTxt = "TweenText";
+        TextDrawer textDrawer = new TextDrawer(tweenTxt, paint)
+                .rotateRegistration(paint.measureText(tweenTxt) / 2, paint.getTextSize() / 2);
+
         DisplayObject textDisplay = new DisplayObject();
-        textDisplay.with(new TextDrawer(tweenTxt, paint).rotateRegistration(paint.measureText(tweenTxt) / 2, paint.getTextSize() / 2))
+        textDisplay.with(textDrawer)
                 .tween()
                 .tweenLoop(true)
                 .transform(0, 800)
