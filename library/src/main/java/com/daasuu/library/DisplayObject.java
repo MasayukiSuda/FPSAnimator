@@ -14,9 +14,12 @@ import com.daasuu.library.animator.TweenAnimator;
  */
 public class DisplayObject {
 
-    private AnimParameter mAnimParameter;
+    /**
+     * hold a parameter related to the drawing on the canvas.
+     */
+    protected AnimParameter mAnimParameter;
 
-    private Animator mAnimator;
+    protected Animator mAnimator;
 
     private Drawer mDrawer;
 
@@ -61,7 +64,7 @@ public class DisplayObject {
      *
      * @param fps Set in FPSTextureView or FPSSurfaceView.
      */
-    public void setUp(long fps) {
+    void setUp(long fps) {
         mAnimator.setUp(fps);
     }
 

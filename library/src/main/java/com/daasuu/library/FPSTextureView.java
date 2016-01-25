@@ -198,8 +198,8 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
     /**
      * Swaps the specified children's depth in the display list. If either child is not a child of this Container, return false.
      *
-     * @param child1 DisplayObject2
-     * @param child2 DisplayObject2
+     * @param child1 DisplayObject
+     * @param child2 DisplayObject
      * @return if true, success to swapChildren
      */
     public boolean swapChildren(@NonNull DisplayObject child1, @NonNull DisplayObject child2) {
