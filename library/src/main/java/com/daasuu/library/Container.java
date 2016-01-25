@@ -1,7 +1,10 @@
 package com.daasuu.library;
 
 
+import android.graphics.Canvas;
 import android.support.annotation.NonNull;
+
+import com.daasuu.library.drawer.ContainerDrawer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,16 +15,34 @@ import java.util.List;
  * and transform them as a group, while still being able to move the individual parts relative to each other.
  * Children of containers have their transform and alpha properties concatenated with their parent Container.
  */
-public class Container extends DisplayObject {
+public class Container extends DisplayBase {
 
     private static final long DEFAULT_FPS = -1;
 
     private long mFps = DEFAULT_FPS;
 
+    /**
+     * Return Composer instance to setup this DisplayObject instance.
+     * This method is useful when you use only default class of animation.
+     *
+     * @param drawer ContainerDrawer object
+     * @return composer
+     */
+    public DisplayComposer with(ContainerDrawer drawer) {
+        return drawer(drawer);
+    }
+
 
     @Override
-    public DisplayObjectComposer with(Drawer drawer) {
-        return super.with(drawer);
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+        for (DisplayObject DisplayObject : mDisplayList) {
+            if (DisplayObject == null) {
+                continue;
+            }
+            DisplayObject.draw(canvas, mAnimParameter);
+        }
+
     }
 
     @Override

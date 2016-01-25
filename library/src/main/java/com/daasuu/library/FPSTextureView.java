@@ -24,7 +24,7 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
     private Timer mTimer;
     private int mFps = Constant.DEFAULT_FPS;
 
-    private List<DisplayObject> mDisplayList = new ArrayList<>();
+    private List<DisplayBase> mDisplayList = new ArrayList<>();
 
     public FPSTextureView(Context context) {
         this(context, null, 0);
@@ -91,18 +91,18 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
 
         synchronized (this) {
 
-            List<DisplayObject> copyDisplayObjectList = new ArrayList<DisplayObject>(mDisplayList);
+            List<DisplayBase> copyDisplayObjectList = new ArrayList<DisplayBase>(mDisplayList);
 
             Canvas canvas = this.lockCanvas();
             if (canvas == null) return;
 
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
-            for (DisplayObject DisplayObject : copyDisplayObjectList) {
-                if (DisplayObject == null) {
+            for (DisplayBase displayBase : copyDisplayObjectList) {
+                if (displayBase == null) {
                     continue;
                 }
-                DisplayObject.draw(canvas);
+                displayBase.draw(canvas);
             }
 
             this.unlockCanvasAndPost(canvas);
@@ -144,7 +144,7 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
      * @param DisplayObject DisplayObject2
      * @return this
      */
-    public FPSTextureView addChild(@NonNull DisplayObject DisplayObject) {
+    public FPSTextureView addChild(@NonNull DisplayBase DisplayObject) {
         DisplayObject.setUp(mFps);
         mDisplayList.add(DisplayObject);
         return this;
@@ -153,24 +153,24 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
     /**
      * Adds a child to the display list at the specified index, bumping children at equal or greater indexes up one, and setting its parent to this Container
      *
-     * @param location      index
-     * @param DisplayObject DisplayObject2
+     * @param location    index
+     * @param displayBase DisplayObject2
      * @return this
      */
-    public FPSTextureView addChildAt(int location, @NonNull DisplayObject DisplayObject) {
-        DisplayObject.setUp(mFps);
-        mDisplayList.add(location, DisplayObject);
+    public FPSTextureView addChildAt(int location, @NonNull DisplayBase displayBase) {
+        displayBase.setUp(mFps);
+        mDisplayList.add(location, displayBase);
         return this;
     }
 
     /**
      * Removes the specified child from the display list.
      *
-     * @param DisplayObject DisplayObject2
+     * @param displayBase DisplayBase
      * @return this
      */
-    public FPSTextureView removeChild(@NonNull DisplayObject DisplayObject) {
-        boolean a = mDisplayList.remove(DisplayObject);
+    public FPSTextureView removeChild(@NonNull DisplayBase displayBase) {
+        boolean a = mDisplayList.remove(displayBase);
         return this;
     }
 
@@ -202,7 +202,7 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
      * @param child2 DisplayObject
      * @return if true, success to swapChildren
      */
-    public boolean swapChildren(@NonNull DisplayObject child1, @NonNull DisplayObject child2) {
+    public boolean swapChildren(@NonNull DisplayBase child1, @NonNull DisplayBase child2) {
         int childIndex1 = mDisplayList.indexOf(child1);
         int childIndex2 = mDisplayList.indexOf(child2);
 
@@ -222,7 +222,7 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
      *
      * @return DisplayList
      */
-    public List<DisplayObject> getDisplayList() {
+    public List<DisplayBase> getDisplayList() {
         return mDisplayList;
     }
 }

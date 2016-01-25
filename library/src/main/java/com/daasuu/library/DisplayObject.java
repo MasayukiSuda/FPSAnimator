@@ -1,112 +1,56 @@
 package com.daasuu.library;
 
 import android.graphics.Canvas;
+import android.support.annotation.NonNull;
 
-import com.daasuu.library.animator.ParabolicAnimator;
-import com.daasuu.library.animator.TweenAnimator;
+import com.daasuu.library.drawer.BitmapDrawer;
+import com.daasuu.library.drawer.SpriteSheetDrawer;
+import com.daasuu.library.drawer.TextDrawer;
+import com.daasuu.library.util.Util;
 
 /**
  * DisplayObject class.
  * When you only use default animation and drawing class which is provided by this library,
- * you can use simple interface to compose DisplayObject by calling {@link #with(Drawer)}.
+ * you can use simple interface to compose DisplayObject by calling {@link #drawer(Drawer)}.
  * If you need to use your custom animation or drawing class which implements {@link Animator} or {@link Drawer},
  * you prepare their instances and simply set by calling {@link #animator(Animator)}.
  */
-public class DisplayObject {
+public class DisplayObject extends DisplayBase {
 
-    /**
-     * hold a parameter related to the drawing on the canvas.
-     */
-    protected AnimParameter mAnimParameter;
 
-    protected Animator mAnimator;
+    public DisplayComposer with(BitmapDrawer drawer) {
+        return drawer(drawer);
+    }
 
-    private Drawer mDrawer;
+    public DisplayComposer with(SpriteSheetDrawer drawer) {
+        return drawer(drawer);
+    }
 
-    /**
-     * Return Composer instance to setup this DisplayObject instance.
-     * This method is useful when you use only default class of animation.
-     *
-     * @param drawer drawing object
-     * @return composer
-     */
-    public DisplayObjectComposer with(Drawer drawer) {
-        mDrawer = drawer;
-        return new DisplayObjectComposer();
+    public DisplayComposer with(TextDrawer drawer) {
+        return drawer(drawer);
     }
 
     /**
-     * Set animation class.
-     * Use this method only when there is need to your own custom class of animation,
-     * in other cases, use {@link #with(Drawer)} instead.
+     * Call from {@link Container} class.
+     * Affected by the parametor of Container.
      *
-     * @param animator Animator instance
+     * @param canvas        This Canvas acquired by lookCanvas in FPSTextureView or FPSSurfaceView.
+     * @param animParameter AnimParameter instance
      */
-    public DisplayObject animator(Animator animator) {
-        this.mAnimator = animator;
-        mAnimParameter = mAnimator.getInitialAnimParameter();
-        return this;
-    }
-
-    /**
-     * Draws the display object into the specified context ignoring its visible, alpha, shadow, and transform.
-     *
-     * @param canvas This Canvas acquired by lookCanvas in FPSTextureView or FPSSurfaceView.
-     */
-    public void draw(Canvas canvas) {
+    void draw(@NonNull Canvas canvas, @NonNull AnimParameter animParameter) {
         mAnimator.setBaseLine(canvas, mDrawer.getWidth(), mDrawer.getHeight());
         mAnimator.updateAnimParam(mAnimParameter);
-        mDrawer.draw(canvas, mAnimParameter.x, mAnimParameter.y, mAnimParameter.alpha, mAnimParameter.scaleX, mAnimParameter.scaleY, mAnimParameter.rotation);
+
+        mDrawer.draw(
+                canvas,
+                mAnimParameter.x + animParameter.x,
+                mAnimParameter.y + animParameter.y,
+                (int) (mAnimParameter.alpha * Util.convertAlphaIntToFloat(animParameter.alpha)),
+                mAnimParameter.scaleX * animParameter.scaleX,
+                mAnimParameter.scaleY * animParameter.scaleY,
+                mAnimParameter.rotation + animParameter.rotation);
     }
 
-    /**
-     * call from FPSTextureView or FPSSurfaceView when it is addChild.
-     *
-     * @param fps Set in FPSTextureView or FPSSurfaceView.
-     */
-    void setUp(long fps) {
-        mAnimator.setUp(fps);
-    }
 
-    public AnimParameter getAnimParameter() {
-        return mAnimParameter;
-    }
-
-    /**
-     * Setter status of pause Motion Animator
-     *
-     * @param pause indicates whether to start the motion animation paused.
-     */
-    public void pause(boolean pause) {
-        mAnimator.pause(pause);
-    }
-
-    /**
-     * Getter status of pause Motion Animator
-     *
-     * @return indicates whether to start the motion animation paused.
-     */
-    public boolean isPause() {
-        return mAnimator.isPause();
-    }
-
-    /**
-     * Composer provide simple composing interface.
-     */
-    public class DisplayObjectComposer {
-        /**
-         * @return tween composer
-         */
-        public TweenAnimator.Composer tween() {
-            return TweenAnimator.composer(DisplayObject.this);
-        }
-
-        /**
-         * @return parabolic composer
-         */
-        public ParabolicAnimator.Composer parabolic() {
-            return ParabolicAnimator.composer(DisplayObject.this);
-        }
-    }
 }
 

@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.daasuu.library.Animator;
 import com.daasuu.library.AnimParameter;
-import com.daasuu.library.DisplayObject;
+import com.daasuu.library.DisplayBase;
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.constant.Constant;
 
@@ -110,11 +110,11 @@ public class ParabolicAnimator implements Animator {
     /**
      * create composer instance.
      *
-     * @param displayObject
+     * @param DisplayBase
      * @return composer
      */
-    public static Composer composer(DisplayObject displayObject) {
-        return new Composer(displayObject);
+    public static Composer composer(DisplayBase DisplayBase) {
+        return new Composer(DisplayBase);
     }
 
 
@@ -233,7 +233,7 @@ public class ParabolicAnimator implements Animator {
      */
     public static final class Composer {
 
-        private final DisplayObject mDisplayObject;
+        private final DisplayBase mDisplayBase;
 
         private float x;
 
@@ -324,13 +324,13 @@ public class ParabolicAnimator implements Animator {
          */
         private AnimCallBack mRightHitCallback;
 
-        private Composer(DisplayObject displayObject) {
-            mDisplayObject = displayObject;
+        private Composer(DisplayBase DisplayBase) {
+            mDisplayBase = DisplayBase;
         }
 
 
         public void end() {
-            mDisplayObject.animator(new ParabolicAnimator(
+            mDisplayBase.animator(new ParabolicAnimator(
                     new AnimParameter(x, y),
                     mDrawingNum,
                     mMovementY,
