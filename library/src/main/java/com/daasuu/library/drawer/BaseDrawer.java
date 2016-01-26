@@ -8,7 +8,7 @@ import com.daasuu.library.Drawer;
 /**
  * The base drawing class which allows the deformation of the scale, rotation, and alpha value.
  */
-abstract class BaseDrawer implements Drawer {
+public abstract class BaseDrawer implements Drawer {
 
     protected final Paint mPaint;
 

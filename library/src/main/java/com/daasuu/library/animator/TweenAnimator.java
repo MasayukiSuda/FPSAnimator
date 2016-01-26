@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 
 import com.daasuu.library.AnimParameter;
 import com.daasuu.library.Animator;
-import com.daasuu.library.DisplayObject;
+import com.daasuu.library.DisplayBase;
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.constant.Constant;
 import com.daasuu.library.easing.Ease;
@@ -39,7 +39,7 @@ public class TweenAnimator implements Animator {
     private int mDrawCount = -1;
 
     /**
-     * Array of parameters required when to Tween animation DisplayObject.
+     * Array of parameters required when to Tween animation DisplayBase.
      */
     protected final List<AnimParameter> mAnimParameters;
 
@@ -47,8 +47,8 @@ public class TweenAnimator implements Animator {
 
     private final Map<AnimParameter, AnimCallBack> mCallbacks;
 
-    public static Composer composer(DisplayObject displayObject) {
-        return new Composer(displayObject);
+    public static Composer composer(DisplayBase DisplayBase) {
+        return new Composer(DisplayBase);
     }
 
     private TweenAnimator(boolean tweenLoop, AnimParameter initialParam, List<TweenParameter> tweenParameters) {
@@ -228,7 +228,7 @@ public class TweenAnimator implements Animator {
      */
     public static class Composer {
 
-        private final DisplayObject mDisplayObject;
+        private final DisplayBase mDisplayBase;
 
         protected List<TweenParameter> mTweenParameterList = new ArrayList<>();
 
@@ -239,12 +239,12 @@ public class TweenAnimator implements Animator {
 
         private AnimParameter mInitialParam = new AnimParameter(0, 0);
 
-        private Composer(DisplayObject displayObject) {
-            mDisplayObject = displayObject;
+        private Composer(DisplayBase DisplayBase) {
+            mDisplayBase = DisplayBase;
         }
 
         public void end() {
-            mDisplayObject.animator(new TweenAnimator(mTweenLoop, mInitialParam, mTweenParameterList));
+            mDisplayBase.animator(new TweenAnimator(mTweenLoop, mInitialParam, mTweenParameterList));
         }
 
         /**

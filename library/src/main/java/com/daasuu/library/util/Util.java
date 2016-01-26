@@ -44,4 +44,17 @@ public class Util {
         return (int) (alphaFloat * Constant.DEFAULT_ALPHA);
     }
 
+    /**
+     * The alpha (transparency) ,from as a percentage of 255 to as a percentage of 1.
+     *
+     * @param alphaInt int as a percentage of 255.
+     * @return float as a percentage of 1
+     */
+    public static float convertAlphaIntToFloat(int alphaInt) {
+        if (alphaInt >= 255) return 1f;
+        if (alphaInt <= 0f) return 0;
+
+        return alphaInt / Constant.DEFAULT_ALPHA;
+    }
+
 }

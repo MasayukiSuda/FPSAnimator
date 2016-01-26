@@ -28,7 +28,7 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
 
     private SurfaceHolder mSurfaceHolder;
 
-    private List<DisplayObject> mDisplayList = new ArrayList<>();
+    private List<DisplayBase> mDisplayList = new ArrayList<>();
 
     public FPSSurfaceView(Context context) {
         this(context, null, 0);
@@ -99,18 +99,18 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
 
         synchronized (this) {
 
-            List<DisplayObject> copyDisplayObjectList = new ArrayList<DisplayObject>(mDisplayList);
+            List<DisplayBase> copyDisplayBaseList = new ArrayList<DisplayBase>(mDisplayList);
 
             Canvas canvas = mSurfaceHolder.lockCanvas();
             if (canvas == null) return;
 
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
-            for (DisplayObject DisplayObject : copyDisplayObjectList) {
-                if (DisplayObject == null) {
+            for (DisplayBase DisplayBase : copyDisplayBaseList) {
+                if (DisplayBase == null) {
                     continue;
                 }
-                DisplayObject.draw(canvas);
+                DisplayBase.draw(canvas);
             }
 
             mSurfaceHolder.unlockCanvasAndPost(canvas);
@@ -136,36 +136,36 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
     /**
      * Adds a child to the top of the display list.
      *
-     * @param DisplayObject DisplayObject2
+     * @param DisplayBase DisplayBase2
      * @return this
      */
-    public FPSSurfaceView addChild(@NonNull DisplayObject DisplayObject) {
-        DisplayObject.setUp(mFps);
-        mDisplayList.add(DisplayObject);
+    public FPSSurfaceView addChild(@NonNull DisplayBase DisplayBase) {
+        DisplayBase.setUp(mFps);
+        mDisplayList.add(DisplayBase);
         return this;
     }
 
     /**
      * Adds a child to the display list at the specified index, bumping children at equal or greater indexes up one, and setting its parent to this Container
      *
-     * @param location      index
-     * @param DisplayObject DisplayObject2
+     * @param location    index
+     * @param DisplayBase DisplayBase2
      * @return this
      */
-    public FPSSurfaceView addChildAt(int location, @NonNull DisplayObject DisplayObject) {
-        DisplayObject.setUp(mFps);
-        mDisplayList.add(location, DisplayObject);
+    public FPSSurfaceView addChildAt(int location, @NonNull DisplayBase DisplayBase) {
+        DisplayBase.setUp(mFps);
+        mDisplayList.add(location, DisplayBase);
         return this;
     }
 
     /**
      * Removes the specified child from the display list.
      *
-     * @param DisplayObject DisplayObject2
+     * @param DisplayBase DisplayBase2
      * @return this
      */
-    public FPSSurfaceView removeChild(@NonNull DisplayObject DisplayObject) {
-        mDisplayList.remove(DisplayObject);
+    public FPSSurfaceView removeChild(@NonNull DisplayBase DisplayBase) {
+        mDisplayList.remove(DisplayBase);
         return this;
     }
 
@@ -193,11 +193,11 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
     /**
      * Swaps the specified children's depth in the display list. If either child is not a child of this Container, return false.
      *
-     * @param child1 DisplayObject2
-     * @param child2 DisplayObject2
+     * @param child1 DisplayBase
+     * @param child2 DisplayBase
      * @return if true, success to swapChildren
      */
-    public boolean swapChildren(@NonNull DisplayObject child1, @NonNull DisplayObject child2) {
+    public boolean swapChildren(@NonNull DisplayBase child1, @NonNull DisplayBase child2) {
         int childIndex1 = mDisplayList.indexOf(child1);
         int childIndex2 = mDisplayList.indexOf(child2);
 
@@ -217,7 +217,7 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
      *
      * @return DisplayList
      */
-    public List<DisplayObject> getDisplayList() {
+    public List<DisplayBase> getDisplayList() {
         return mDisplayList;
     }
 }
