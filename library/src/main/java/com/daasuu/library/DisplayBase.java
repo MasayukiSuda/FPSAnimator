@@ -36,7 +36,7 @@ public abstract class DisplayBase {
      * @param drawer drawing object
      * @return composer
      */
-    protected DisplayComposer drawer(Drawer drawer) {
+    protected DisplayComposer drawer(@NonNull Drawer drawer) {
         mDrawer = drawer;
         return new DisplayComposer();
     }
@@ -47,7 +47,7 @@ public abstract class DisplayBase {
      *
      * @param animator Animator instance
      */
-    public DisplayBase animator(Animator animator) {
+    public DisplayBase animator(@NonNull Animator animator) {
         this.mAnimator = animator;
         mAnimParameter = mAnimator.getInitialAnimParameter();
         return this;
@@ -59,7 +59,7 @@ public abstract class DisplayBase {
      *
      * @param canvas This Canvas acquired by lookCanvas in FPSTextureView or FPSSurfaceView.
      */
-    void draw(Canvas canvas) {
+    void draw(@NonNull Canvas canvas) {
         mAnimator.setBaseLine(canvas, mDrawer.getWidth(), mDrawer.getHeight());
         mAnimator.updateAnimParam(mAnimParameter);
         mDrawer.draw(canvas, mAnimParameter.x, mAnimParameter.y, mAnimParameter.alpha, mAnimParameter.scaleX, mAnimParameter.scaleY, mAnimParameter.rotation);

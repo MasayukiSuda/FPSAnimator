@@ -2,9 +2,10 @@ package com.daasuu.library;
 
 
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 
-import com.daasuu.library.drawer.ContainerDrawer;
+import com.daasuu.library.drawer.BaseDrawer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,21 +23,28 @@ public class Container extends DisplayBase {
     private long mFps = DEFAULT_FPS;
 
     /**
-     * Return Composer instance to setup this DisplayObject instance.
-     * This method is useful when you use only default class of animation.
-     *
-     * @param drawer ContainerDrawer object
-     * @return composer
+     * constructor
      */
-    public DisplayComposer with(ContainerDrawer drawer) {
-        return drawer(drawer);
+    public Container() {
+        drawer(new ContainerDrawer()).tween().end();
     }
 
+    /**
+     * Return Composer instance to setup this Container instance.
+     * This method is useful when you use only default class of animation.
+     *
+     * @return composer
+     */
+    public DisplayComposer with() {
+        return new DisplayComposer();
+    }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        for (DisplayObject DisplayObject : mDisplayList) {
+
+        List<DisplayObject> copyDisplayObjectList = new ArrayList<DisplayObject>(mDisplayList);
+        for (DisplayObject DisplayObject : copyDisplayObjectList) {
             if (DisplayObject == null) {
                 continue;
             }
@@ -91,11 +99,11 @@ public class Container extends DisplayBase {
     /**
      * Removes the specified child from the display list.
      *
-     * @param DisplayObject DisplayObject2
+     * @param DisplayObject DisplayObject
      * @return this
      */
     public Container removeChild(@NonNull DisplayObject DisplayObject) {
-        boolean a = mDisplayList.remove(DisplayObject);
+        mDisplayList.remove(DisplayObject);
         return this;
     }
 
@@ -149,6 +157,29 @@ public class Container extends DisplayBase {
      */
     public List<DisplayObject> getDisplayList() {
         return mDisplayList;
+    }
+
+
+    private class ContainerDrawer extends BaseDrawer {
+
+        public ContainerDrawer() {
+            super(new Paint());
+        }
+
+        @Override
+        protected void draw(Canvas canvas, float x, float y) {
+            // Do nothing
+        }
+
+        @Override
+        public float getWidth() {
+            return 0;
+        }
+
+        @Override
+        public float getHeight() {
+            return 0;
+        }
     }
 
 }

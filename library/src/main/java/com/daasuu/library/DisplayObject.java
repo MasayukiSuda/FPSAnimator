@@ -3,9 +3,6 @@ package com.daasuu.library;
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 
-import com.daasuu.library.drawer.BitmapDrawer;
-import com.daasuu.library.drawer.SpriteSheetDrawer;
-import com.daasuu.library.drawer.TextDrawer;
 import com.daasuu.library.util.Util;
 
 /**
@@ -17,16 +14,7 @@ import com.daasuu.library.util.Util;
  */
 public class DisplayObject extends DisplayBase {
 
-
-    public DisplayComposer with(BitmapDrawer drawer) {
-        return drawer(drawer);
-    }
-
-    public DisplayComposer with(SpriteSheetDrawer drawer) {
-        return drawer(drawer);
-    }
-
-    public DisplayComposer with(TextDrawer drawer) {
+    public DisplayComposer with(Drawer drawer) {
         return drawer(drawer);
     }
 
