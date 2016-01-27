@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
 
+import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.constant.Constant;
 import com.daasuu.library.spritesheet.SpriteSheet;
 import com.daasuu.library.util.Util;
@@ -154,6 +155,30 @@ public class SpriteSheetDrawer extends BaseDrawer {
         mSpriteSheet.customFrameList = list;
         return this;
     }
+
+    /**
+     * If loopNum is 3, the Sprite Animation will loop 3 times.
+     * If loopNum is greater than or equal to 0 , spriteLoop parameter is ignored .
+     *
+     * @param loopNum Number of SpriteSheet Animation loop
+     * @return this
+     */
+    public SpriteSheetDrawer spriteLoopNum(int loopNum) {
+        mSpriteSheet.spriteLoopNum = loopNum;
+        return this;
+    }
+
+    /**
+     * Set function of dispatched when a spriteSheet animation reaches its ends.
+     *
+     * @param callBack Dispatched when a spriteSheet animation reaches its ends.
+     * @return this
+     */
+    public SpriteSheetDrawer spriteAnimationEndCallBack(AnimCallBack callBack) {
+        mSpriteSheet.setSpriteSheetFinishCallback(callBack);
+        return this;
+    }
+
 
     /**
      * The left offset and y offset for this display object's registration point. For example, to make a 100x100px Bitmap scale
