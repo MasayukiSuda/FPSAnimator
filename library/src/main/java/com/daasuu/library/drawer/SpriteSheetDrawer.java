@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.support.annotation.NonNull;
 
 import com.daasuu.library.callback.AnimCallBack;
@@ -39,11 +38,6 @@ public class SpriteSheetDrawer extends BaseDrawer {
      * Height of Bitmap in device-specific pixel density.
      */
     private float mBitmapDpHeight;
-
-    /**
-     * Bitmap of Rect holds four integer coordinates for a rectangle.
-     */
-    private Rect mBitmapRect;
 
     /**
      * The SpriteSheet instance to play back. This includes frame dimensions, and frame data.
@@ -114,12 +108,8 @@ public class SpriteSheetDrawer extends BaseDrawer {
     public SpriteSheetDrawer dpSize(@NonNull Context context) {
         mDpSize = true;
 
-        mSpriteSheet.frameWidth = Util.convertPixelsToDp(mSpriteSheet.frameWidth, context);
-        mSpriteSheet.frameHeight = Util.convertPixelsToDp(mSpriteSheet.frameHeight, context);
-
-        mBitmapDpWidth = Util.convertPixelsToDp(mBitmap.getWidth(), context);
-        mBitmapDpHeight = Util.convertPixelsToDp(mBitmap.getHeight(), context);
-        mBitmapRect = new Rect(0, 0, mBitmap.getWidth(), mBitmap.getHeight());
+        mBitmapDpWidth = Util.convertPixelsToDp(mSpriteSheet.frameWidth, context);
+        mBitmapDpHeight = Util.convertPixelsToDp(mSpriteSheet.frameHeight, context);
         return this;
     }
 
@@ -226,29 +216,30 @@ public class SpriteSheetDrawer extends BaseDrawer {
 
     @Override
     protected void draw(Canvas canvas, float x, float y) {
-        if (mBitmap == null) {
-            return;
-        }
+        if (mBitmap == null) return;
 
-        RectF bounds = new RectF(
-                x,
-                y,
-                x + mSpriteSheet.frameWidth,
-                y + mSpriteSheet.frameHeight
-        );
-        canvas.saveLayer(bounds, null, Canvas.ALL_SAVE_FLAG);
         updateSpriteFrame();
+        Rect bitmapRect = new Rect((int) (mSpriteSheet.dx), (int) (mSpriteSheet.dy), (int) (mSpriteSheet.dx + mSpriteSheet.frameWidth), (int) (mSpriteSheet.dy + mSpriteSheet.frameHeight));
 
         if (mDpSize) {
-            RectF dpSizeRect = new RectF(
-                    x + mSpriteSheet.dx,
-                    y + mSpriteSheet.dy,
-                    x + mSpriteSheet.dx + mBitmapDpWidth,
-                    y + mSpriteSheet.dy + mBitmapDpHeight
+
+            Rect bounds = new Rect(
+                    (int) x,
+                    (int) y,
+                    (int) (x + mBitmapDpWidth),
+                    (int) (y + mBitmapDpHeight)
             );
-            canvas.drawBitmap(mBitmap, mBitmapRect, dpSizeRect, mPaint);
+            canvas.drawBitmap(mBitmap, bitmapRect, bounds, mPaint);
+
         } else {
-            canvas.drawBitmap(mBitmap, x + mSpriteSheet.dx, y + mSpriteSheet.dy, mPaint);
+
+            Rect bounds = new Rect(
+                    (int) x,
+                    (int) y,
+                    (int) (x + mSpriteSheet.frameWidth),
+                    (int) (y + mSpriteSheet.frameHeight)
+            );
+            canvas.drawBitmap(mBitmap, bitmapRect, bounds, mPaint);
         }
 
     }

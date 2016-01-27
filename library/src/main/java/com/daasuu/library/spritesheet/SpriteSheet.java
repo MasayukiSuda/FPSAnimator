@@ -137,7 +137,7 @@ public class SpriteSheet {
             // It falls under the case of the end
             currentFrame++;
             if (currentFrame <= frameNum) {
-                dy -= frameHeight;
+                dy += frameHeight;
                 dx = 0;
             }
             repeatFrame();
@@ -146,7 +146,7 @@ public class SpriteSheet {
 
         currentFrame++;
         if (currentFrame <= frameNum) {
-            dx -= frameWidth;
+            dx += frameWidth;
         }
         repeatFrame();
     }
