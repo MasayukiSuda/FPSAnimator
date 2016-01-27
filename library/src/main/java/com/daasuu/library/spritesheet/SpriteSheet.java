@@ -1,7 +1,5 @@
 package com.daasuu.library.spritesheet;
 
-import android.util.Log;
-
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.constant.Constant;
 
@@ -13,6 +11,8 @@ import java.util.List;
  * images could be combined into a single 400x200 sprite sheet (4 frames across by 2 high).
  */
 public class SpriteSheet {
+
+    private static final int DEFAULT_SPRITE_SHEET_NUM = -1;
 
     /**
      * The number of width of each frame
@@ -64,6 +64,13 @@ public class SpriteSheet {
      * Dispatched when an animation reaches its ends.
      */
     private AnimCallBack mSpriteSheetFinishCallback;
+
+    /**
+     * Number of SpriteSheet Animation loop
+     */
+    public int spriteLoopNum = DEFAULT_SPRITE_SHEET_NUM;
+
+    private int currentLoopNum = 0;
 
     /**
      * indicates whether to start the SpriteAnimation paused.
@@ -150,22 +157,40 @@ public class SpriteSheet {
     protected void repeatFrame() {
         if (currentFrame != frameNum) return;
 
+        if (spriteLoopNum > 0) {
+            currentLoopNum++;
+            if (spriteLoopNum == currentLoopNum) {
+                dispatchCallback();
+                return;
+            }
+            resetFrame();
+            return;
+        }
+
         if (spriteLoop) {
-            currentFrame = Constant.DEFAULT_CURRENT_FRAME;
-            dx = 0;
-            dy = 0;
+            resetFrame();
         } else {
             currentFrame = frameNum;
         }
 
+        dispatchCallback();
+
+    }
+
+    private void resetFrame() {
+        currentFrame = Constant.DEFAULT_CURRENT_FRAME;
+        dx = 0;
+        dy = 0;
+    }
+
+    private void dispatchCallback() {
         if (mSpriteSheetFinishCallback != null) {
             mSpriteSheetFinishCallback.call();
-            if (!spriteLoop) {
+            if (!spriteLoop || spriteLoopNum > 0) {
                 //　SpriteSheetFinishCallback is called only once.
                 mSpriteSheetFinishCallback = null;
             }
         }
-
     }
 
     /**

@@ -103,7 +103,14 @@ public class FPSSurfaceViewSampleActivity extends AppCompatActivity {
                 frameHeight,
                 64,
                 12)
-                .spriteLoop(true);
+                .spriteLoopNum(6)
+                .spriteAnimationEndCallBack(new AnimCallBack() {
+                    @Override
+                    public void call() {
+                        Snackbar.make(mFpsSurfaceView, "Sprite Apinmation Finish loop 6", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
+                });
 
         DisplayObject tweenSprite = new DisplayObject();
         tweenSprite.with(spriteSheetDrawer)
