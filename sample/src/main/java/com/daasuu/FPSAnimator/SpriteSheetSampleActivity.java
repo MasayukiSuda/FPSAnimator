@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import com.daasuu.FPSAnimator.util.UIUtil;
@@ -32,11 +33,11 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
 
         createSparkles();
 
-        float frameWidth = Util.convertDpToPixel(82.875f, this);
-        float frameHeight = Util.convertDpToPixel(146.25f, this);
+        final float frameWidth = Util.convertDpToPixel(82.875f, this);
+        final float frameHeight = Util.convertDpToPixel(146.25f, this);
 
         Bitmap baseSpriteBitmapB = BitmapFactory.decodeResource(getResources(), R.drawable.spritesheet_grant);
-        Bitmap spriteBitmapB = Bitmap.createScaledBitmap(
+        final Bitmap spriteBitmapB = Bitmap.createScaledBitmap(
                 baseSpriteBitmapB,
                 (int) Util.convertDpToPixel(1024f, this),
                 (int) Util.convertDpToPixel(1024f, this),
@@ -58,34 +59,38 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
                 .end();
 
 
-        OverrideSpriteSheet overrideSpriteSheet = new OverrideSpriteSheet(
+        final OverrideSpriteSheet overrideSpriteSheet = new OverrideSpriteSheet(
                 frameWidth,
                 frameHeight,
                 64,
                 12
         );
 
-        final DisplayObject parabolicDisplay = new DisplayObject();
-        parabolicDisplay
-                .with(
-                        new SpriteSheetDrawer(spriteBitmapB, overrideSpriteSheet)
-                                .dpSize(this)
-                                .spriteLoop(true)
-                )
-                .parabolic()
-                .transform(0, UIUtil.getWindowHeight(this) / 2)
-                .initialVelocityY(-30)
-                .reboundRight(false)
-                .rightHitCallback(new AnimCallBack() {
-                    @Override
-                    public void call() {
-                        mFPSTextureView.removeChild(parabolicDisplay);
-                    }
-                })
-                .end();
+        final Context context = this;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                final DisplayObject parabolicDisplay = new DisplayObject();
+                parabolicDisplay
+                        .with(
+                                new SpriteSheetDrawer(spriteBitmapB, overrideSpriteSheet)
+                                        .dpSize(context)
+                                        .spriteLoop(true)
+                        )
+                        .parabolic()
+                        .transform(0, UIUtil.getWindowHeight(context) / 2)
+                        .initialVelocityY(-30)
+                        .bottomBase(mFPSTextureView.getHeight())
+                        .rightSide(mFPSTextureView.getWidth())
+                        .end();
+
+                mFPSTextureView
+                        .addChild(parabolicDisplay);
+            }
+        }, 50);
+
 
         mFPSTextureView
-                .addChild(parabolicDisplay)
                 .addChild(displayObject);
     }
 
@@ -115,7 +120,7 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
             if (edge) {
                 currentFrame++;
                 if (currentFrame <= frameNum) {
-                    dy -= frameHeight;
+                    dy += frameHeight;
                     dx = 0;
                 }
                 repeatFrame();
@@ -123,7 +128,7 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
             }
             currentFrame++;
             if (currentFrame <= frameNum) {
-                dx -= frameWidth;
+                dx += frameWidth;
             }
             repeatFrame();
         }
