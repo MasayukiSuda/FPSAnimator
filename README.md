@@ -86,12 +86,11 @@ This is the implementation of the sample application.
             .with(spriteSheetDrawer)
             .tween()
             .tweenLoop(true)
-            .transform(frameWidth, windowHeight / 2)
+            .transform(-frameWidth, windowHeight / 2)
             .toX(3000, windowWidth)
             .end();
 
     mFPSTextureView
-                .setFps(24)
                 .addChild(displayObject);
 ```
 
