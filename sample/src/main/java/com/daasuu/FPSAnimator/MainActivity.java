@@ -61,6 +61,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button containerSample = (Button) findViewById(R.id.container_sample);
+        containerSample.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ContainerSampleActivity.startActivity(v.getContext());
+            }
+        });
+
     }
 
 

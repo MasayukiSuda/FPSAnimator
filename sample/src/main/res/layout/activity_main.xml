@@ -58,6 +58,13 @@
             android:text="FPSSurfaceViewSample"
             android:textAllCaps="false" />
 
+        <Button
+            android:id="@+id/container_sample"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ContainerSample"
+            android:textAllCaps="false" />
+
     </LinearLayout>
 
 </RelativeLayout>
