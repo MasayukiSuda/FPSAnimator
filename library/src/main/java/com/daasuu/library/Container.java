@@ -40,7 +40,7 @@ public class Container extends DisplayBase {
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    void draw(Canvas canvas) {
         super.draw(canvas);
 
         List<DisplayObject> copyDisplayObjectList = new ArrayList<DisplayObject>(mDisplayList);

@@ -205,8 +205,8 @@ public class SpriteSheet {
 
         int currentNum = customFrameList.get(currentFrame - 1);
 
-        dx = -(frameWidth * (currentNum % frameNumPerLine));
-        dy = -(frameHeight * (currentNum / frameNumPerLine));
+        dx = frameWidth * (currentNum % frameNumPerLine);
+        dy = frameHeight * (currentNum / frameNumPerLine);
 
         currentFrame++;
 

@@ -54,7 +54,7 @@ public class Util {
         if (alphaInt >= 255) return 1f;
         if (alphaInt <= 0f) return 0;
 
-        return alphaInt / Constant.DEFAULT_ALPHA;
+        return (float) alphaInt / Constant.DEFAULT_ALPHA;
     }
 
 }
