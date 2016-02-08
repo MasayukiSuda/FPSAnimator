@@ -45,6 +45,16 @@ public class SpriteSheetDrawer extends BaseDrawer {
     private SpriteSheet mSpriteSheet;
 
     /**
+     * The subset of the SpriteSheet bitmap to be drawn
+     */
+    private final Rect mBitmapRect;
+
+    /**
+     * The rectangle that the SpriteSheet bitmap will be scaled/translated to fit into
+     */
+    private final Rect mBounds;
+
+    /**
      * member variables needed to skip a tick in mFrequency
      */
     private int mDrawingNum = Constant.DEFAULT_DRAWING_NUM;
@@ -96,6 +106,8 @@ public class SpriteSheetDrawer extends BaseDrawer {
         super(new Paint());
         this.mBitmap = bitmap;
         this.mSpriteSheet = spriteSheet;
+        mBitmapRect = new Rect();
+        mBounds = new Rect();
     }
 
 
@@ -219,27 +231,27 @@ public class SpriteSheetDrawer extends BaseDrawer {
         if (mBitmap == null) return;
 
         updateSpriteFrame();
-        Rect bitmapRect = new Rect((int) (mSpriteSheet.dx), (int) (mSpriteSheet.dy), (int) (mSpriteSheet.dx + mSpriteSheet.frameWidth), (int) (mSpriteSheet.dy + mSpriteSheet.frameHeight));
+        mBitmapRect.set((int) (mSpriteSheet.dx), (int) (mSpriteSheet.dy), (int) (mSpriteSheet.dx + mSpriteSheet.frameWidth), (int) (mSpriteSheet.dy + mSpriteSheet.frameHeight));
 
         if (mDpSize) {
 
-            Rect bounds = new Rect(
+            mBounds.set(
                     (int) x,
                     (int) y,
                     (int) (x + mBitmapDpWidth),
                     (int) (y + mBitmapDpHeight)
             );
-            canvas.drawBitmap(mBitmap, bitmapRect, bounds, mPaint);
+            canvas.drawBitmap(mBitmap, mBitmapRect, mBounds, mPaint);
 
         } else {
 
-            Rect bounds = new Rect(
+            mBounds.set(
                     (int) x,
                     (int) y,
                     (int) (x + mSpriteSheet.frameWidth),
                     (int) (y + mSpriteSheet.frameHeight)
             );
-            canvas.drawBitmap(mBitmap, bitmapRect, bounds, mPaint);
+            canvas.drawBitmap(mBitmap, mBitmapRect, mBounds, mPaint);
         }
 
     }
