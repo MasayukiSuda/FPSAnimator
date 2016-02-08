@@ -605,8 +605,8 @@ public class TweenAnimator implements Animator {
         /**
          * see {@link #rotation(long, float, Ease)}
          *
-         * @param animDuration
-         * @param rotation
+         * @param animDuration The duration of the tween in milliseconds
+         * @param rotation     The rotation, in degrees
          * @return this
          */
         public Composer rotation(long animDuration, float rotation) {
