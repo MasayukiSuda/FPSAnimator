@@ -162,11 +162,12 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
     /**
      * Removes the specified child from the display list.
      *
-     * @param DisplayBase DisplayBase2
+     * @param displayBase DisplayBase2
      * @return this
      */
-    public FPSSurfaceView removeChild(@NonNull DisplayBase DisplayBase) {
-        mDisplayList.remove(DisplayBase);
+    public FPSSurfaceView removeChild(@NonNull DisplayBase displayBase) {
+        displayBase.disable();
+        mDisplayList.remove(displayBase);
         return this;
     }
 
@@ -177,7 +178,10 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
      * @return this
      */
     public FPSSurfaceView removeChildAt(int location) {
-        mDisplayList.remove(location);
+        DisplayBase removed = mDisplayList.remove(location);
+        if (removed != null) {
+            removed.disable();
+        }
         return this;
     }
 
