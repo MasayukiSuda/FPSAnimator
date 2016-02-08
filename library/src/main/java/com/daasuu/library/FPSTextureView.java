@@ -25,6 +25,7 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
     private int mFps = Constant.DEFAULT_FPS;
 
     private List<DisplayBase> mDisplayList = new ArrayList<>();
+    private final List<DisplayBase> mDrawingList = new ArrayList<>();
 
     public FPSTextureView(Context context) {
         this(context, null, 0);
@@ -90,20 +91,19 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
     private void onTick() {
 
         synchronized (this) {
-
-            List<DisplayBase> copyDisplayObjectList = new ArrayList<DisplayBase>(mDisplayList);
-
             Canvas canvas = this.lockCanvas();
             if (canvas == null) return;
 
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
-            for (DisplayBase displayBase : copyDisplayObjectList) {
+            mDrawingList.addAll(mDisplayList);
+            for (DisplayBase displayBase : mDrawingList) {
                 if (displayBase == null) {
                     continue;
                 }
                 displayBase.draw(canvas);
             }
+            mDrawingList.clear();
 
             this.unlockCanvasAndPost(canvas);
         }

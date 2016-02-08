@@ -41,6 +41,11 @@ public class BitmapDrawer extends BaseDrawer {
      */
     private Rect mBitmapRect;
 
+    /**
+     * The rectangle that the bitmap will be scaled/translated to fit into
+     */
+    private RectF mDpSizeRect;
+
     public BitmapDrawer(@NonNull Bitmap bitmap) {
         super(new Paint());
         this.mBitmap = bitmap;
@@ -57,6 +62,7 @@ public class BitmapDrawer extends BaseDrawer {
         mBitmapDpWidth = Util.convertPixelsToDp(mBitmap.getWidth(), context);
         mBitmapDpHeight = Util.convertPixelsToDp(mBitmap.getHeight(), context);
         mBitmapRect = new Rect(0, 0, mBitmap.getWidth(), mBitmap.getHeight());
+        mDpSizeRect = new RectF();
         return this;
     }
 
@@ -107,13 +113,13 @@ public class BitmapDrawer extends BaseDrawer {
         }
 
         if (mDpSize) {
-            RectF dpSizeRect = new RectF(
+            mDpSizeRect.set(
                     x,
                     y,
                     x + mBitmapDpWidth,
                     y + mBitmapDpHeight
             );
-            canvas.drawBitmap(mBitmap, mBitmapRect, dpSizeRect, mPaint);
+            canvas.drawBitmap(mBitmap, mBitmapRect, mDpSizeRect, mPaint);
         } else {
             canvas.drawBitmap(mBitmap, x, y, mPaint);
         }
