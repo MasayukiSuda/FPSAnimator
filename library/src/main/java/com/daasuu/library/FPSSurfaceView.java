@@ -29,6 +29,7 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
     private SurfaceHolder mSurfaceHolder;
 
     private List<DisplayBase> mDisplayList = new ArrayList<>();
+    private final List<DisplayBase> mDrawingList = new ArrayList<>();
 
     public FPSSurfaceView(Context context) {
         this(context, null, 0);
@@ -99,19 +100,19 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
 
         synchronized (this) {
 
-            List<DisplayBase> copyDisplayBaseList = new ArrayList<DisplayBase>(mDisplayList);
-
             Canvas canvas = mSurfaceHolder.lockCanvas();
             if (canvas == null) return;
 
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
-            for (DisplayBase DisplayBase : copyDisplayBaseList) {
+            mDrawingList.addAll(mDisplayList);
+            for (DisplayBase DisplayBase : mDrawingList) {
                 if (DisplayBase == null) {
                     continue;
                 }
                 DisplayBase.draw(canvas);
             }
+            mDrawingList.clear();
 
             mSurfaceHolder.unlockCanvasAndPost(canvas);
         }
