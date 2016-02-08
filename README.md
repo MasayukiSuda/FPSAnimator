@@ -15,7 +15,7 @@ Gradle
 ```groovy
     dependencies {
         // jCenter
-        compile 'com.daasuu:FPSAnimator:0.1.1'
+        compile 'com.daasuu:FPSAnimator:0.2.0'
     }
 ```
 Include the FPSTextureView widget in your layout. Set FPS by attribute.
