@@ -106,6 +106,11 @@ public class BitmapDrawer extends BaseDrawer {
             return;
         }
 
+        if (mBitmap.isRecycled()) {
+            mBitmap = null;
+            return;
+        }
+
         if (mDpSize) {
             RectF dpSizeRect = new RectF(
                     x,

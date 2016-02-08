@@ -218,6 +218,11 @@ public class SpriteSheetDrawer extends BaseDrawer {
     protected void draw(Canvas canvas, float x, float y) {
         if (mBitmap == null) return;
 
+        if (mBitmap.isRecycled()) {
+            mBitmap = null;
+            return;
+        }
+
         updateSpriteFrame();
         Rect bitmapRect = new Rect((int) (mSpriteSheet.dx), (int) (mSpriteSheet.dy), (int) (mSpriteSheet.dx + mSpriteSheet.frameWidth), (int) (mSpriteSheet.dy + mSpriteSheet.frameHeight));
 
