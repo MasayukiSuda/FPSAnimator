@@ -170,6 +170,7 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
      * @return this
      */
     public FPSTextureView removeChild(@NonNull DisplayBase displayBase) {
+        displayBase.disable();
         boolean a = mDisplayList.remove(displayBase);
         return this;
     }
@@ -181,7 +182,10 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
      * @return this
      */
     public FPSTextureView removeChildAt(int location) {
-        mDisplayList.remove(location);
+        DisplayBase removed = mDisplayList.remove(location);
+        if (removed != null) {
+            removed.disable();
+        }
         return this;
     }
 

@@ -20,12 +20,17 @@ public abstract class DisplayBase {
 
     protected Drawer mDrawer;
 
+    private boolean mIsEnable;
+
     /**
      * call from FPSTextureView or FPSSurfaceView when it is addChild.
      *
      * @param fps Set in FPSTextureView or FPSSurfaceView.
      */
     void setUp(long fps) {
+        synchronized (this) {
+            mIsEnable = true;
+        }
         mAnimator.setUp(fps);
     }
 
@@ -60,9 +65,13 @@ public abstract class DisplayBase {
      * @param canvas This Canvas acquired by lookCanvas in FPSTextureView or FPSSurfaceView.
      */
     void draw(@NonNull Canvas canvas) {
-        mAnimator.setBaseLine(canvas, mDrawer.getWidth(), mDrawer.getHeight());
-        mAnimator.updateAnimParam(mAnimParameter);
-        mDrawer.draw(canvas, mAnimParameter.x, mAnimParameter.y, mAnimParameter.alpha, mAnimParameter.scaleX, mAnimParameter.scaleY, mAnimParameter.rotation);
+        synchronized (this) {
+            if (mIsEnable) {
+                mAnimator.setBaseLine(canvas, mDrawer.getWidth(), mDrawer.getHeight());
+                mAnimator.updateAnimParam(mAnimParameter);
+                mDrawer.draw(canvas, mAnimParameter.x, mAnimParameter.y, mAnimParameter.alpha, mAnimParameter.scaleX, mAnimParameter.scaleY, mAnimParameter.rotation);
+            }
+        }
     }
 
     public AnimParameter getAnimParameter() {
@@ -85,6 +94,16 @@ public abstract class DisplayBase {
      */
     public boolean isPause() {
         return mAnimator.isPause();
+    }
+
+    /**
+     * disable this display object.
+     * This call from FPSTextureView, FPSSurfaceView or Container when it is removeChild.
+     */
+    void disable() {
+        synchronized (this) {
+            mIsEnable = false;
+        }
     }
 
     /**

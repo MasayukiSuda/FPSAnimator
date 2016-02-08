@@ -99,11 +99,12 @@ public class Container extends DisplayBase {
     /**
      * Removes the specified child from the display list.
      *
-     * @param DisplayObject DisplayObject
+     * @param displayObject DisplayObject
      * @return this
      */
-    public Container removeChild(@NonNull DisplayObject DisplayObject) {
-        mDisplayList.remove(DisplayObject);
+    public Container removeChild(@NonNull DisplayObject displayObject) {
+        displayObject.disable();
+        mDisplayList.remove(displayObject);
         return this;
     }
 
@@ -114,7 +115,10 @@ public class Container extends DisplayBase {
      * @return this
      */
     public Container removeChildAt(int location) {
-        mDisplayList.remove(location);
+        DisplayBase removed = mDisplayList.remove(location);
+        if (removed != null) {
+            removed.disable();
+        }
         return this;
     }
 
