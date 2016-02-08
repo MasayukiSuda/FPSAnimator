@@ -137,7 +137,7 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
     /**
      * Adds a child to the top of the display list.
      *
-     * @param DisplayBase DisplayBase2
+     * @param DisplayBase DisplayBase
      * @return this
      */
     public FPSSurfaceView addChild(@NonNull DisplayBase DisplayBase) {
@@ -150,7 +150,7 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
      * Adds a child to the display list at the specified index, bumping children at equal or greater indexes up one, and setting its parent to this Container
      *
      * @param location    index
-     * @param DisplayBase DisplayBase2
+     * @param DisplayBase DisplayBase
      * @return this
      */
     public FPSSurfaceView addChildAt(int location, @NonNull DisplayBase DisplayBase) {
@@ -162,7 +162,7 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
     /**
      * Removes the specified child from the display list.
      *
-     * @param displayBase DisplayBase2
+     * @param displayBase DisplayBase
      * @return this
      */
     public FPSSurfaceView removeChild(@NonNull DisplayBase displayBase) {

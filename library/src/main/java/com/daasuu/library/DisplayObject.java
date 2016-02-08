@@ -20,7 +20,7 @@ public class DisplayObject extends DisplayBase {
 
     /**
      * Call from {@link Container} class.
-     * Affected by the parametor of Container.
+     * Affected by the parameter of Container.
      *
      * @param canvas        This Canvas acquired by lookCanvas in FPSTextureView or FPSSurfaceView.
      * @param animParameter AnimParameter instance

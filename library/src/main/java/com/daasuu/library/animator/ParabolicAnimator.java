@@ -110,7 +110,7 @@ public class ParabolicAnimator implements Animator {
     /**
      * create composer instance.
      *
-     * @param DisplayBase
+     * @param DisplayBase DisplayBase
      * @return composer
      */
     public static Composer composer(DisplayBase DisplayBase) {

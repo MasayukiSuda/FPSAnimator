@@ -251,6 +251,7 @@ public class TweenAnimator implements Animator {
          * Setter mTweenLoop
          *
          * @param repeat If true, the tween will loop when it reaches the end.
+         * @return this
          */
         public Composer tweenLoop(boolean repeat) {
             mTweenLoop = repeat;
@@ -259,6 +260,10 @@ public class TweenAnimator implements Animator {
 
         /**
          * see {@link #transform(float, float, int, float, float, float)}
+         *
+         * @param x The horizontal translation (x position) in pixels
+         * @param y The vertical translation (y position) in pixels
+         * @return this
          */
         public Composer transform(float x, float y) {
             AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
@@ -290,6 +295,11 @@ public class TweenAnimator implements Animator {
 
         /**
          * see {@link #to(long, float, float, int, float, float, float, Ease)}
+         *
+         * @param animDuration The duration of the tween in milliseconds
+         * @param x            The horizontal translation (x position) in pixels
+         * @param y            The vertical translation (y position) in pixels
+         * @return this
          */
         public Composer to(long animDuration, float x, float y) {
             return to(animDuration, x, y, Ease.LINEAR);
@@ -297,6 +307,12 @@ public class TweenAnimator implements Animator {
 
         /**
          * see {@link #to(long, float, float, int, float, float, float, Ease)}
+         *
+         * @param animDuration The duration of the tween in milliseconds
+         * @param x            The horizontal translation (x position) in pixels
+         * @param y            The vertical translation (y position) in pixels
+         * @param ease         The easing function to use for this tween.
+         * @return this
          */
         public Composer to(long animDuration, float x, float y, Ease ease) {
             AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
@@ -307,6 +323,12 @@ public class TweenAnimator implements Animator {
 
         /**
          * see {@link #to(long, float, float, int, float, float, float, Ease)}
+         *
+         * @param animDuration The duration of the tween in milliseconds
+         * @param x            The horizontal translation (x position) in pixels
+         * @param y            The vertical translation (y position) in pixels
+         * @param alpha        The alpha (transparency) ,as a percentage of 255.
+         * @return this
          */
         public Composer to(long animDuration, float x, float y, int alpha) {
             return to(animDuration, x, y, alpha, Ease.LINEAR);
@@ -314,6 +336,13 @@ public class TweenAnimator implements Animator {
 
         /**
          * see {@link #to(long, float, float, int, float, float, float, Ease)}
+         *
+         * @param animDuration The duration of the tween in milliseconds
+         * @param x            The horizontal translation (x position) in pixels
+         * @param y            The vertical translation (y position) in pixels
+         * @param alpha        The alpha (transparency) ,as a percentage of 255.
+         * @param ease         The easing function to use for this tween.
+         * @return this
          */
         public Composer to(long animDuration, float x, float y, int alpha, Ease ease) {
             AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
@@ -325,6 +354,13 @@ public class TweenAnimator implements Animator {
 
         /**
          * see {@link #to(long, float, float, int, float, float, float, Ease)}
+         *
+         * @param animDuration The duration of the tween in milliseconds
+         * @param x            The horizontal translation (x position) in pixels
+         * @param y            The vertical translation (y position) in pixels
+         * @param scaleX       The horizontal scale, as a percentage of 1
+         * @param scaleY       The vertical scale, as a percentage of 1
+         * @return this
          */
         public Composer to(long animDuration, float x, float y, float scaleX, float scaleY) {
             return to(animDuration, x, y, scaleX, scaleY, Ease.LINEAR);
@@ -332,6 +368,14 @@ public class TweenAnimator implements Animator {
 
         /**
          * see {@link #to(long, float, float, int, float, float, float, Ease)}
+         *
+         * @param animDuration The duration of the tween in milliseconds
+         * @param x            The horizontal translation (x position) in pixels
+         * @param y            The vertical translation (y position) in pixels
+         * @param scaleX       The horizontal scale, as a percentage of 1
+         * @param scaleY       The vertical scale, as a percentage of 1
+         * @param ease         The easing function to use for this tween.
+         * @return this
          */
         public Composer to(long animDuration, float x, float y, float scaleX, float scaleY, Ease ease) {
             AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
@@ -343,6 +387,12 @@ public class TweenAnimator implements Animator {
 
         /**
          * see {@link #to(long, float, float, int, float, float, float, Ease)}
+         *
+         * @param animDuration The duration of the tween in milliseconds
+         * @param x            The horizontal translation (x position) in pixels
+         * @param y            The vertical translation (y position) in pixels
+         * @param rotation     The rotation, in degrees
+         * @return this
          */
         public Composer to(long animDuration, float x, float y, float rotation) {
             return to(animDuration, x, y, rotation, Ease.LINEAR);
@@ -350,6 +400,13 @@ public class TweenAnimator implements Animator {
 
         /**
          * see {@link #to(long, float, float, int, float, float, float, Ease)}
+         *
+         * @param animDuration The duration of the tween in milliseconds
+         * @param x            The horizontal translation (x position) in pixels
+         * @param y            The vertical translation (y position) in pixels
+         * @param rotation     The rotation, in degrees
+         * @param ease         The easing function to use for this tween.
+         * @return this
          */
         public Composer to(long animDuration, float x, float y, float rotation, Ease ease) {
             AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
@@ -389,6 +446,10 @@ public class TweenAnimator implements Animator {
 
         /**
          * see {@link #toX(long, float, Ease)}
+         *
+         * @param animDuration The duration of the tween in milliseconds
+         * @param x            The horizontal translation (x position) in pixels
+         * @return this
          */
         public Composer toX(long animDuration, float x) {
             return toX(animDuration, x, Ease.LINEAR);
@@ -424,6 +485,10 @@ public class TweenAnimator implements Animator {
 
         /**
          * see {@link #toY(long, float, Ease)}
+         *
+         * @param animDuration The duration of the tween in milliseconds
+         * @param y            The vertical translation (y position) in pixels
+         * @return this
          */
         public Composer toY(long animDuration, float y) {
             return toY(animDuration, y, Ease.LINEAR);
@@ -459,6 +524,10 @@ public class TweenAnimator implements Animator {
 
         /**
          * see {@link #alpha(long, float, Ease)}
+         *
+         * @param animDuration The duration of the tween in milliseconds
+         * @param alpha        The alpha (transparency) ,as a percentage of 255.
+         * @return this
          */
         public Composer alpha(long animDuration, float alpha) {
             return alpha(animDuration, alpha, Ease.LINEAR);
@@ -494,6 +563,11 @@ public class TweenAnimator implements Animator {
 
         /**
          * see {@link #scale(long, float, float, Ease)}
+         *
+         * @param animDuration The duration of the tween in milliseconds
+         * @param scaleX       The horizontal scale, as a percentage of 1
+         * @param scaleY       The vertical scale, as a percentage of 1
+         * @return this
          */
         public Composer scale(long animDuration, float scaleX, float scaleY) {
             return scale(animDuration, scaleX, scaleY, Ease.LINEAR);
@@ -530,6 +604,10 @@ public class TweenAnimator implements Animator {
 
         /**
          * see {@link #rotation(long, float, Ease)}
+         *
+         * @param animDuration
+         * @param rotation
+         * @return this
          */
         public Composer rotation(long animDuration, float rotation) {
             return rotation(animDuration, rotation, Ease.LINEAR);

@@ -7,7 +7,7 @@ import com.daasuu.library.animator.ParabolicAnimator;
 import com.daasuu.library.animator.TweenAnimator;
 
 /**
- * Created by sudamasayuki on 16/01/26.
+ * Basic Class of Object to Add to FPSTextureView or FPSSurfaceView.
  */
 public abstract class DisplayBase {
 
@@ -51,6 +51,7 @@ public abstract class DisplayBase {
      * Use this method only when there is need to your own custom class of animation,
      *
      * @param animator Animator instance
+     * @return this
      */
     public DisplayBase animator(@NonNull Animator animator) {
         this.mAnimator = animator;
@@ -74,6 +75,11 @@ public abstract class DisplayBase {
         }
     }
 
+    /**
+     * Getter mAnimParameter
+     *
+     * @return hold a parameter related to the drawing on the canvas.
+     */
     public AnimParameter getAnimParameter() {
         return mAnimParameter;
     }
