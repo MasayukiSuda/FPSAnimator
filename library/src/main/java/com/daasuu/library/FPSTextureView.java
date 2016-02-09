@@ -13,6 +13,7 @@ import android.view.TextureView;
 import com.daasuu.library.constant.Constant;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -97,6 +98,7 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
             mDrawingList.addAll(mDisplayList);
+            Collections.sort(mDrawingList);
             for (DisplayBase displayBase : mDrawingList) {
                 if (displayBase == null) {
                     continue;

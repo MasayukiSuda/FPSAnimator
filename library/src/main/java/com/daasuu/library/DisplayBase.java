@@ -9,7 +9,7 @@ import com.daasuu.library.animator.TweenAnimator;
 /**
  * Basic Class of Object to Add to FPSTextureView or FPSSurfaceView.
  */
-public abstract class DisplayBase {
+public abstract class DisplayBase implements Comparable<DisplayBase> {
 
     /**
      * hold a parameter related to the drawing on the canvas.
@@ -21,6 +21,16 @@ public abstract class DisplayBase {
     protected Drawer mDrawer;
 
     private boolean mIsEnable;
+
+    private final int mPriority;
+
+    protected DisplayBase() {
+        this(0);
+    }
+
+    protected DisplayBase(int priority) {
+        mPriority = priority;
+    }
 
     /**
      * call from FPSTextureView or FPSSurfaceView when it is addChild.
@@ -110,6 +120,11 @@ public abstract class DisplayBase {
         synchronized (this) {
             mIsEnable = false;
         }
+    }
+
+    @Override
+    public int compareTo(DisplayBase another) {
+        return this.mPriority - (another == null ? 0 : another.mPriority);
     }
 
     /**

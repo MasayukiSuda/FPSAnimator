@@ -14,6 +14,13 @@ import com.daasuu.library.util.Util;
  */
 public class DisplayObject extends DisplayBase {
 
+    public DisplayObject() {
+    }
+
+    public DisplayObject(int priority) {
+        super(priority);
+    }
+
     public DisplayComposer with(Drawer drawer) {
         return drawer(drawer);
     }
