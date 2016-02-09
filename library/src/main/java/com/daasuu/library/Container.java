@@ -26,6 +26,11 @@ public class Container extends DisplayBase {
      * constructor
      */
     public Container() {
+        this(0);
+    }
+
+    public Container(int priority) {
+        super(priority);
         drawer(new ContainerDrawer()).tween().end();
     }
 

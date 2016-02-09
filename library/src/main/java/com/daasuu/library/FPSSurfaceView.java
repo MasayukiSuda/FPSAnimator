@@ -14,6 +14,7 @@ import android.view.SurfaceView;
 import com.daasuu.library.constant.Constant;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -106,6 +107,7 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
             mDrawingList.addAll(mDisplayList);
+            Collections.sort(mDrawingList);
             for (DisplayBase DisplayBase : mDrawingList) {
                 if (DisplayBase == null) {
                     continue;
