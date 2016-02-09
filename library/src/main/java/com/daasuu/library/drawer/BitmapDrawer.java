@@ -107,7 +107,7 @@ public class BitmapDrawer extends BaseDrawer {
     }
 
     @Override
-    protected void draw(Canvas canvas, float x, float y) {
+    protected void draw(Canvas canvas, float x, float y, int alpha) {
         if (mBitmap == null) {
             return;
         }
@@ -116,6 +116,8 @@ public class BitmapDrawer extends BaseDrawer {
             mBitmap = null;
             return;
         }
+
+        mPaint.setAlpha(alpha);
 
         if (mDpSize) {
             mDpSizeRect.set(

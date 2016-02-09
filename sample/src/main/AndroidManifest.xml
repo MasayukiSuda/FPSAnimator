@@ -37,6 +37,9 @@
         <activity
             android:name=".ContainerSampleActivity"
             android:label="ContainerSampleActivity" />
+        <activity
+            android:name=".CustomDrawerSampleActivity"
+            android:label="CustomDrawerSampleActivity" />
     </application>
 
 </manifest>

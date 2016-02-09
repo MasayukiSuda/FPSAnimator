@@ -65,6 +65,13 @@
             android:text="ContainerSample"
             android:textAllCaps="false" />
 
+        <Button
+            android:id="@+id/custom_drawer_sample"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CustomDrawerSample"
+            android:textAllCaps="false" />
+
     </LinearLayout>
 
 </RelativeLayout>

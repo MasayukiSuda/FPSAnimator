@@ -69,6 +69,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button customDrawerSample = (Button) findViewById(R.id.custom_drawer_sample);
+        customDrawerSample.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomDrawerSampleActivity.startActivity(v.getContext());
+            }
+        });
+
     }
 
 

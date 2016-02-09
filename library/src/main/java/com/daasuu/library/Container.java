@@ -176,7 +176,7 @@ public class Container extends DisplayBase {
         }
 
         @Override
-        protected void draw(Canvas canvas, float x, float y) {
+        protected void draw(Canvas canvas, float x, float y, int alpha) {
             // Do nothing
         }
 

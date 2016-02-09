@@ -41,8 +41,9 @@ public class TextDrawer extends BaseDrawer {
     }
 
     @Override
-    protected void draw(Canvas canvas, float x, float y) {
+    protected void draw(Canvas canvas, float x, float y, int alpha) {
         if (mText != null) {
+            mPaint.setAlpha(alpha);
             canvas.drawText(mText, x, y + mAdjustTextMesureY, mPaint);
         }
     }

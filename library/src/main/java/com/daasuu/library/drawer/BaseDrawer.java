@@ -65,13 +65,12 @@ public abstract class BaseDrawer implements Drawer {
 
     @Override
     public void draw(Canvas canvas, float x, float y, int alpha, float scaleX, float scaleY, float rotation) {
-        mPaint.setAlpha(alpha);
 
         canvas.save();
         canvas.scale(scaleX, scaleY, x + mScaleRegistrationX, y + mScaleRegistrationY);
         canvas.rotate(rotation, x + mRotateRegistrationX, y + mRotateRegistrationY);
 
-        draw(canvas, x, y);
+        draw(canvas, x, y, alpha);
 
         canvas.restore();
     }
@@ -82,6 +81,7 @@ public abstract class BaseDrawer implements Drawer {
      * @param canvas This Canvas acquired by lookCanvas in FPSTextureView or FPSSurfaceView.
      * @param x      The horizontal translation (x position) in pixels
      * @param y      The vertical translation (y position) in pixels
+     * @param alpha  The alpha (transparency) ,as a percentage of 255.
      */
-    protected abstract void draw(Canvas canvas, float x, float y);
+    protected abstract void draw(Canvas canvas, float x, float y, int alpha);
 }

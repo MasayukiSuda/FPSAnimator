@@ -227,13 +227,15 @@ public class SpriteSheetDrawer extends BaseDrawer {
     }
 
     @Override
-    protected void draw(Canvas canvas, float x, float y) {
+    protected void draw(Canvas canvas, float x, float y, int alpha) {
         if (mBitmap == null) return;
 
         if (mBitmap.isRecycled()) {
             mBitmap = null;
             return;
         }
+
+        mPaint.setAlpha(alpha);
 
         updateSpriteFrame();
         mBitmapRect.set((int) (mSpriteSheet.dx), (int) (mSpriteSheet.dy), (int) (mSpriteSheet.dx + mSpriteSheet.frameWidth), (int) (mSpriteSheet.dy + mSpriteSheet.frameHeight));
