@@ -22,7 +22,7 @@ public abstract class DisplayBase implements Comparable<DisplayBase> {
 
     private boolean mIsEnable;
 
-    private final int mPriority;
+    private int mPriority;
 
     protected DisplayBase() {
         this(0);
@@ -119,6 +119,16 @@ public abstract class DisplayBase implements Comparable<DisplayBase> {
     void disable() {
         synchronized (this) {
             mIsEnable = false;
+        }
+    }
+
+    synchronized void swapPriority(DisplayBase another) {
+        if (another != null) {
+            synchronized (another) {
+                int myPriority = this.mPriority;
+                this.mPriority = another.mPriority;
+                another.mPriority = myPriority;
+            }
         }
     }
 

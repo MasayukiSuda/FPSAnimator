@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import com.daasuu.library.drawer.BaseDrawer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,6 +22,8 @@ public class Container extends DisplayBase {
     private static final long DEFAULT_FPS = -1;
 
     private long mFps = DEFAULT_FPS;
+
+    private final List<DisplayObject> mDrawingList = new ArrayList<>();
 
     /**
      * constructor
@@ -48,13 +51,15 @@ public class Container extends DisplayBase {
     void draw(Canvas canvas) {
         super.draw(canvas);
 
-        List<DisplayObject> copyDisplayObjectList = new ArrayList<DisplayObject>(mDisplayList);
-        for (DisplayObject DisplayObject : copyDisplayObjectList) {
+        mDrawingList.addAll(mDisplayList);
+        Collections.sort(mDrawingList);
+        for (DisplayObject DisplayObject : mDrawingList) {
             if (DisplayObject == null) {
                 continue;
             }
             DisplayObject.draw(canvas, mAnimParameter);
         }
+        mDrawingList.clear();
 
     }
 
@@ -145,6 +150,7 @@ public class Container extends DisplayBase {
      * @return if true, success to swapChildren
      */
     public boolean swapChildren(@NonNull DisplayObject child1, @NonNull DisplayObject child2) {
+        child1.swapPriority(child2);
         int childIndex1 = mDisplayList.indexOf(child1);
         int childIndex2 = mDisplayList.indexOf(child2);
 
