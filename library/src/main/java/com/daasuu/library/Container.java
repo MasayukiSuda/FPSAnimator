@@ -95,7 +95,7 @@ public class Container extends DisplayBase {
      * Adds a child to the display list at the specified index, bumping children at equal or greater indexes up one, and setting its parent to this Container
      *
      * @param location      index
-     * @param DisplayObject DisplayObject2
+     * @param DisplayObject DisplayObject
      * @return this
      */
     public Container addChildAt(int location, @NonNull DisplayObject DisplayObject) {
