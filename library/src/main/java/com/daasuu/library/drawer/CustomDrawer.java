@@ -11,7 +11,7 @@ public class CustomDrawer extends BaseDrawer {
     private CustomDraw mCustomDraw;
 
     public CustomDrawer(CustomDraw customDraw) {
-        super(new Paint());
+        super(null);
         mCustomDraw = customDraw;
     }
 

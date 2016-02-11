@@ -11,6 +11,7 @@ import android.os.Bundle;
 import com.daasuu.FPSAnimator.util.UIUtil;
 import com.daasuu.library.DisplayObject;
 import com.daasuu.library.FPSTextureView;
+import com.daasuu.library.drawer.CircleDrawer;
 import com.daasuu.library.drawer.CustomDrawer;
 import com.daasuu.library.easing.Ease;
 import com.daasuu.library.util.Util;
@@ -87,9 +88,25 @@ public class CustomDrawerSampleActivity extends AppCompatActivity {
                 .leftSide(100)
                 .end();
 
+
+        Paint paint = new Paint();
+        paint.setColor(ContextCompat.getColor(this, R.color.colorAccent));
+        CircleDrawer circleDrawer = new CircleDrawer(paint, 100);
+        DisplayObject displayObject4 = new DisplayObject();
+        displayObject4.with(circleDrawer)
+                .tween()
+                .tweenLoop(true)
+                .to(3000, 300, 500)
+                .scale(1000, 3, 4)
+                .scale(1000, 1, 1)
+                .to(3000, 0, 0)
+                .end();
+
+
         mFPSTextureView
                 .addChild(displayObject2)
                 .addChild(displayObject3)
+                .addChild(displayObject4)
                 .addChild(displayObject);
 
     }
