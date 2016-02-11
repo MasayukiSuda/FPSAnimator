@@ -4,4 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorBlack">#000000</color>
+
+    <color name="circle1">#cc3333</color>
+    <color name="circle2">#ff6600</color>
+    <color name="circle3">#ffffcc</color>
 </resources>

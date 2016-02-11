@@ -44,23 +44,14 @@ public class ContainerSampleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_container_sample);
         mFPSTextureView = (FPSTextureView) findViewById(R.id.animation_texture_view);
 
-        container1
-                .with()
-                .tween()
-                .waitTime(10000)
-                .toY(2000, 400)
-                .toY(2000, 0)
-                .tweenLoop(true)
-                .end();
-
         float container2Height = UIUtil.getWindowHeight(this) / 2;
         container2
                 .with()
                 .tween()
-                .transform(0, container2Height)
-                .waitTime(5000)
-                .to(2000, 0, container2Height + 200, Util.convertAlphaFloatToInt(1f), 0.3f, 0.3f, 0, Ease.LINEAR)
-                .to(2000, 0, container2Height, Util.convertAlphaFloatToInt(1f), 1f, 1f, 0, Ease.LINEAR)
+                .waitTime(3000)
+                .toY(2000, container2Height)
+                .waitTime(3000)
+                .toY(2000, 0)
                 .tweenLoop(true)
                 .end();
 

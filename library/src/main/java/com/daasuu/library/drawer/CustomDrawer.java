@@ -34,6 +34,7 @@ public class CustomDrawer extends BaseDrawer {
 
         /**
          * Draw the object on the canvas with given properties.
+         * This argument, comes in property values ​​in the animation.
          *
          * @param canvas This Canvas acquired by lookCanvas in FPSTextureView or FPSSurfaceView.
          * @param x      The horizontal translation (x position) in pixels
@@ -57,7 +58,6 @@ public class CustomDrawer extends BaseDrawer {
         float getHeight();
 
     }
-
 
     /**
      * The left offset and y offset for this display object's registration point. For example, to make a 100x100px Bitmap scale
