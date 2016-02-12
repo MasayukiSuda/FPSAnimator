@@ -94,16 +94,16 @@ public class BitmapDrawer extends BaseDrawer {
 
     @Override
     public float getWidth() {
-        return mDpSize ?
-                mBitmapDpWidth :
-                mBitmap.getWidth();
+        return mBitmap == null ?
+                0 :
+                mDpSize ? mBitmapDpWidth : mBitmap.getWidth();
     }
 
     @Override
     public float getHeight() {
-        return mDpSize ?
-                mBitmapDpHeight :
-                mBitmap.getHeight();
+        return mBitmap == null ?
+                0 :
+                mDpSize ? mBitmapDpHeight : mBitmap.getHeight();
     }
 
     @Override
