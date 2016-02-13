@@ -32,12 +32,12 @@ public class CircleDrawer extends BaseDrawer {
 
     @Override
     public float getWidth() {
-        return mRadius;
+        return mRadius * 2;
     }
 
     @Override
     public float getHeight() {
-        return mRadius;
+        return mRadius * 2;
     }
 
     /**
