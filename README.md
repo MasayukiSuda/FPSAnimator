@@ -209,6 +209,17 @@ This is the implementation of the sample application.
 # Easing
 <img src="art/easingDemo.gif" width="80%">
 
+Applications using FPSAnimator
+-------
+
+Please send a pull request if you would like to be added here.
+
+Icon | Application
+------------ | -------------
+<img src="https://lh3.googleusercontent.com/Q_D0w0gkAnOFIu8dZeERlqM2RcEU8emBmakaCJGhDtfxbY4jOE_g7epGEi6w1G_TaFc=w300-rw" width="48" height="48" /> | [takusuta](https://play.google.com/store/apps/details?id=jp.co.takusuta.takusuta)
+
+
+
 Contributers
 -------
 
