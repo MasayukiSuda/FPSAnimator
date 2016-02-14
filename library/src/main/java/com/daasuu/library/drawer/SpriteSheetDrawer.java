@@ -278,11 +278,13 @@ public class SpriteSheetDrawer extends BaseDrawer {
 
     @Override
     public float getWidth() {
+        if (mDpSize) return mBitmapDpWidth;
         return mSpriteSheet.frameWidth;
     }
 
     @Override
     public float getHeight() {
+        if (mDpSize) return mBitmapDpHeight;
         return mSpriteSheet.frameHeight;
     }
 }

@@ -5,7 +5,7 @@ import android.graphics.Paint;
 import android.support.annotation.NonNull;
 
 /**
- * Draw the specified circle using the specified paint. If radius is <= 0,
+ * Draw the specified circle using the specified paint. If radius is less 0,
  * then nothing will be drawn. The circle will be filled or framed based
  * on the Style in the paint.
  */

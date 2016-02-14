@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import com.daasuu.FPSAnimator.util.UIUtil;
+import com.daasuu.library.Container;
 import com.daasuu.library.DisplayObject;
 import com.daasuu.library.FPSTextureView;
 import com.daasuu.library.callback.AnimCallBack;
@@ -16,9 +17,15 @@ import com.daasuu.library.drawer.SpriteSheetDrawer;
 import com.daasuu.library.spritesheet.SpriteSheet;
 import com.daasuu.library.util.Util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SpriteSheetSampleActivity extends AppCompatActivity {
 
     private FPSTextureView mFPSTextureView;
+
+    private Container mSparkContainer = new Container();
+    private Container mMainContainer = new Container();
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, SpriteSheetSampleActivity.class);
@@ -31,7 +38,9 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sprite_sheet_sample);
         mFPSTextureView = (FPSTextureView) findViewById(R.id.animation_texture_view);
 
-        createSparkles();
+        mFPSTextureView
+                .addChild(mSparkContainer)
+                .addChild(mMainContainer);
 
         final float frameWidth = Util.convertDpToPixel(82.875f, this);
         final float frameHeight = Util.convertDpToPixel(146.25f, this);
@@ -58,80 +67,38 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
                 .toX(3000, UIUtil.getWindowWidth(this))
                 .end();
 
+        List<Integer> list = new ArrayList<Integer>();
+        for (int i = 26; i < 64; i++) list.add(i);
 
-        final OverrideSpriteSheet overrideSpriteSheet = new OverrideSpriteSheet(
+        final SpriteSheetDrawer spriteSheetDrawer2 = new SpriteSheetDrawer(
+                spriteBitmapB,
                 frameWidth,
                 frameHeight,
-                64,
-                12
-        );
-
-        final Context context = this;
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                final DisplayObject parabolicDisplay = new DisplayObject();
-                parabolicDisplay
-                        .with(
-                                new SpriteSheetDrawer(spriteBitmapB, overrideSpriteSheet)
-                                        .dpSize(context)
-                                        .spriteLoop(true)
-                        )
-                        .parabolic()
-                        .transform(0, UIUtil.getWindowHeight(context) / 2)
-                        .initialVelocityY(-30)
-                        .bottomBase(mFPSTextureView.getHeight())
-                        .rightSide(mFPSTextureView.getWidth())
-                        .end();
-
-                mFPSTextureView
-                        .addChild(parabolicDisplay);
-            }
-        }, 50);
+                64)
+                .dpSize(this)
+                .customFrameList(list)
+                .spriteLoop(true);
 
 
-        mFPSTextureView
+        final DisplayObject parabolicDisplay = new DisplayObject();
+        parabolicDisplay
+                .with(spriteSheetDrawer2)
+                .parabolic()
+                .transform(0, UIUtil.getWindowHeight(this) / 2)
+                .initialVelocityY(-30)
+                .rightHitCallback(new AnimCallBack() {
+                    @Override
+                    public void call() {
+                        mMainContainer.removeChild(parabolicDisplay);
+                    }
+                })
+                .end();
+
+        mMainContainer
+                .addChild(parabolicDisplay)
                 .addChild(displayObject);
-    }
 
-    private class OverrideSpriteSheet extends SpriteSheet {
-
-        /**
-         * constructor
-         *
-         * @param frameWidth
-         * @param frameHeight
-         * @param frameNum
-         * @param frameNumPerLine
-         */
-        public OverrideSpriteSheet(float frameWidth, float frameHeight, int frameNum, int frameNumPerLine) {
-            super(frameWidth, frameHeight, frameNum, frameNumPerLine);
-        }
-
-        @Override
-        public void updateFrame() {
-            if (currentFrame > frameNum + 2) return;
-
-            if (currentFrame < 26) {
-                currentFrame = 26;
-            }
-
-            boolean edge = currentFrame % 12 == 0;
-            if (edge) {
-                currentFrame++;
-                if (currentFrame <= frameNum) {
-                    dy += frameHeight;
-                    dx = 0;
-                }
-                repeatFrame();
-                return;
-            }
-            currentFrame++;
-            if (currentFrame <= frameNum) {
-                dx += frameWidth;
-            }
-            repeatFrame();
-        }
+        createSparkles();
     }
 
 
@@ -166,7 +133,7 @@ public class SpriteSheetSampleActivity extends AppCompatActivity {
                         .transform(i * interval, j * interval)
                         .end();
 
-                mFPSTextureView.addChild(displayObject);
+                mSparkContainer.addChild(displayObject);
 
             }
 
