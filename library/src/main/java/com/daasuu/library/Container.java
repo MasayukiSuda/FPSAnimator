@@ -52,6 +52,7 @@ public class Container extends DisplayBase {
         super.draw(canvas);
 
         mDrawingList.addAll(mDisplayList);
+        mDrawingList.removeAll(Collections.singleton(null));
         Collections.sort(mDrawingList);
         for (DisplayObject DisplayObject : mDrawingList) {
             if (DisplayObject == null) {

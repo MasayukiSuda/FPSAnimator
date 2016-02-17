@@ -98,6 +98,7 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
             mDrawingList.addAll(mDisplayList);
+            mDrawingList.removeAll(Collections.singleton(null));
             Collections.sort(mDrawingList);
             for (DisplayBase displayBase : mDrawingList) {
                 if (displayBase == null) {

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
+import com.daasuu.library.Container;
 import com.daasuu.library.DisplayObject;
 import com.daasuu.library.FPSTextureView;
 import com.daasuu.library.callback.AnimCallBack;
@@ -25,6 +26,9 @@ public class ParabolicMotionSampleActivity extends AppCompatActivity {
     private Timer mTimer;
     private Bitmap mBitmap;
 
+    private Container mTextContainer = new Container();
+    private Container mBitmapContainer = new Container();
+
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, ParabolicMotionSampleActivity.class);
         context.startActivity(intent);
@@ -35,6 +39,10 @@ public class ParabolicMotionSampleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parabolic_motion);
         mFPSTextureView = (FPSTextureView) findViewById(R.id.animation_texture_view);
+
+        mFPSTextureView
+                .addChild(mBitmapContainer)
+                .addChild(mTextContainer);
 
         Paint paint = new Paint();
         paint.setColor(ContextCompat.getColor(this, R.color.colorPrimary));
@@ -48,7 +56,7 @@ public class ParabolicMotionSampleActivity extends AppCompatActivity {
                 .end();
 
 
-        mFPSTextureView.addChild(textDisplay);
+        mTextContainer.addChild(textDisplay);
         mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
 
     }
@@ -67,12 +75,12 @@ public class ParabolicMotionSampleActivity extends AppCompatActivity {
                 .bottomHitCallback(new AnimCallBack() {
                     @Override
                     public void call() {
-                        mFPSTextureView.removeChild(bitmapDisplay);
+                        mBitmapContainer.removeChild(bitmapDisplay);
                     }
                 })
                 .end();
 
-        mFPSTextureView.addChild(bitmapDisplay);
+        mBitmapContainer.addChild(bitmapDisplay);
     }
 
 

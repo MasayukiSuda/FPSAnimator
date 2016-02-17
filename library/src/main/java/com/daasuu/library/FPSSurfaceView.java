@@ -107,6 +107,7 @@ public class FPSSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
             mDrawingList.addAll(mDisplayList);
+            mDrawingList.removeAll(Collections.singleton(null));
             Collections.sort(mDrawingList);
             for (DisplayBase DisplayBase : mDrawingList) {
                 if (DisplayBase == null) {
