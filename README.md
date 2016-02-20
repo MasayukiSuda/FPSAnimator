@@ -94,7 +94,7 @@ This is the implementation of the sample application.
     mFPSTextureView
                 .addChild(displayObject);
 ```
-
+[SpriteSheet wiki](https://github.com/MasayukiSuda/FPSAnimator/wiki/SpriteSheet-Animation)
 
 #### TweenText
 <img src="art/tweenTextDemo.gif" width="50%">
@@ -141,6 +141,7 @@ This is the implementation of the sample application.
                 .end();
 
 ```
+[TweenAnimation wiki](https://github.com/MasayukiSuda/FPSAnimator/wiki/Tween-Animation)
 
 #### ParabolicMotion
 <img src="art/parabolicDemo.gif" width="50%">
@@ -206,6 +207,8 @@ This is the implementation of the sample application.
     }
 
 ```
+[ParabolicMotion wiki](https://github.com/MasayukiSuda/FPSAnimator/wiki/ParabolicMotion-Animation)
+
 
 # Easing
 <img src="art/easingDemo.gif" width="80%">
