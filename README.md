@@ -19,7 +19,8 @@ Gradle
     }
 ```
 Include the FPSTextureView widget in your layout. Set FPS by attribute.
-Default FPS is 30.
+Default FPS is 30.<br>
+If you use SurfaceView , use FPSSurfaceVIew.
 ```xml
     <com.daasuu.library.FPSTextureView
         android:id="@+id/animation_texture_view"
