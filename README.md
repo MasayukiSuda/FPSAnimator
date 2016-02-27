@@ -209,6 +209,14 @@ This is the implementation of the sample application.
 ```
 [ParabolicMotion wiki](https://github.com/MasayukiSuda/FPSAnimator/wiki/ParabolicMotion-Animation)
 
+#### Container
+ A Container is a nestable display list that allows you to work with compound display elements.<br>
+ For example you could group arm, leg, torso and head Bitmap instances together into a Person Container,
+ and transform them as a group, while still being able to move the individual parts relative to each other.
+ Children of containers have their transform and alpha properties concatenated with their parent Container.<br>
+ Containers have some overhead, so you generally shouldn't create a Container to hold a single child.
+
+
 
 # Easing
 <img src="art/easingDemo.gif" width="80%">
