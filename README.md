@@ -1,6 +1,9 @@
 # FPSAnimator
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html)
+[![Android Weekly](https://img.shields.io/badge/Android%20Weekly-%23194-blue.svg?style=true)](http://androidweekly.net/issues/issue-194)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-FPSAnimator-green.svg?style=true)](http://android-arsenal.com/details/1/3219)
+
 
 A simple but powerful Tween / SpriteSheet / ParabolicMotion / animation library for Android TextureView and SurfaceView.
 
