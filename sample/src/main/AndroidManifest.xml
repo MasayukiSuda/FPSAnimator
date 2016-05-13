@@ -40,6 +40,7 @@
         <activity
             android:name=".CustomDrawerSampleActivity"
             android:label="CustomDrawerSampleActivity" />
+        <activity android:name=".ArcSampleActivity"></activity>
     </application>
 
 </manifest>

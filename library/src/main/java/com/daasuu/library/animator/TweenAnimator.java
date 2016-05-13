@@ -1,6 +1,7 @@
 package com.daasuu.library.animator;
 
 import android.graphics.Canvas;
+import android.graphics.PointF;
 
 import com.daasuu.library.AnimParameter;
 import com.daasuu.library.Animator;
@@ -175,20 +176,117 @@ public class TweenAnimator implements Animator {
         cntScaleX = (tweenParameter.scaleX - beforeParam.scaleX) / animParamNum;
         cntScaleY = (tweenParameter.scaleY - beforeParam.scaleY) / animParamNum;
 
-        for (int i = 0; i < animParamNum; i++) {
-            float elapsedTimeRate = (float) i / (float) animParamNum;
-            float valueChangeRate = EaseProvider.get(tweenParameter.ease, elapsedTimeRate);
+        if (tweenParameter.angle == TweenParameter.DEFAULT_ANGLE) {
 
-            AnimParameter animParameter = new AnimParameter(
-                    beforeParam.x + cntX * i * valueChangeRate,
-                    beforeParam.y + cntY * i * valueChangeRate,
-                    (int) (beforeParam.alpha + cntAlpha * i * valueChangeRate),
-                    beforeParam.scaleX + cntScaleX * i * valueChangeRate,
-                    beforeParam.scaleY + cntScaleY * i * valueChangeRate,
-                    beforeParam.rotation + cntRotation * i * valueChangeRate
-            );
+            for (int i = 0; i < animParamNum; i++) {
+                float elapsedTimeRate = (float) i / (float) animParamNum;
+                float valueChangeRate = EaseProvider.get(tweenParameter.ease, elapsedTimeRate);
 
-            params.add(animParameter);
+                AnimParameter animParameter = new AnimParameter(
+                        beforeParam.x + cntX * i * valueChangeRate,
+                        beforeParam.y + cntY * i * valueChangeRate,
+                        (int) (beforeParam.alpha + cntAlpha * i * valueChangeRate),
+                        beforeParam.scaleX + cntScaleX * i * valueChangeRate,
+                        beforeParam.scaleY + cntScaleY * i * valueChangeRate,
+                        beforeParam.rotation + cntRotation * i * valueChangeRate
+                );
+
+                params.add(animParameter);
+            }
+
+        } else {
+
+
+            float differX = tweenParameter.x - beforeParam.x;
+            float differY = tweenParameter.y - beforeParam.y;
+
+            float halfDifferX = differX / 2;
+            float halfDifferY = differY / 2;
+
+
+            float baseLineLength = (float) Math.sqrt(halfDifferX * halfDifferX + halfDifferY * halfDifferY);
+
+            double baseRadian = Math.atan2(differY, differX);
+            double baseDegree = Math.toDegrees(baseRadian);
+
+            double cosRadius = 90 - (tweenParameter.angle / 2);
+
+            //
+            double distance = (baseLineLength / Math.cos(Math.toRadians(cosRadius)));
+
+
+//            for (int i = 0; i < 361; i++) {
+//                PointF basePointF = Util.getPointByDistanceAndDegree(distance, i);
+//                Log.d("aaaaaaaaaaaaaaaa ", "basePointF " + basePointF.x + "  " + basePointF.y + "  " + i);
+//            }
+
+
+            //Log.d("aaaaaaaaaaaaaaaa ", "cosRadius  " + cosRadius);
+            //Log.d("aaaaaaaaaaaaaaaa ", "baseLineLength  " + baseLineLength);
+            //Log.d("aaaaaaaaaaaaaaaa ", "distance  " + distance);
+
+
+            //Log.d("aaaaaaaaaaaaaaaa ", "baseRadian " + baseRadian);
+            //Log.d("aaaaaaaaaaaaaaaa ", "baseDegree " + baseDegree);
+
+            float plusAngle = 0;
+            float startAngle = 0;
+
+            if (beforeParam.x >= tweenParameter.x && beforeParam.y <= tweenParameter.y) {
+                plusAngle = 0;
+                startAngle = (float) (plusAngle + (90 - tweenParameter.angle) / 2 + baseDegree - 90 - 45f);
+
+            } else if (beforeParam.x >= tweenParameter.x && beforeParam.y > tweenParameter.y) {
+                plusAngle = 90;
+                startAngle = (float) (plusAngle + (90 - tweenParameter.angle) / 2 + -(-180 - baseDegree) - 45f);
+            } else if (beforeParam.x < tweenParameter.x && beforeParam.y > tweenParameter.y) {
+                plusAngle = 180;
+                startAngle = (float) (plusAngle + (90 - tweenParameter.angle) / 2 + -(-90 - baseDegree) - 45f);
+            } else if (beforeParam.x < tweenParameter.x && beforeParam.y <= tweenParameter.y) {
+                plusAngle = 270;
+                startAngle = (float) (plusAngle + (90 - tweenParameter.angle) / 2 + baseDegree - 45f);
+            }
+
+            //Log.d("aaaaaaaaaaaaaaaa ", "plusAngle " + plusAngle);
+
+            //float startAngle = (float) (plusAngle - baseDegree);
+
+            PointF differPointF = Util.getPointByDistanceAndDegree(distance, startAngle);
+
+            float differBaseX = beforeParam.x - differPointF.x;
+            float differBaseY = beforeParam.y - differPointF.y;
+
+
+            //Log.d("aaaaaaaaaaaaaaaa ", "differPointF.x " + differPointF.x + " differPointF.y " + differPointF.y);
+
+            //Log.d("aaaaaaaaaaaaaaaa ", "startAngle " + startAngle);
+
+
+            float cntAngle = tweenParameter.angle / animParamNum;
+
+            for (int i = 0; i < animParamNum; i++) {
+                float elapsedTimeRate = (float) i / (float) animParamNum;
+                float valueChangeRate = EaseProvider.get(tweenParameter.ease, elapsedTimeRate);
+
+                float angle = startAngle + cntAngle * (i + 1) * valueChangeRate;
+
+                PointF pointF = Util.getPointByDistanceAndDegree(distance, angle);
+
+                //Log.d("aaaaaaaaaaaaaaaa ", "angle " + angle);
+                //Log.d("aaaaaaaaaaaaaaaa ", "pointF " + pointF.x + "  " + pointF.y);
+
+                AnimParameter animParameter = new AnimParameter(
+                        pointF.x + differBaseX,
+                        pointF.y + differBaseY,
+                        (int) (beforeParam.alpha + cntAlpha * i * valueChangeRate),
+                        beforeParam.scaleX + cntScaleX * i * valueChangeRate,
+                        beforeParam.scaleY + cntScaleY * i * valueChangeRate,
+                        beforeParam.rotation + cntRotation * i * valueChangeRate
+                );
+
+                params.add(animParameter);
+            }
+
         }
 
         return params;
@@ -198,9 +296,11 @@ public class TweenAnimator implements Animator {
      * Arrangement for generating AnimParameter
      */
     private static class TweenParameter extends AnimParameter {
+        private static final float DEFAULT_ANGLE = -9999;
         private long animDuration;
         private Ease ease = Ease.NONE;
         private AnimCallBack callBack;
+        private float angle = DEFAULT_ANGLE;
 
         private TweenParameter(float x, float y, long animDuration) {
             super(x, y);
@@ -208,9 +308,14 @@ public class TweenAnimator implements Animator {
         }
 
         public TweenParameter(float x, float y, int alpha, float scaleX, float scaleY, float rotation, long animDuration, Ease ease) {
+            this(x, y, alpha, scaleX, scaleY, rotation, animDuration, ease, DEFAULT_ANGLE);
+        }
+
+        public TweenParameter(float x, float y, int alpha, float scaleX, float scaleY, float rotation, long animDuration, Ease ease, float angle) {
             super(x, y, alpha, scaleX, scaleY, rotation);
             this.animDuration = animDuration;
             this.ease = ease;
+            this.angle = angle;
         }
 
         @Override
@@ -640,6 +745,71 @@ public class TweenAnimator implements Animator {
 
             return this;
         }
+
+        /**
+         * Queues a tween from the current values to the target properties. Set duration to 0 to jump to these value.
+         * Numeric properties will be tweened from their current value in the tween to the target value.
+         *
+         * @param animDuration The duration of the tween in milliseconds
+         * @param x            The horizontal translation (x position) in pixels
+         * @param y            The vertical translation (y position) in pixels
+         * @param angle        The curve angle
+         * @return this
+         */
+        public Composer arc(long animDuration, float x, float y, float angle) {
+            return arc(animDuration, x, y, angle, Ease.NONE);
+        }
+
+        /**
+         * Queues a tween from the current values to the target properties. Set duration to 0 to jump to these value.
+         * Numeric properties will be tweened from their current value in the tween to the target value.
+         *
+         * @param animDuration The duration of the tween in milliseconds
+         * @param x            The horizontal translation (x position) in pixels
+         * @param y            The vertical translation (y position) in pixels
+         * @param angle        The curve angle
+         * @param ease         The easing function to use for this tween.
+         * @return this
+         */
+        public Composer arc(long animDuration, float x, float y, float angle, Ease ease) {
+            AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
+                    mTweenParameterList.get(mTweenParameterList.size() - 1) :
+                    mInitialParam;
+
+            return arc(animDuration, x, y, angle, beforeParam.alpha, beforeParam.scaleX, beforeParam.scaleY, beforeParam.rotation, ease);
+        }
+
+        /**
+         * Queues a tween from the current values to the target properties. Set duration to 0 to jump to these value.
+         * Numeric properties will be tweened from their current value in the tween to the target value.
+         *
+         * @param animDuration The duration of the tween in milliseconds
+         * @param x            The horizontal translation (x position) in pixels
+         * @param y            The vertical translation (y position) in pixels
+         * @param angle        The curve angle
+         * @param alpha        The alpha (transparency) ,as a percentage of 255.
+         * @param scaleX       The horizontal scale, as a percentage of 1
+         * @param scaleY       The vertical scale, as a percentage of 1
+         * @param rotation     The rotation, in degrees
+         * @param ease         The easing function to use for this tween.
+         * @return this
+         */
+        public Composer arc(long animDuration, float x, float y, float angle, int alpha, float scaleX, float scaleY, float rotation, Ease ease) {
+            mTweenParameterList.add(new TweenParameter(
+                    x,
+                    y,
+                    alpha,
+                    scaleX,
+                    scaleY,
+                    rotation,
+                    animDuration,
+                    ease,
+                    angle
+            ));
+
+            return this;
+        }
+
 
         /**
          * Queues a wait (essentially an empty tween).

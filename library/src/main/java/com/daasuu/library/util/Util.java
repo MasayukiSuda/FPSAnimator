@@ -1,6 +1,7 @@
 package com.daasuu.library.util;
 
 import android.content.Context;
+import android.graphics.PointF;
 import android.util.DisplayMetrics;
 
 import com.daasuu.library.constant.Constant;
@@ -55,6 +56,15 @@ public class Util {
         if (alphaInt <= 0f) return 0;
 
         return (float) alphaInt / Constant.DEFAULT_ALPHA;
+    }
+
+    public static PointF getPointByDistanceAndDegree(double distance, double degree) {
+
+        double radian = Math.PI / 180 * degree;
+        float x = (float) ((float) Math.cos(radian) * distance);
+        float y = (float) ((float) Math.sin(radian) * distance);
+
+        return new PointF(x, y);
     }
 
 }

@@ -72,6 +72,13 @@
             android:text="CustomDrawerSample"
             android:textAllCaps="false" />
 
+        <Button
+            android:id="@+id/arc_sample"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ArcSample"
+            android:textAllCaps="false" />
+
     </LinearLayout>
 
 </RelativeLayout>

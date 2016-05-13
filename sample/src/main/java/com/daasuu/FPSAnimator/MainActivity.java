@@ -77,6 +77,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button arcSample = (Button) findViewById(R.id.arc_sample);
+        arcSample.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArcSampleActivity.startActivity(v.getContext());
+            }
+        });
+
     }
 
 
