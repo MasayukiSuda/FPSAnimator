@@ -211,23 +211,8 @@ public class TweenAnimator implements Animator {
 
             double cosRadius = 90 - (tweenParameter.angle / 2);
 
-            //
             double distance = (baseLineLength / Math.cos(Math.toRadians(cosRadius)));
 
-
-//            for (int i = 0; i < 361; i++) {
-//                PointF basePointF = Util.getPointByDistanceAndDegree(distance, i);
-//                Log.d("aaaaaaaaaaaaaaaa ", "basePointF " + basePointF.x + "  " + basePointF.y + "  " + i);
-//            }
-
-
-            //Log.d("aaaaaaaaaaaaaaaa ", "cosRadius  " + cosRadius);
-            //Log.d("aaaaaaaaaaaaaaaa ", "baseLineLength  " + baseLineLength);
-            //Log.d("aaaaaaaaaaaaaaaa ", "distance  " + distance);
-
-
-            //Log.d("aaaaaaaaaaaaaaaa ", "baseRadian " + baseRadian);
-            //Log.d("aaaaaaaaaaaaaaaa ", "baseDegree " + baseDegree);
 
             float plusAngle = 0;
             float startAngle = 0;
@@ -247,19 +232,10 @@ public class TweenAnimator implements Animator {
                 startAngle = (float) (plusAngle + (90 - tweenParameter.angle) / 2 + baseDegree - 45f);
             }
 
-            //Log.d("aaaaaaaaaaaaaaaa ", "plusAngle " + plusAngle);
-
-            //float startAngle = (float) (plusAngle - baseDegree);
-
             PointF differPointF = Util.getPointByDistanceAndDegree(distance, startAngle);
 
             float differBaseX = beforeParam.x - differPointF.x;
             float differBaseY = beforeParam.y - differPointF.y;
-
-
-            //Log.d("aaaaaaaaaaaaaaaa ", "differPointF.x " + differPointF.x + " differPointF.y " + differPointF.y);
-
-            //Log.d("aaaaaaaaaaaaaaaa ", "startAngle " + startAngle);
 
 
             float cntAngle = tweenParameter.angle / animParamNum;
@@ -271,9 +247,6 @@ public class TweenAnimator implements Animator {
                 float angle = startAngle + cntAngle * (i + 1) * valueChangeRate;
 
                 PointF pointF = Util.getPointByDistanceAndDegree(distance, angle);
-
-                //Log.d("aaaaaaaaaaaaaaaa ", "angle " + angle);
-                //Log.d("aaaaaaaaaaaaaaaa ", "pointF " + pointF.x + "  " + pointF.y);
 
                 AnimParameter animParameter = new AnimParameter(
                         pointF.x + differBaseX,
@@ -757,6 +730,9 @@ public class TweenAnimator implements Animator {
          * @return this
          */
         public Composer arc(long animDuration, float x, float y, float angle) {
+            if (angle < 1f && angle > -1f) {
+                return to(animDuration, x, y, Ease.NONE);
+            }
             return arc(animDuration, x, y, angle, Ease.NONE);
         }
 
@@ -775,6 +751,10 @@ public class TweenAnimator implements Animator {
             AnimParameter beforeParam = mTweenParameterList.size() > 0 ?
                     mTweenParameterList.get(mTweenParameterList.size() - 1) :
                     mInitialParam;
+
+            if (angle < 1f && angle > -1f) {
+                return to(animDuration, x, y, beforeParam.alpha, beforeParam.scaleX, beforeParam.scaleY, beforeParam.rotation, ease);
+            }
 
             return arc(animDuration, x, y, angle, beforeParam.alpha, beforeParam.scaleX, beforeParam.scaleY, beforeParam.rotation, ease);
         }
@@ -795,6 +775,11 @@ public class TweenAnimator implements Animator {
          * @return this
          */
         public Composer arc(long animDuration, float x, float y, float angle, int alpha, float scaleX, float scaleY, float rotation, Ease ease) {
+
+            if (angle < 1f && angle > -1f) {
+                return to(animDuration, x, y, alpha, scaleX, scaleY, rotation, ease);
+            }
+
             mTweenParameterList.add(new TweenParameter(
                     x,
                     y,
