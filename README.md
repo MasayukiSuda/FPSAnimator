@@ -1,6 +1,5 @@
 # FPSAnimator
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-[![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html)
 [![Android Weekly](https://img.shields.io/badge/Android%20Weekly-%23194-blue.svg?style=true)](http://androidweekly.net/issues/issue-194)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-FPSAnimator-green.svg?style=true)](http://android-arsenal.com/details/1/3219)
 
@@ -231,7 +230,7 @@ Please send a pull request if you would like to be added here.
 
 Icon | Application
 ------------ | -------------
-<img src="https://lh3.googleusercontent.com/Q_D0w0gkAnOFIu8dZeERlqM2RcEU8emBmakaCJGhDtfxbY4jOE_g7epGEi6w1G_TaFc=w300-rw" width="48" height="48" /> | [takusuta](https://play.google.com/store/apps/details?id=jp.co.takusuta.takusuta)
+<img src="https://lh3.googleusercontent.com/61DRGI2kIEf-edob9g2mHkEax0k69yiFEZ8y6O2pQUdBYg706a1BQaepqUcyy1UJHOw=w300-rw" width="48" height="48" /> | [CChannel](https://play.google.com/store/apps/details?id=tv.cchan.harajuku)
 
 
 
