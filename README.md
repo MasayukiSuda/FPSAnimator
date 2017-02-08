@@ -1,5 +1,6 @@
 # FPSAnimator
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![API](https://img.shields.io/badge/API-16%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=16)
 [![Android Weekly](https://img.shields.io/badge/Android%20Weekly-%23194-blue.svg?style=true)](http://androidweekly.net/issues/issue-194)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-FPSAnimator-green.svg?style=true)](http://android-arsenal.com/details/1/3219)
 
