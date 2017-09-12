@@ -116,9 +116,15 @@ public class FPSTextureView extends TextureView implements TextureView.SurfaceTe
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
         synchronized (this) {
-            Canvas canvas = this.lockCanvas();
-            canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-            this.unlockCanvasAndPost(canvas);
+            try {
+                Canvas canvas = this.lockCanvas();
+                if (canvas != null) {
+                    canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+                }
+                this.unlockCanvasAndPost(canvas);
+            } catch (Exception e) {
+                // do nothing
+            }
         }
 
     }
