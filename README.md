@@ -101,6 +101,7 @@ This is the implementation of the sample application.
 
 #### TweenText
 <img src="art/tweenTextDemo.gif" width="50%">
+
 ```JAVA
     Paint paint = new Paint();
     paint.setColor(ContextCompat.getColor(this, R.color.colorAccent));
