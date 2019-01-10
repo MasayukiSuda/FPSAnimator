@@ -1,6 +1,6 @@
 package com.daasuu.library.easing;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * The Ease class provides a collection of ease functions. It does not use the standard 4 param

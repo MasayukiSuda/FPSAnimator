@@ -1,7 +1,7 @@
 package com.daasuu.library.animator;
 
 import android.graphics.Canvas;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.daasuu.library.Animator;
 import com.daasuu.library.AnimParameter;

@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.daasuu.FPSAnimator.util.UIUtil;
 import com.daasuu.library.Container;
@@ -14,7 +14,6 @@ import com.daasuu.library.DisplayObject;
 import com.daasuu.library.FPSTextureView;
 import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.drawer.SpriteSheetDrawer;
-import com.daasuu.library.spritesheet.SpriteSheet;
 import com.daasuu.library.util.Util;
 
 import java.util.ArrayList;

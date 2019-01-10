@@ -1,7 +1,7 @@
 package com.daasuu.library;
 
 import android.graphics.Canvas;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.daasuu.library.animator.ParabolicAnimator;
 import com.daasuu.library.animator.TweenAnimator;

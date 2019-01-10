@@ -2,7 +2,7 @@ package com.daasuu.library.drawer;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * Draw the specified circle using the specified paint. If radius is less 0,

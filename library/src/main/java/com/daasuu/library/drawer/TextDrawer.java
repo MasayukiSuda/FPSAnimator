@@ -2,7 +2,7 @@ package com.daasuu.library.drawer;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * Class for drawing Text on canvas.

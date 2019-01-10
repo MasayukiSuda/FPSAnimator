@@ -5,17 +5,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Paint;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.daasuu.FPSAnimator.util.UIUtil;
 import com.daasuu.library.Container;
 import com.daasuu.library.DisplayObject;
 import com.daasuu.library.FPSTextureView;
-import com.daasuu.library.callback.AnimCallBack;
 import com.daasuu.library.drawer.BitmapDrawer;
 import com.daasuu.library.drawer.SpriteSheetDrawer;
 import com.daasuu.library.drawer.TextDrawer;
@@ -23,7 +21,6 @@ import com.daasuu.library.easing.Ease;
 import com.daasuu.library.util.Util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ContainerSampleActivity extends AppCompatActivity {

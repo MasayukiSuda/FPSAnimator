@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.SweepGradient;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.daasuu.FPSAnimator.util.UIUtil;
@@ -15,8 +15,6 @@ import com.daasuu.library.FPSTextureView;
 import com.daasuu.library.drawer.CircleDrawer;
 import com.daasuu.library.drawer.CustomDrawer;
 import com.daasuu.library.drawer.RectDrawer;
-import com.daasuu.library.easing.Ease;
-import com.daasuu.library.util.Util;
 
 public class CustomDrawerSampleActivity extends AppCompatActivity {
 
